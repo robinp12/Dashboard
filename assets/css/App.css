@@ -1,0 +1,32 @@
+.row div{
+  border-radius: 10px;
+}
+.card {
+  padding: 5px;
+  margin: 5px;
+}
+.col-md-3>.card{
+  height: 100%;
+}
+h1{
+  color: dimgrey;
+}
+.jumbotron{
+  padding: 40px;
+}
+table{
+  text-align: center;
+}
+.card-body>span{
+  font-size: 150%;
+}
+.card-body>#nb{
+  font-weight: bold;
+  font-size: 300%;
+}
+.firstrow{
+  max-height: 170px;
+}
+.secondrow{
+  max-height: 270px;
+}
