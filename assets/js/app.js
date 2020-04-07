@@ -8,7 +8,6 @@ import ConnexionPage from "../js/Components/Pages/ConnexionPage";
 import InscriptionPage from "../js/Components/Pages/InscriptionPage";
 
 const App = () => {
-  
     return (
         <HashRouter>
           <Navbar/>
