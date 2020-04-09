@@ -3,7 +3,6 @@ import Header from "../Header";
 import usersAPI from "../Services/usersAPI";
 
 const InscriptionPage = ({history}) => {
-
     const [user, setUser] = useState({
         firstName:"",
         lastName:"",

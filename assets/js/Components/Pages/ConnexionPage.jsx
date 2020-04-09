@@ -1,36 +1,26 @@
 import React, { useState } from "react";
 import Header from "../Header";
-import Axios from "axios";
-import Test from "../Test";
+import authAPI from "../Services/authAPI";
 
-const ConnexionPage = () => {
+const ConnexionPage = ({onLogin, history}) => {
         const [login, setLogin] = useState({
             username: "",
             password: ""
         });
-
         const [error, setError] = useState("");
 
-        const handleChange = event => {
-            const value = event.currentTarget.value;
-            const name = event.currentTarget.name;
-
+        const handleChange = ({currentTarget}) => {
+            const {value, name } = currentTarget;
             setLogin({...login, [name] : value});
         };
+
         const handleSubmit = async event => {
             event.preventDefault();
-
             try {
-                const token = await Axios
-                .post("", login)
-                .then(response => response.data.token)
-
+               await authAPI.authenticate(login);
                 setError("");
-
-                window.localStorage.setItem("authToken", token);   
-                   
-                Axios.defaults.headers["Authorization"] = "Bearer " + token;
-
+                onLogin(true);
+                history.replace("/");
             } catch (error) {
                 setError("Aucun compte avec cet email");
             }
@@ -75,7 +65,7 @@ const ConnexionPage = () => {
                             </label>
                         </div>
                     </fieldset>
-                    <button className="btn-secondary btn" href="#">Connexion</button>
+                    <button className="btn-secondary btn">Connexion</button>
                 </form>
             </div>
         </>
