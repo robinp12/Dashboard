@@ -30,3 +30,9 @@ table{
 .secondrow{
   max-height: 270px;
 }
+.clienttable{
+  margin-left: 15em;
+  margin-right: 15em;
+
+}
+  #mapid { height: 180px; }

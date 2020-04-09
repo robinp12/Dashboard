@@ -1,15 +1,17 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
+import "react-datepicker/dist/react-datepicker.css";
 
-class Header extends Component{
-    render(){
-        const {title, other} = this.props
-        return (
+const Header = ({title,other}) => {
+        
+    return (
             <>
-                <h4>{title}{other}</h4>
+                <div>
+                    <span className="lead">{title}</span>
+                    <span className=" float-right mr-4">{other}</span>
+                </div>
                 <hr />
                 <br />
             </>
         );
-    }
 }
 export default Header;
