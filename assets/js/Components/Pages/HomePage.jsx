@@ -17,6 +17,7 @@ const HomePage = () => {
                 <USNumber/>
                 <ChartBedNumber />
                 <Table/>
+                
             </div>
             <div className="row">
                 <ChartCaseNumber />

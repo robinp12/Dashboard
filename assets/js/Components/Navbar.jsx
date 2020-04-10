@@ -24,11 +24,11 @@ const Navbar = ({isAuth, onLogout, history}) => {
                 <li className="nav-item active">
                   <NavLink className="nav-link" to="/" >Home <span className="sr-only">(current)</span></NavLink>
                 </li>
+                {/* <li className="nav-item">
+                  <NavLink className="nav-link" to="/" >Maps</NavLink>
+                </li> */}
                 <li className="nav-item">
                   <NavLink className="nav-link" to="/units" >Unité de soin</NavLink>
-                </li>
-                <li className="nav-item">
-                  <NavLink className="nav-link" to="/" >Maps</NavLink>
                 </li>
                 <li className="nav-item">
                   <NavLink className="nav-link" to="/users" >Utilisateurs</NavLink>

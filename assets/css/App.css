@@ -35,4 +35,6 @@ table{
   margin-right: 15em;
 
 }
-  #mapid { height: 180px; }
+  #mapid { height: 380px; 
+    background-color: aqua;
+  }

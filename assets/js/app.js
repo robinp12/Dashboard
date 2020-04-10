@@ -27,7 +27,7 @@ const App = () => {
           <NavbarWithRouter isAuth={isAuth} onLogout={setIsAuth} />
           <main className="jumbotron">
               <Switch>
-                <PrivateRoute path="/test" isAuth={isAuth} component={Test}/>
+                <Route path="/test" isAuth={isAuth} component={Test}/>
                 <PrivateRoute path="/units" isAuth={isAuth} component={UnitList}/>
                 <PrivateRoute path="/users" isAuth={isAuth} component={UserList} />
                 <Route 
