@@ -22,7 +22,7 @@ const ConnexionPage = ({onLogin, history}) => {
                 onLogin(true);
                 history.replace("/");
             } catch (error) {
-                setError("Aucun compte avec cet email");
+                setError("Mauvais identifiants");
             }
         }
 

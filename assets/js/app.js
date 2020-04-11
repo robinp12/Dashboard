@@ -32,18 +32,12 @@ const App = () => {
             <PrivateRoute path="/map" isAuth={isAuth} component={MapPage}/>
             <PrivateRoute path="/units" isAuth={isAuth} component={UnitList}/>
             <PrivateRoute path="/users" isAuth={isAuth} component={UserList} />
-            {isAuth && 
-              <Route path={"/connexion" && "/inscription"} 
-              render={() => <Redirect to={"/"} />}/>
-            || 
-              <>
-                <Route path="/inscription" component={InscriptionPage}/>
-                <Route 
-                  path="/connexion" 
-                  render={props => <ConnexionPage onLogin={setIsAuth} {...props} />}
-                />
-              </>
-            }
+            {isAuth && <Redirect path={"/connexion"} to="/"/>}
+            {isAuth && <Redirect path={"/inscription"} to="/"/>}
+            <Route path="/inscription" component={InscriptionPage}/>
+            <Route path="/connexion" 
+              render={props => <ConnexionPage onLogin={setIsAuth} {...props} />}
+            />
             <PrivateRoute path={"/"} isAuth={isAuth} component={HomePage}/>
           </Switch>
         <Footer/>

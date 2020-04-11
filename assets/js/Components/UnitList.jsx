@@ -10,7 +10,7 @@ const UserList = props => {
         <Header title="Liste Unité de soin"/>
         <div className="clienttable">
         <table className="table table-hover">
-            <thead>
+            <thead className="table-dark">
                 <tr>
                 <th scope="col">Identifiant</th>
                     <th scope="col">Unité</th>
@@ -24,7 +24,7 @@ const UserList = props => {
                 <th scope="row"></th>
                 <td></td>
                 <td></td>
-                <td><button className="btn-danger">X</button></td>
+                <td><button className="btn btn-danger">X</button></td>
             </tr>
             </tbody>
         </table>

@@ -46,4 +46,10 @@ hr.mid{
   border-left: 0.8px solid lightgray;
   height: 60vh;
 }
+.btn-danger{
+  height: 30px;
+  width: 30px;
+  padding: 0px;
+  font-weight: bold;
+}
 

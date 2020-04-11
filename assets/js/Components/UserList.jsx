@@ -44,7 +44,7 @@ const UserList = props => {
                 <td>{users.lastName}</td>
                 <td>{users.email}</td>
                 <td>{users.roles}</td>
-                <td><button className="btn-danger">X</button></td>
+                <td><button className="btn btn-danger">X</button></td>
             </tr>)}
             </tbody>
         </table>
