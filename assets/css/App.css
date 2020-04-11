@@ -31,9 +31,8 @@ table{
   max-height: 270px;
 }
 .clienttable{
-  margin-left: 15em;
-  margin-right: 15em;
-
+  margin-left: 17em;
+  margin-right: 17em;
 }
 #mapid { 
   box-shadow: lightgray 1px 1px 5px 0.5px;

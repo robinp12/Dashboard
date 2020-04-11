@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ChartCaseTotal from "../Charts/ChartCaseTotal";
 import USNumber from "../Charts/USNumber";
 import ChartBedNumber from "../Charts/ChartBedNumber";
@@ -9,7 +9,14 @@ import Header from "../Header";
 import Datepicker from "../Datepicker";
 
 const HomePage = () => {
+    const [startDate, setStartDate] = useState(new Date());
 
+    var date = Array(7);
+    for(let i=0; i < date.length;i++){
+        date[i] = new Date();
+        date[i].setDate(startDate.getDate()-i)
+        date[i] = date[i].toLocaleDateString();
+    }
     return(
         <>
             <Header title={"Dashboard"} other={<Datepicker/>}/>
@@ -17,10 +24,10 @@ const HomePage = () => {
                 <ChartCaseTotal />
                 <USNumber/>
                 <ChartBedNumber />
-                <Table/>
+                <Table date={date}/>
             </div>
             <div className="row">
-                <ChartCaseNumber />
+                <ChartCaseNumber date={date}/>
                 <ChartUSNumber/>
             </div>
         </>

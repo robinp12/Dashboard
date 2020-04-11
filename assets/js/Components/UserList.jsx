@@ -4,7 +4,7 @@ import Header from "./Header";
 import InscriptionPage from "./Pages/InscriptionPage";
 
 const UserList = props => {
-    const[val, setVal] = useState(false);
+    const[show, setShow] = useState(false);
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
@@ -16,15 +16,18 @@ const UserList = props => {
 
     return(
         <>
-        <Header title="Liste Utilisateur" other={<button className="btn-outline-secondary btn" onClick={() => setVal(!val)}>{!val && "Ajouter" || "Fermer"}</button>}/>
-        {val && 
-        <InscriptionPage/>
+        <Header title="Liste Utilisateur" other={<button className="btn-outline-secondary btn" onClick={() => setShow(!show)}>{!show && "Ajouter" || "Fermer"}</button>}/>
+        {show && 
+        <>
+            <InscriptionPage/>
+            <br/>
+            </>
         }
         <div className="clienttable">
         <table className="table table-hover">
-            <thead>
+            <thead className="table-dark">
                 <tr>
-                <th scope="col">Identifiant</th>
+                <th scope="col">#</th>
                     <th scope="col">Prénom</th>
                     <th scope="col">Nom</th>
                     <th scope="col">Email</th>

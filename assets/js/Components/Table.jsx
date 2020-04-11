@@ -1,13 +1,12 @@
 import React from 'react';
 
-const Table = () => {
-    let dates = [ new Date(2020, 2, 31).toLocaleDateString(),new Date(2020, 3, 1).toLocaleDateString(),new Date(2020, 3, 2).toLocaleDateString()];
-    let d = 150
-    let c = 100
-    let b = 81
-    for(let e in dates){
-        if(dates[e] === new Date().toLocaleDateString()){
-            dates[e] = "Aujourd'hui"
+const Table = ({date}) => {
+    let d = 200
+    let c = 160
+    let b = 218
+    for(let e in date){
+        if(date[e] === new Date().toLocaleDateString()){
+            date[e] = "Aujourd'hui"
         }
     }
     return ( 
@@ -27,7 +26,7 @@ const Table = () => {
                 </tr>
                 </thead>
                 <tbody>
-                    {dates.reverse().map((date, index)=>
+                    {date.slice(0, 1).map((date, index)=>
                     <tr key={index}>
                         <th key={index} scope="row">{date}</th>
                         <td>{d--}</td>
@@ -35,6 +34,19 @@ const Table = () => {
                         <td>{b--}</td>
                     </tr>
                     )}
+                    <tr>
+                        <th scope="row">{date[1]}</th>
+                        <td>\</td>
+                        <td>\</td>
+                        <td>\</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">{date[2]}</th>
+                        <td>\</td>
+                        <td>\</td>
+                        <td>\</td>
+                    </tr>
+                    
                 </tbody>
             </table>
         </div>

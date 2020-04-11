@@ -24,25 +24,31 @@ const App = () => {
   const NavbarWithRouter = withRouter(Navbar);
 
     return (
-        <HashRouter>
-          <NavbarWithRouter isAuth={isAuth} onLogout={setIsAuth} />
-          <main className="jumbotron">
-              <Switch>
-                <PrivateRoute path="/map" isAuth={isAuth} component={MapPage}/>
-
-                <Route path="/test" isAuth={isAuth} component={Test}/>
-                <PrivateRoute path="/units" isAuth={isAuth} component={UnitList}/>
-                <PrivateRoute path="/users" isAuth={isAuth} component={UserList} />
+      <HashRouter>
+      <NavbarWithRouter isAuth={isAuth} onLogout={setIsAuth} />
+        <main className="jumbotron">
+          <Switch>
+            <Route path="/test" isAuth={isAuth} component={Test}/>
+            <PrivateRoute path="/map" isAuth={isAuth} component={MapPage}/>
+            <PrivateRoute path="/units" isAuth={isAuth} component={UnitList}/>
+            <PrivateRoute path="/users" isAuth={isAuth} component={UserList} />
+            {isAuth && 
+              <Route path={"/connexion" && "/inscription"} 
+              render={() => <Redirect to={"/"} />}/>
+            || 
+              <>
+                <Route path="/inscription" component={InscriptionPage}/>
                 <Route 
                   path="/connexion" 
-                  render={props =>  <ConnexionPage onLogin={setIsAuth} {...props} />}
-                  />
-                <Route path="/inscription" component={InscriptionPage}/>
-                <PrivateRoute path={"/"} isAuth={isAuth} component={HomePage}/>
-              </Switch>
-              <Footer/>
-          </main>
-        </HashRouter>
+                  render={props => <ConnexionPage onLogin={setIsAuth} {...props} />}
+                />
+              </>
+            }
+            <PrivateRoute path={"/"} isAuth={isAuth} component={HomePage}/>
+          </Switch>
+        <Footer/>
+        </main>
+      </HashRouter>
     );
 };
 

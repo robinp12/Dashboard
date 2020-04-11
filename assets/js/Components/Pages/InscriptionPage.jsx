@@ -20,13 +20,11 @@ const InscriptionPage = ({history}) => {
     // Changement des inputs
     const handleChange = ({ currentTarget }) => {
         const { name, value } = currentTarget;
-        
         setUser({...user, [name] : value});
     };
     // Soumission
     const handleSubmit = async event => {
         event.preventDefault();
-
         const apiErrors = {};
 
         if(user.password !== user.passwordConfirm){
@@ -34,18 +32,15 @@ const InscriptionPage = ({history}) => {
             setError(apiErrors);
             return
         }
-
-
         try {
             await usersAPI.register(user)
             setError({})
             history.replace("#/connexion")
         } catch (error) {
             const {violations} = error.response.data;
-
             if(violations){
                 violations.forEach(violation => {
-                    apiErrors[violation.propertyPath] = violation.message
+                apiErrors[violation.propertyPath] = violation.message
                 });
                 setError(apiErrors);
             }
@@ -115,7 +110,6 @@ const InscriptionPage = ({history}) => {
                         </button>
                     </div>
                 </form>
-
             </div>
         </>
     )

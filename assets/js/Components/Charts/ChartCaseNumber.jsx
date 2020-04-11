@@ -4,19 +4,24 @@ import Chart from 'chart.js';
 class ChartCaseNumber extends Component {
 
     chartRef = React.createRef();
-    
+
     componentDidMount() {
+        const {date} = this.props
         const myChartRef = this.chartRef.current.getContext("2d");
-        let date = [new Date(2020, 2, 29).toLocaleDateString(), new Date(2020, 2, 30).toLocaleDateString(), new Date(2020, 2, 31).toLocaleDateString(),new Date(2020, 3, 1).toLocaleDateString(),new Date(2020, 3, 2).toLocaleDateString(),new Date(2020, 3, 3).toLocaleDateString()];
+        date.pop()
         for(let e in date){
             if(date[e] === new Date().toLocaleDateString()){
                 date[e] = "Aujourd'hui"
             }
         }
+        let d = new Date();
+        let a = new Date();
+        a.setDate(d.getDate()+1)
+        date.unshift(a.toLocaleDateString())
         new Chart(myChartRef, {
             type: "line",
             data: {
-                labels: date,
+                labels: date.reverse(),
                 datasets: [{
                     label: 'Cas entrant',
                     data: [{
@@ -34,6 +39,9 @@ class ChartCaseNumber extends Component {
                     }, {
                         x: 5,
                         y: 81
+                    }, {
+                        x: 6,
+                        y: 200
                     },],
                     backgroundColor: 'rgb(54, 162, 235)',
                     borderColor: 'rgb(54, 162, 235)',
@@ -43,13 +51,13 @@ class ChartCaseNumber extends Component {
                     label: 'Cas entrant estimé',
                     backgroundColor: 'rgb(54, 162, 235)',
                     borderColor: 'rgb(54, 162, 235)',
-                    data: [null, null, null,null,
+                    data: [null, null, null,null,null,
                     {
-                        x: 5,
-                        y: 81
-                    }, {
                         x: 6,
-                        y: 243
+                        y: 200
+                    }, {
+                        x: 7,
+                        y: 343
                     },],
                     fill: false,
                     borderDash: [5, 5],
@@ -70,6 +78,9 @@ class ChartCaseNumber extends Component {
                     }, {
                         x: 5,
                         y: 100
+                    },{
+                        x: 6,
+                        y: 160
                     },],
                     backgroundColor: 'rgb(255, 205, 86)',
                     borderColor: 'rgb(255, 205, 86)',
@@ -79,13 +90,13 @@ class ChartCaseNumber extends Component {
                     label: 'Soins intensifs estimé',
                     backgroundColor: 'rgb(255, 205, 86)',
                     borderColor: 'rgb(255, 205, 86)',
-                    data: [null, null, null,null,
+                    data: [null, null, null,null,null,
                         {
-                            x: 5,
-                            y: 100
-                        }, {
                             x: 6,
-                            y: 150
+                            y: 160
+                        }, {
+                            x: 7,
+                            y: 260
                         },],
                     fill: false,
                     borderDash: [5, 5],
@@ -105,7 +116,10 @@ class ChartCaseNumber extends Component {
                         y: 16
                     },{
                         x: 5,
-                        y: 128
+                        y: 90
+                    },{
+                        x: 6,
+                        y: 218
                     }],
                     backgroundColor: 'rgb(255, 99, 132)',
                     borderColor: 'rgb(255, 99, 132)',
@@ -115,13 +129,13 @@ class ChartCaseNumber extends Component {
                     label: 'Décès estimé',
                     backgroundColor: 'rgb(255, 99, 132)',
                     borderColor: 'rgb(255, 99, 132)',
-                    data: [null, null, null,null,
+                    data: [null, null, null,null,null,
                     {
-                        x: 5,
-                        y: 128
-                    },{
                         x: 6,
-                        y: 256
+                        y: 218
+                    },{
+                        x: 7,
+                        y: 356
                     }],
                     fill: false,
                     borderDash: [5, 5],
