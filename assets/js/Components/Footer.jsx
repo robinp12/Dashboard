@@ -5,7 +5,7 @@ const Footer = props => {
             <>
             <hr/>
             <div className="row justify-content-center">
-            <small>Front-End & Back-End by Robin Paquet</small>
+            <small className="text-muted">Front-End & Back-End by Robin Paquet</small>
             </div>
             <br/>
             <br/>

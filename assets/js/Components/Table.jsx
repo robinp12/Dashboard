@@ -27,15 +27,13 @@ const Table = () => {
                 </tr>
                 </thead>
                 <tbody>
-                    {dates.reverse().map((date)=>
-                    <>
-                    <tr key={date.toString()}>
-                        <th scope="row">{date}</th>
+                    {dates.reverse().map((date, index)=>
+                    <tr key={index}>
+                        <th key={index} scope="row">{date}</th>
                         <td>{d--}</td>
                         <td>{c--}</td>
                         <td>{b--}</td>
                     </tr>
-                    </>
                     )}
                 </tbody>
             </table>

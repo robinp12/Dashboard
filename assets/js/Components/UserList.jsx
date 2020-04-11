@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from "react";
 import axios from 'axios';
 import Header from "./Header";
+import InscriptionPage from "./Pages/InscriptionPage";
 
 const UserList = props => {
-
+    const[val, setVal] = useState(false);
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
@@ -15,7 +16,10 @@ const UserList = props => {
 
     return(
         <>
-        <Header title="Liste Utilisateur"/>
+        <Header title="Liste Utilisateur" other={<button className="btn-outline-secondary btn" onClick={() => setVal(!val)}>{!val && "Ajouter" || "Fermer"}</button>}/>
+        {val && 
+        <InscriptionPage/>
+        }
         <div className="clienttable">
         <table className="table table-hover">
             <thead>

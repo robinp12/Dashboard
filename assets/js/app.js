@@ -11,6 +11,7 @@ import UnitList from './Components/UnitList';
 import Footer from './Components/Footer';
 import Test from './Components/Test';
 import authAPI from './Components/Services/authAPI';
+import MapPage from './Components/Pages/MapPage';
 
 authAPI.setup();
 
@@ -27,6 +28,8 @@ const App = () => {
           <NavbarWithRouter isAuth={isAuth} onLogout={setIsAuth} />
           <main className="jumbotron">
               <Switch>
+                <PrivateRoute path="/map" isAuth={isAuth} component={MapPage}/>
+
                 <Route path="/test" isAuth={isAuth} component={Test}/>
                 <PrivateRoute path="/units" isAuth={isAuth} component={UnitList}/>
                 <PrivateRoute path="/users" isAuth={isAuth} component={UserList} />

@@ -21,12 +21,12 @@ const Navbar = ({isAuth, onLogout, history}) => {
 
             <div className="collapse navbar-collapse" id="navbarColor02">
               <ul className="navbar-nav mr-auto">
-                <li className="nav-item active">
-                  <NavLink className="nav-link" to="/" >Home <span className="sr-only">(current)</span></NavLink>
-                </li>
                 {/* <li className="nav-item">
-                  <NavLink className="nav-link" to="/" >Maps</NavLink>
+                  <NavLink className="nav-link" to="/" >Home <span className="sr-only">(current)</span></NavLink>
                 </li> */}
+                <li className="nav-item">
+                  <NavLink className="nav-link" to="/map" >Map</NavLink>
+                </li>
                 <li className="nav-item">
                   <NavLink className="nav-link" to="/units" >Unité de soin</NavLink>
                 </li>

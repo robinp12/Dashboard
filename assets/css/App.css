@@ -35,6 +35,16 @@ table{
   margin-right: 15em;
 
 }
-  #mapid { height: 380px; 
-    background-color: aqua;
-  }
+#mapid { 
+  box-shadow: lightgray 1px 1px 5px 0.5px;
+  background-color: #343a40;
+  width: 95%;
+  height: 65vh;
+}
+hr.mid{
+  margin-top: auto;
+  margin-bottom: auto;
+  border-left: 0.8px solid lightgray;
+  height: 60vh;
+}
+

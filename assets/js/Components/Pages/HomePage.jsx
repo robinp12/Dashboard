@@ -9,6 +9,7 @@ import Header from "../Header";
 import Datepicker from "../Datepicker";
 
 const HomePage = () => {
+
     return(
         <>
             <Header title={"Dashboard"} other={<Datepicker/>}/>
@@ -17,7 +18,6 @@ const HomePage = () => {
                 <USNumber/>
                 <ChartBedNumber />
                 <Table/>
-                
             </div>
             <div className="row">
                 <ChartCaseNumber />
