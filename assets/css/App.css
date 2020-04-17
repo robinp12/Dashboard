@@ -1,3 +1,6 @@
+body{
+  background-color: #e9ecef;
+}
 .row div{
   border-radius: 10px;
 }
@@ -31,14 +34,14 @@ table{
   max-height: 270px;
 }
 .clienttable{
-  margin-left: 17em;
-  margin-right: 17em;
+  margin-left: 17%;
+  margin-right: 17%;
 }
 #mapid { 
   box-shadow: lightgray 1px 1px 5px 0.5px;
   background-color: #343a40;
   width: 95%;
-  height: 65vh;
+  height: 50em;
 }
 hr.mid{
   margin-top: auto;
@@ -52,4 +55,38 @@ hr.mid{
   padding: 0px;
   font-weight: bold;
 }
+form{
+  background-color: whitesmoke;
+  padding: 20px;
+  margin: 10px;
+  box-shadow: lightslategrey 5px 5px 10px 0.5px;
+  border-radius: 5px;
+}
+.form-group{
+  margin-left: 35px;
+  margin-right: 35px;
 
+}
+.visible {
+  display: block;
+}
+.invisible {
+  display:none;
+}
+.toa{
+  border-radius: 5px;
+  color:white;
+  box-shadow: lightslategrey 5px 5px 10px 0.5px;
+  padding-left: 25px;
+}
+.bg-red{
+  border-radius: 5px;
+  box-shadow: lightslategrey 5px 5px 10px 0.5px;
+  padding-left: 25px;
+  background-color: rgb(189, 52, 52);
+  color: white
+}
+.popup{
+  margin: 10px;
+  text-align: center;
+}

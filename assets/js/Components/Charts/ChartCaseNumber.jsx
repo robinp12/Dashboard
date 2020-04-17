@@ -10,20 +10,20 @@ class ChartCaseNumber extends Component {
         const myChartRef = this.chartRef.current.getContext("2d");
         date.pop()
         for(let e in date){
-            if(date[e] === new Date().toLocaleDateString()){
+            if(date[e] === new Date().getDate() + '/'+ (new Date().getMonth()+1)){
                 date[e] = "Aujourd'hui"
             }
         }
         let d = new Date();
         let a = new Date();
         a.setDate(d.getDate()+1)
-        date.unshift(a.toLocaleDateString())
+        date.unshift(a.getDate() + '/'+ (a.getMonth()+1))
         new Chart(myChartRef, {
             type: "line",
             data: {
                 labels: date.reverse(),
                 datasets: [{
-                    label: 'Cas entrant',
+                    label: '200 Cas entrant',
                     data: [{
                         x: 1,
                         y: 1
@@ -46,9 +46,9 @@ class ChartCaseNumber extends Component {
                     backgroundColor: 'rgb(54, 162, 235)',
                     borderColor: 'rgb(54, 162, 235)',
                     weight: 20,
-                    fill: false
+                    fill: false,
                 },{
-                    label: 'Cas entrant estimé',
+                    label: '',
                     backgroundColor: 'rgb(54, 162, 235)',
                     borderColor: 'rgb(54, 162, 235)',
                     data: [null, null, null,null,null,
@@ -62,7 +62,7 @@ class ChartCaseNumber extends Component {
                     fill: false,
                     borderDash: [5, 5],
                 },{
-                    label: 'Soins intensifs',
+                    label: '160 Soins intensifs',
                     data: [{
                         x: 1,
                         y: 5
@@ -87,7 +87,7 @@ class ChartCaseNumber extends Component {
                     weight: 20,
                     fill: false
                 },{
-                    label: 'Soins intensifs estimé',
+                    label: '',
                     backgroundColor: 'rgb(255, 205, 86)',
                     borderColor: 'rgb(255, 205, 86)',
                     data: [null, null, null,null,null,
@@ -101,7 +101,7 @@ class ChartCaseNumber extends Component {
                     fill: false,
                     borderDash: [5, 5],
                 },{
-                    label: 'Décès',
+                    label: '218 Décès',
                     data: [{
                         x: 1,
                         y: 1
@@ -126,7 +126,7 @@ class ChartCaseNumber extends Component {
                     weight: 20,
                     fill: false
                 },{
-                    label: 'Décès estimé',
+                    label: '',
                     backgroundColor: 'rgb(255, 99, 132)',
                     borderColor: 'rgb(255, 99, 132)',
                     data: [null, null, null,null,null,
@@ -143,23 +143,48 @@ class ChartCaseNumber extends Component {
             },
             options: {
                 maintainAspectRatio:false,
+                tooltips: {
+                    filter: function (legendItem, chartData) {
+                        return (chartData.datasets[legendItem.datasetIndex].label)
+                    },
+                    intersect:false,
+                    backgroundColor: '#FFF',
+                    borderWidth: 0.1,
+                    borderColor: '#000',
+                    titleFontSize: 13,
+                    titleFontColor: '#555',
+                    bodyFontColor: '#555',
+                    bodyFontSize: 12,
+                    mode: "index"
+                },
                 legend: {
                     labels:{
                         fontSize: 13,
-                        boxWidth: 12
+                        boxWidth: 12,
+                        filter: function (legendItem, chartData) {
+                            return (chartData.datasets[legendItem.datasetIndex].label)
+                        },
                     },
-                    display: true,
                     position: 'bottom',
                     reverse: false
                 },
                 layout: {
                     padding: {
                         left: 0,
-                        right: 0,
+                        right: 10,
                         top: 20,
                         bottom: 1
                     }
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            stepSize: 100
+                        },
+                        position: "right"
+                    }]
                 }
+                
             }
         });
     }
@@ -168,7 +193,7 @@ class ChartCaseNumber extends Component {
             <>
             <div className="col-xs col-md card" >
                     <div className="card-header">
-                        Cas COVID
+                        Evolution des cas COVID
                     </div>
                     <canvas id="myChart" className="secondrow" ref={this.chartRef}></canvas>
                 </div>

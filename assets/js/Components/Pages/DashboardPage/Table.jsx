@@ -5,7 +5,7 @@ const Table = ({date}) => {
     let c = 160
     let b = 218
     for(let e in date){
-        if(date[e] === new Date().toLocaleDateString()){
+        if(date[e] === (new Date().getDate()+"/"+new Date().getMonth())){
             date[e] = "Aujourd'hui"
         }
     }
@@ -13,14 +13,14 @@ const Table = ({date}) => {
     <>
     <div className="col-md-5 col-xs-12 col-sm-12 card">
         <div className="card-header">
-            Données par jours
+            Statistiques recentes
         </div>
         <div className="card-body">
             <table id="table" className="table table-hover table-sm">
                 <thead>
                 <tr>
                     <th scope="col">Date</th>
-                    <th scope="col">Cas entrant</th>
+                    <th scope="col">Cas entrants</th>
                     <th scope="col">Cas soins intensifs</th>
                     <th scope="col">Décès</th>
                 </tr>

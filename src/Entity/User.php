@@ -5,12 +5,15 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ApiResource(
  *  normalizationContext={"groups"={"users_read"}}
  * )
+ * @UniqueEntity("email", message="Email déjà existant")
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
 class User implements UserInterface
@@ -19,13 +22,15 @@ class User implements UserInterface
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"users_read"})
+     * @Groups({"users_read","hospital_read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      * @Groups({"users_read"})
+     * @Assert\NotBlank(message="Email obligatoire")
+     * @Assert\Email(message="Format de l'email invalide")
      */
     private $email;
 
@@ -38,20 +43,31 @@ class User implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Assert\NotBlank(message="Mot de passe obligatoire")
      */
     private $password;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"users_read"})
+     * @Groups({"users_read","hospital_read"})
+     * @Assert\NotBlank(message="Prénom obligatoire")
+     * @Assert\Length(min=2, minMessage="Prénom trop court", max=254, maxMessage="Prénom trop long")
      */
     private $firstName;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"users_read"})
+     * @Groups({"users_read","hospital_read"})
+     * @Assert\NotBlank(message="Nom obligatoire")
+     * @Assert\Length(min=2, minMessage="Nom trop court", max=254, maxMessage="Nom trop long")
      */
     private $lastName;
+
+    /**
+     * @Groups({"users_read"})
+     * @ORM\OneToOne(targetEntity="App\Entity\Hospital", mappedBy="user", cascade={"persist", "remove"})
+     */
+    private $hospital;
 
     public function getId(): ?int
     {
@@ -86,8 +102,9 @@ class User implements UserInterface
     public function getRoles(): array
     {
         $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        if (empty($this->roles)) {
+            $roles[] = 'USER';
+        }
 
         return array_unique($roles);
     }
@@ -151,6 +168,23 @@ class User implements UserInterface
     public function setLastName(string $lastName): self
     {
         $this->lastName = $lastName;
+
+        return $this;
+    }
+
+    public function getHospital(): ?Hospital
+    {
+        return $this->hospital;
+    }
+
+    public function setHospital(Hospital $hospital): self
+    {
+        $this->hospital = $hospital;
+
+        // set the owning side of the relation if necessary
+        if ($hospital->getUser() !== $this) {
+            $hospital->setUser($this);
+        }
 
         return $this;
     }

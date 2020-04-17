@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import Header from "../Header";
 import authAPI from "../Services/authAPI";
+import FieldConnexion from "../Forms/FieldConnexion"
+import { toast } from "react-toastify";
+import usersAPI from "../Services/usersAPI";
 
 const ConnexionPage = ({onLogin, history}) => {
         const [login, setLogin] = useState({
@@ -20,9 +23,13 @@ const ConnexionPage = ({onLogin, history}) => {
                await authAPI.authenticate(login);
                 setError("");
                 onLogin(true);
+                toast("Vous êtes connecté " + login.username)
                 history.replace("/");
             } catch (error) {
-                setError("Mauvais identifiants");
+                toast("Mauvais identifiants",{
+                    className: 'bg-red',
+                });
+
             }
         }
 
@@ -31,32 +38,25 @@ const ConnexionPage = ({onLogin, history}) => {
             <Header title={"Connexion"}/>
             <div className="row justify-content-center">
                 <form className="col-xs-12 col-sm-9 col-md-6 col-lg-4" onSubmit={handleSubmit}>
-                    <div className="form-group">
-                        <label htmlFor="username">Adresse email</label>
-                        <input 
-                            value={login.mail}
-                            name="username"
-                            onChange={handleChange}
-                            type="email" 
-                            className={"form-control" + (error && " is-invalid")}
-                            id="username" 
-                            aria-describedby="emailHelp"
-                            placeholder="Adresse email" 
-                        />
-                        { error && <p className="invalid-feedback">{error}</p>}
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="password">Mot de passe</label>
-                        <input 
-                            value={login.password}
-                            name="password"
-                            onChange={handleChange}
-                            type="password" 
-                            className="form-control" 
-                            id="password" 
-                            placeholder="Mot de passe"
-                        />
-                    </div>
+                    
+                    <FieldConnexion
+                        label="Adresse email" 
+                        name="username" 
+                        value={login.mail} 
+                        onChange={handleChange} 
+                        placeholder="Adresse email"
+                        error={error} 
+                    />
+                    <FieldConnexion 
+                        label="Mot de passe" 
+                        name="password" 
+                        value={login.password} 
+                        onChange={handleChange} 
+                        type="password"
+                        placeholder="Mot de passe"
+                        error={error} 
+                    />
+                    
                     <fieldset className="form-group">
                         <div className="form-check disabled">
                             <label className="form-check-label">
@@ -65,7 +65,9 @@ const ConnexionPage = ({onLogin, history}) => {
                             </label>
                         </div>
                     </fieldset>
+                    <div className="form-group">
                     <button className="btn-secondary btn">Connexion</button>
+                    </div>
                 </form>
             </div>
         </>

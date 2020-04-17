@@ -4,7 +4,6 @@ import "react-datepicker/dist/react-datepicker.css";
 
 const Datepicker = () => {
     const [startDate, setStartDate] = useState(new Date());
-
        return (                 
         <DatePicker className="date text-center p-1 text-muted bg-light" 
             selected={startDate} 

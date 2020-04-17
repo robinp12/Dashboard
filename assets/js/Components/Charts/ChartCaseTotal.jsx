@@ -10,10 +10,10 @@ class ChartCaseNumber extends Component {
         new Chart(myChartRef, {
             type: 'pie',
             data: {
-                labels: ['Décès', 'Cas entrant', 'Soins intensifs'],
+                labels: ['352 Décès', '347 Cas entrant', '302 Soins intensifs'],
                 datasets: [{
                     label: '#',
-                    data: [12, 10, 5],
+                    data: [352, 347, 302],
                     backgroundColor: [
                         'rgba(255, 99, 132, 1)',
                         'rgba(54, 162, 235, 1)',
@@ -23,20 +23,32 @@ class ChartCaseNumber extends Component {
             },
             options: {
                 maintainAspectRatio:false,
+                tooltips: {
+                    intersect:false,
+                    backgroundColor: '#FFF',
+                    borderWidth: 0.1,
+                    borderColor: '#000',
+                    titleFontSize: 13,
+                    titleFontColor: '#0066ff',
+                    bodyFontColor: '#555',
+                    bodyFontSize: 14,
+                    mode: "dataset",
+                },
+                
                 legend: {
                     display: true,
-                    position: "bottom",
+                    position: "left",
                     labels: {
                         fontSize: 13,
-                        boxWidth: 12
+                        boxWidth: 12,
                     },
-                    reverse: true
+                    reverse: true,
                 },
                 layout: {
                     padding: {
                         left: 0,
-                        right: 0,
-                        top: 5,
+                        right: 2,
+                        top: 2,
                         bottom: 1
                     }
                 }

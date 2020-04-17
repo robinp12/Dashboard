@@ -31,6 +31,17 @@ class ChartUSNumber extends Component {
             },
             options: {
                 maintainAspectRatio:false,
+                tooltips: {
+                    intersect:false,
+                    backgroundColor: '#FFF',
+                    borderWidth: 0.1,
+                    borderColor: '#000',
+                    titleFontSize: 13,
+                    titleFontColor: '#0066ff',
+                    bodyFontColor: '#555',
+                    bodyFontSize: 12,
+                    displayColors: false
+                },
                 legend: {
                     display: false,
                     position: "right",

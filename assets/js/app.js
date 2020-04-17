@@ -5,13 +5,14 @@ import '../css/App.css';
 import Navbar from '../js/Components/Navbar';
 import HomePage from "../js/Components/Pages/HomePage";
 import ConnexionPage from "../js/Components/Pages/ConnexionPage";
-import InscriptionPage from "../js/Components/Pages/InscriptionPage";
-import UserList from './Components/UserList';
-import UnitList from './Components/UnitList';
+import UsersPage from './Components/Pages/UsersPage';
 import Footer from './Components/Footer';
 import Test from './Components/Test';
 import authAPI from './Components/Services/authAPI';
 import MapPage from './Components/Pages/MapPage';
+import { ToastContainer, toast, Zoom } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import HospitalsPage from './Components/Pages/HospitalsPage';
 
 authAPI.setup();
 
@@ -24,17 +25,16 @@ const App = () => {
   const NavbarWithRouter = withRouter(Navbar);
 
     return (
+      <>
       <HashRouter>
       <NavbarWithRouter isAuth={isAuth} onLogout={setIsAuth} />
         <main className="jumbotron">
           <Switch>
             <Route path="/test" isAuth={isAuth} component={Test}/>
             <PrivateRoute path="/map" isAuth={isAuth} component={MapPage}/>
-            <PrivateRoute path="/units" isAuth={isAuth} component={UnitList}/>
-            <PrivateRoute path="/users" isAuth={isAuth} component={UserList} />
+            <PrivateRoute path="/hospitals" isAuth={isAuth} component={HospitalsPage}/>
+            <PrivateRoute path="/users" isAuth={isAuth} component={UsersPage} />
             {isAuth && <Redirect path={"/connexion"} to="/"/>}
-            {isAuth && <Redirect path={"/inscription"} to="/"/>}
-            <Route path="/inscription" component={InscriptionPage}/>
             <Route path="/connexion" 
               render={props => <ConnexionPage onLogin={setIsAuth} {...props} />}
             />
@@ -43,7 +43,17 @@ const App = () => {
         <Footer/>
         </main>
       </HashRouter>
-    );
+      <ToastContainer 
+      className='toast-container'
+      position={toast.POSITION.BOTTOM_LEFT} 
+      transition={Zoom} 
+      autoClose={3000}
+      pauseOnFocusLoss={false}
+      hideProgressBar={true}
+      newestOnTop={true}
+      toastClassName="bg-dark toa"/>
+      </>
+  );
 };
 
 const rootElement = document.querySelector("#app");

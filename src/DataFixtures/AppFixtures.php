@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Hospital;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -30,7 +31,8 @@ class AppFixtures extends Fixture
         $user->setFirstName("Robin")
                 ->setLastName("Paquet")
                 ->setEmail("robipaq@hotmail.com")
-                ->setPassword($hash);
+                ->setPassword($hash)
+                ->setRoles(["ADMIN"]);
 
         $manager->persist($user);
         
@@ -42,10 +44,14 @@ class AppFixtures extends Fixture
                 ->setPassword($hash);
 
             $manager->persist($user);
-
+           
+            $hospital = new Hospital();
+            $hospital->setName("Hopital " . $faker->lastName())
+                        ->setProvince($faker->randomElement(['Namur','Bruxelles','Liège']))
+                        ->setUser($user);
+            $manager->persist($hospital);
+            
         }
-        // $product = new Product();
-        // $manager->persist($product);
 
         $manager->flush();
     }

@@ -51,7 +51,8 @@ const InscriptionPage = ({history}) => {
         <>
             <Header title={"Inscription"}/>
             <div className="row justify-content-center">
-                <form onSubmit={handleSubmit} className="col-xs-12 col-sm-9 col-md-6 col-lg-5">
+                <div className="col-xs-12 col-sm-9 col-md-6 col-lg-5">
+                <form onSubmit={handleSubmit}>
                     <div className="form-group">
                         <label htmlFor="name">Nom</label>
                         <input name="lastName" className="form-control" label={"Nom"} placeholder={"Nom"} error={error.lastName} value={user.lastName} onChange={handleChange} />
@@ -110,6 +111,7 @@ const InscriptionPage = ({history}) => {
                         </button>
                     </div>
                 </form>
+                    </div>
             </div>
         </>
     )

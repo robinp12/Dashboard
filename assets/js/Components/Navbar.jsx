@@ -1,6 +1,7 @@
 import React from 'react';
 import authAPI from './Services/authAPI';
 import { NavLink } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 
 const Navbar = ({isAuth, onLogout, history}) => {
@@ -8,6 +9,7 @@ const Navbar = ({isAuth, onLogout, history}) => {
     const handleLogout = () => {
       authAPI.logout();
       onLogout(false);
+      toast("Vous êtes déconnecté !")
       history.push("/connexion");
     }
 
@@ -30,7 +32,7 @@ const Navbar = ({isAuth, onLogout, history}) => {
                   <NavLink className="nav-link" to="/map" >Map</NavLink>
                 </li>
                 <li className="nav-item">
-                  <NavLink className="nav-link" to="/units" >Unité de soin</NavLink>
+                  <NavLink className="nav-link" to="/hospitals" >Hopitaux</NavLink>
                 </li>
                 <li className="nav-item">
                   <NavLink className="nav-link" to="/users" >Utilisateurs</NavLink>
@@ -41,9 +43,6 @@ const Navbar = ({isAuth, onLogout, history}) => {
           <ul className="navbar-nav ml-auto">
             {!isAuth && 
               <>
-                <li className="nav-item ml-2 mr-2">
-                  <NavLink className="btn btn-outline-secondary text-light" to="/inscription">Inscription</NavLink>
-                </li>
                 <li className="nav-item ml-2 mr-2">
                   <NavLink className="btn btn-outline-secondary text-light active" to="/connexion" >Connexion</NavLink>
                 </li>
