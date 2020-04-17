@@ -140,28 +140,28 @@ const UsersPage = props => {
                 <table className="table table-hover">
                     <thead className="table-dark">
                         <tr>
-                        <th scope="col">#</th>
+                        <th scope="col" className="text-center">#</th>
                             <th scope="col">Nom</th>
                             <th scope="col">Prénom</th>
                             <th scope="col">Email</th>
-                            <th scope="col">Role</th>
-                            <th scope="col">\</th>
+                            <th scope="col" className="text-center">Role</th>
+                            <th scope="col" className="text-center">\</th>
 
                         </tr>
                     </thead>
                     <tbody>
                         {users.map(users =>
                         <tr key={users.id}>
-                            <th scope="row">{users.id}</th>
+                            <th scope="row" className="text-center">{users.id}</th>
                             <td>{users.lastName}</td>
                             <td>{users.firstName}</td>
                             <td>{users.email}</td>
                                 {users.roles == "ADMIN" && (
                                 <>
-                                <td>
+                                <td className="text-center">
                                     {users.roles}
                                 </td>
-                                <td>
+                                <td className="text-center">
                                     <button 
                                         disabled 
                                         className="btn btn-danger">X
@@ -170,7 +170,7 @@ const UsersPage = props => {
                                 </>
                                 ) || (
                                 <>
-                                <td>
+                                <td className="text-center">
                                     {/* <Select 
                                     name="role" 
                                     value={users.role} 
@@ -178,9 +178,9 @@ const UsersPage = props => {
                                     />*/}
                                     {users.roles}
                                 </td>
-                                <td>
+                                <td className="text-center">
                                     <Popup
-                                    trigger={<button className="btn btn-danger">X </button>}
+                                    trigger={<button className="btn btn-sm btn-danger">X </button>}
                                     position="right top"
                                     closeOnDocumentClick
                                     >

@@ -41,7 +41,7 @@ const Hopitaux = () => {
     )
 }
 
-const MapList = (props) => {
+const MapList = () => {
     
     return ( 
     <>

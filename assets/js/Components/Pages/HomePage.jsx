@@ -2,24 +2,17 @@ import React, { useState } from "react";
 import ChartCaseTotal from "../Charts/ChartCaseTotal";
 import USNumber from "../Charts/USNumber";
 import ChartBedNumber from "../Charts/ChartBedNumber";
-import Table from "../Pages/Dashboard/Table";
+import Table from "./DashboardPage/Table";
 import ChartCaseNumber from "../Charts/ChartCaseNumber";
 import ChartUSNumber from "../Charts/ChartUSNumber";
 import Header from "../Header";
-import Datepicker from "../Pages/Dashboard/Datepicker";
+import Datepicker from "../DashboardPage/Datepicker";
 
 const HomePage = () => {
-    const [startDate, setStartDate] = useState(new Date());
-    var date = Array(7);
-    for(let i=0; i < date.length;i++){
-        date[i] = new Date();
-        date[i].setDate(startDate.getDate()-i)
-        date[i] = date[i].getDate() + '/'+ (date[i].getMonth()+1);
-    }
-    
+    const date = Datepicker.getDate();
     return(
         <>
-            <Header title={"Monitoring COVID2019"} other={Datepicker()}/>
+            <Header title={"Monitoring COVID2019"}/>
             <div className="row">
                 <ChartCaseTotal />
                 <USNumber/>

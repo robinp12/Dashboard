@@ -147,26 +147,26 @@ const HospitalsPage = props => {
         <table className="table table-hover">
             <thead className="table-dark">
                 <tr>
-                <th scope="col">#</th>
+                <th scope="col" className="text-center" >#</th>
                     <th scope="col">Hopital</th>
                     <th scope="col">Province</th>
-                    <th scope="col">Longitude</th>
-                    <th scope="col">Latitude</th>
+                    <th scope="col" className="text-center">Longitude</th>
+                    <th scope="col" className="text-center">Latitude</th>
                     <th scope="col">Utilisateur</th>
-                    <th scope="col">\</th>
+                    <th scope="col" className="text-center">\</th>
 
                 </tr>
             </thead>
             <tbody>
             {hospitals.map(hospitals =>
                 <tr key={hospitals.id}>
-                    <th scope="row">{hospitals.id}</th>
+                    <th scope="row" className="text-center">{hospitals.id}</th>
                     <th>{hospitals.name}</th>
                     <td>{hospitals.province}</td>
-                    <td>{hospitals.longitude}</td>
-                    <td>{hospitals.latitude}</td>
+                    <td className="text-center">{hospitals.longitude}</td>
+                    <td className="text-center">{hospitals.latitude}</td>
                     <td>{hospitals.user.lastName+" "+hospitals.user.firstName}</td>
-                    <td>
+                    <td className="text-center">
                         <Popup
                             trigger={<button className="btn btn-danger">X </button>}
                             position="right top"

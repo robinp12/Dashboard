@@ -17,9 +17,6 @@ h1{
 .jumbotron{
   padding: 40px;
 }
-table{
-  text-align: center;
-}
 .card-body>span{
   font-size: 150%;
 }

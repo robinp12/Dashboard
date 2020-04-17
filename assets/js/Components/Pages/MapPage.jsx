@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import 'leaflet/dist/leaflet.css'
 import Header from '../Header';
-import Map from '../Pages/Map/Map';
-import MapList from '../Pages/Map/MapList';
+import Map from '../MapPage/Map';
+import MapList from '../MapPage/MapList';
 
 const MapPage = () => {
 
