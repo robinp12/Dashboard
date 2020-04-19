@@ -6,6 +6,7 @@ import Select from "../Forms/Select";
 import FieldInscription from "../Forms/FieldInscription";
 import { toast } from "react-toastify";
 import Popup from "reactjs-popup";
+import authAPI from "../Services/authAPI";
 
 
 const AddUser = props => {
@@ -133,6 +134,7 @@ const UsersPage = props => {
 
     return(
         <>
+        {authAPI.isAdmin() && <>
         <Header title="Liste Utilisateur" other={<button className="btn-outline-secondary btn" onClick={() => setShow(!show)}>{!show && "Ajouter" || "Fermer"}</button>}/>
         {show && <><AddUser/><br/></>}
         <div className="row justify-content-center">
@@ -145,7 +147,8 @@ const UsersPage = props => {
                             <th scope="col">Prénom</th>
                             <th scope="col">Email</th>
                             <th scope="col" className="text-center">Role</th>
-                            <th scope="col" className="text-center">\</th>
+                            {authAPI.isAdmin() && (
+                            <th scope="col" className="text-center">\</th>)}
 
                         </tr>
                     </thead>
@@ -162,10 +165,11 @@ const UsersPage = props => {
                                     {users.roles}
                                 </td>
                                 <td className="text-center">
+                                {authAPI.isAdmin() && (
                                     <button 
                                         disabled 
                                         className="btn btn-danger">X
-                                    </button>
+                                    </button>)}
                                 </td>
                                 </>
                                 ) || (
@@ -179,6 +183,7 @@ const UsersPage = props => {
                                     {users.roles}
                                 </td>
                                 <td className="text-center">
+                                    {authAPI.isAdmin() && (
                                     <Popup
                                     trigger={<button className="btn btn-sm btn-danger">X </button>}
                                     position="right top"
@@ -190,7 +195,7 @@ const UsersPage = props => {
                                             <button className="btn btn-outline-danger mr-1" onClick={() => handleDelete(users.id)}>Oui</button>
                                             <button className="btn btn-outline-secondary ml-1" onClick={close}>Non</button>
                                         </div>)}
-                                    </Popup>
+                                    </Popup>)}
                                 </td>
                                 </>)}
                         </tr>)}
@@ -198,6 +203,7 @@ const UsersPage = props => {
                 </table>
             </div>
         </div>
+        </>}
         </>
     )
 }

@@ -23,7 +23,7 @@ const ConnexionPage = ({onLogin, history}) => {
                await authAPI.authenticate(login);
                 setError("");
                 onLogin(true);
-                toast("Vous êtes connecté " + login.username)
+                toast("Connecté ! " + authAPI.getCurrent().firstName)
                 history.replace("/");
             } catch (error) {
                 toast("Mauvais identifiants",{
@@ -38,7 +38,6 @@ const ConnexionPage = ({onLogin, history}) => {
             <Header title={"Connexion"}/>
             <div className="row justify-content-center">
                 <form className="col-xs-12 col-sm-9 col-md-6 col-lg-4" onSubmit={handleSubmit}>
-                    
                     <FieldConnexion
                         label="Adresse email" 
                         name="username" 

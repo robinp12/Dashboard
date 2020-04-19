@@ -18,7 +18,6 @@ authAPI.setup();
 
 const PrivateRoute = ({path, isAuth, component}) => 
   isAuth?(<Route path={path} component={component}/>):(<Redirect to="/connexion"/>);
-
 const App = () => {
 
   const [isAuth, setIsAuth] = useState(authAPI.isAuth());
@@ -32,7 +31,7 @@ const App = () => {
           <Switch>
             <Route path="/test" isAuth={isAuth} component={Test}/>
             <PrivateRoute path="/map" isAuth={isAuth} component={MapPage}/>
-            <PrivateRoute path="/hospitals" isAuth={isAuth} component={HospitalsPage}/>
+            <PrivateRoute path="/hospitals" isAuth={isAuth} component={HospitalsPage}/>            
             <PrivateRoute path="/users" isAuth={isAuth} component={UsersPage} />
             {isAuth && <Redirect path={"/connexion"} to="/"/>}
             <Route path="/connexion" 

@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import Popup from "reactjs-popup";
 import FieldInscription from "../Forms/FieldInscription";
 import Axios from "axios";
+import authAPI from "../Services/authAPI";
 
 
 const AddHospital = props => {
@@ -116,6 +117,7 @@ const HospitalsPage = props => {
                 });
             });
     }, []);
+    console.log(hospitals)
 
     const handleDelete = (id) => {
 
@@ -143,7 +145,7 @@ const HospitalsPage = props => {
         <>
         <Header title="Liste hopitaux" other={<button className="btn-outline-secondary btn" onClick={() => setShow(!show)} >{!show && "Ajouter" || "Fermer"}</button>}/>
         {show && <><AddHospital/></>}
-        <div className="clienttable">
+        <div className="clienttable row justify-content-center">
         <table className="table table-hover">
             <thead className="table-dark">
                 <tr>
@@ -152,7 +154,8 @@ const HospitalsPage = props => {
                     <th scope="col">Province</th>
                     <th scope="col" className="text-center">Longitude</th>
                     <th scope="col" className="text-center">Latitude</th>
-                    <th scope="col">Utilisateur</th>
+                    {authAPI.isAdmin() && 
+                    <th scope="col">Utilisateur</th>}
                     <th scope="col" className="text-center">\</th>
 
                 </tr>
@@ -160,12 +163,15 @@ const HospitalsPage = props => {
             <tbody>
             {hospitals.map(hospitals =>
                 <tr key={hospitals.id}>
+                {((authAPI.getCurrent().id == hospitals.user.id) || authAPI.isAdmin()) && <>
                     <th scope="row" className="text-center">{hospitals.id}</th>
                     <th>{hospitals.name}</th>
                     <td>{hospitals.province}</td>
                     <td className="text-center">{hospitals.longitude}</td>
                     <td className="text-center">{hospitals.latitude}</td>
+                    {authAPI.isAdmin() && 
                     <td>{hospitals.user.lastName+" "+hospitals.user.firstName}</td>
+                    }
                     <td className="text-center">
                         <Popup
                             trigger={<button className="btn btn-danger">X </button>}
@@ -179,8 +185,10 @@ const HospitalsPage = props => {
                                     <button className="btn btn-outline-secondary ml-1" onClick={close}>Non</button>
                                 </div>)}
                         </Popup>
-                    </td>
-                </tr>)}
+                    </td></>
+                }
+                </tr>
+            )}
             </tbody>
         </table>
         </div>

@@ -48,7 +48,9 @@ class AppFixtures extends Fixture
             $hospital = new Hospital();
             $hospital->setName("Hopital " . $faker->lastName())
                         ->setProvince($faker->randomElement(['Namur','Bruxelles','Liège']))
-                        ->setUser($user);
+                        ->setUser($user)
+                        ->setLatitude($faker->latitude())
+                        ->setLongitude($faker->longitude());
             $manager->persist($hospital);
             
         }

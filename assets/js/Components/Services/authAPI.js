@@ -41,10 +41,23 @@ function isAuth(){
     }
     return false;
 }
+function isAdmin(){
+    const token = window.localStorage.getItem("authToken");
+    if(jwtDecode(token).roles.includes("ADMIN")){
+        return true;
+    }
+   return false
+}
+function getCurrent(){
+    const token = window.localStorage.getItem("authToken");
+    return jwtDecode(token);
+}
 
 export default{
     authenticate,
     logout,
     setup,
-    isAuth
+    isAuth,
+    isAdmin,
+    getCurrent
 }

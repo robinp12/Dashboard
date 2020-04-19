@@ -34,9 +34,10 @@ const Navbar = ({isAuth, onLogout, history}) => {
                 <li className="nav-item">
                   <NavLink className="nav-link" to="/hospitals" >Hopitaux</NavLink>
                 </li>
+                {authAPI.isAdmin() && (
                 <li className="nav-item">
                   <NavLink className="nav-link" to="/users" >Utilisateurs</NavLink>
-                </li>
+                </li>)}
               </>
             }
           </ul>
