@@ -3,13 +3,16 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
+
 /**
- * @ApiResource( 
- * normalizationContext={"groups"={"hospital_read"}}
+ * @ApiResource(
+ *  normalizationContext={"groups"={"hospital_read"}}
  * )
  * @ORM\Entity(repositoryClass="App\Repository\HospitalRepository")
  */
@@ -19,42 +22,47 @@ class Hospital
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"hospital_read"})
+     * @Groups({"users_read","hospital_read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(min=2, minMessage="Nom trop court", max=254, maxMessage="Nom trop long")
      * @Assert\NotBlank(message="Nom obligatoire")
-     * @Groups({"hospital_read"})
+     * @Groups({"users_read","hospital_read"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Province obligatoire")
-     * @Groups({"hospital_read"})
+     * @Groups({"users_read","hospital_read"})
      */
     private $province;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\User", inversedBy="hospital")
-     * @ORM\JoinColumn(nullable=false)
-     * @Groups({"hospital_read"})
+     * @ORM\Column(type="float", nullable=true)
+     * @Groups({"users_read","hospital_read"})
      */
-    private $user;
+    private $latitude;
 
     /**
      * @ORM\Column(type="float", nullable=true)
-     * @Groups({"hospital_read"})
+     * @Groups({"users_read","hospital_read"})
      */
     private $longitude;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
-     * @Groups({"hospital_read"})
+     * @ORM\ManyToMany(targetEntity="App\Entity\User", inversedBy="hospitals")
+     * @Groups({"users_read","hospital_read"})
      */
-    private $latitude;
+    private $user;
+
+    public function __construct()
+    {
+        $this->user = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -85,14 +93,14 @@ class Hospital
         return $this;
     }
 
-    public function getUser(): ?user
+    public function getLatitude(): ?float
     {
-        return $this->user;
+        return $this->latitude;
     }
 
-    public function setUser(user $user): self
+    public function setLatitude(?float $latitude): self
     {
-        $this->user = $user;
+        $this->latitude = $latitude;
 
         return $this;
     }
@@ -109,14 +117,28 @@ class Hospital
         return $this;
     }
 
-    public function getLatitude(): ?float
+    /**
+     * @return Collection|user[]
+     */
+    public function getUser(): Collection
     {
-        return $this->latitude;
+        return $this->user;
     }
 
-    public function setLatitude(?float $latitude): self
+    public function addUser(user $user): self
     {
-        $this->latitude = $latitude;
+        if (!$this->user->contains($user)) {
+            $this->user[] = $user;
+        }
+
+        return $this;
+    }
+
+    public function removeUser(user $user): self
+    {
+        if ($this->user->contains($user)) {
+            $this->user->removeElement($user);
+        }
 
         return $this;
     }

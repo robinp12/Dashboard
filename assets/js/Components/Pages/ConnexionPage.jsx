@@ -7,8 +7,8 @@ import usersAPI from "../Services/usersAPI";
 
 const ConnexionPage = ({onLogin, history}) => {
         const [login, setLogin] = useState({
-            username: "",
-            password: ""
+            username: "robipaq@hotmail.com",
+            password: "password"
         });
         const [error, setError] = useState("");
 
@@ -29,6 +29,7 @@ const ConnexionPage = ({onLogin, history}) => {
                 toast("Mauvais identifiants",{
                     className: 'bg-red',
                 });
+                setError("Erreur dans les identifiants.")
 
             }
         }
@@ -41,10 +42,9 @@ const ConnexionPage = ({onLogin, history}) => {
                     <FieldConnexion
                         label="Adresse email" 
                         name="username" 
-                        value={login.mail} 
+                        value={login.username} 
                         onChange={handleChange} 
                         placeholder="Adresse email"
-                        error={error} 
                     />
                     <FieldConnexion 
                         label="Mot de passe" 

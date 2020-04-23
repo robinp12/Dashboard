@@ -14,7 +14,7 @@ const HomePage = () => {
     console.log(authAPI.getCurrent())
     return(
         <>
-            <Header title={"Monitoring COVID2019"}/>
+            <Header title={"Monitoring COVID19"}/>
             <div className="row">
                 <ChartCaseTotal />
                 <USNumber/>

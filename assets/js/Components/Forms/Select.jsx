@@ -1,18 +1,20 @@
-import React from 'react';
-import Context from '../Services/Context';
+import React, { useState } from 'react';
 
-const Select = ({name, value, onChange, className="form-control"}) => {
+const Select = ({name, value, onChange, className="form-control", defaut}) => {
+   
+    const [roles, setRoles] = useState(["USER","ADMIN"])
     return ( 
-        <>
+         <div className="col">
             <select 
             className={className} 
             id={name} 
             name={name} 
             onChange={onChange} 
-            value={value}>
-                {Context.roles().map((role,index) => <option value={role.value} key={index}>{role.nom}</option>)}
+            value={value}
+            >
+                <option hidden value>{defaut}</option>
+                {roles.map((role,index) => <option value={role} key={index}>{role}</option>)}
             </select>
-        </>
-     )};
- 
+            </div>
+     )}; 
 export default Select;

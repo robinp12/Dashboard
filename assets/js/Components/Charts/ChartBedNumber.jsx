@@ -15,9 +15,9 @@ class ChartCaseNumber extends Component {
                     label: '# of Votes',
                     data: [352, 347, 302],
                     backgroundColor: [
-                        'rgb(255, 127, 14)',
-                        'rgb(31, 119, 180)',
-                        'rgba(174, 199, 232)',
+                        'rgba(240, 188, 142, 1)',
+                        'rgba(142, 176, 199, 1)',
+                        'rgba(184, 197, 213, 1)',
                     ],
                 }]
             },

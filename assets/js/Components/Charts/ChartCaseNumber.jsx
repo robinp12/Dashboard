@@ -43,14 +43,14 @@ class ChartCaseNumber extends Component {
                         x: 6,
                         y: 200
                     },],
-                    backgroundColor: 'rgb(54, 162, 235)',
-                    borderColor: 'rgb(54, 162, 235)',
+                    backgroundColor: 'rgba(165, 203, 227, 1)',
+                    borderColor: 'rgba(165, 203, 227, 1)',
                     weight: 20,
                     fill: false,
                 },{
                     label: '',
-                    backgroundColor: 'rgb(54, 162, 235)',
-                    borderColor: 'rgb(54, 162, 235)',
+                    backgroundColor: 'rgba(165, 203, 227, 1)',
+                    borderColor: 'rgba(165, 203, 227, 1)',
                     data: [null, null, null,null,null,
                     {
                         x: 6,
@@ -82,14 +82,14 @@ class ChartCaseNumber extends Component {
                         x: 6,
                         y: 160
                     },],
-                    backgroundColor: 'rgb(255, 205, 86)',
-                    borderColor: 'rgb(255, 205, 86)',
+                    backgroundColor: 'rgba(247, 223, 161, 1)',
+                    borderColor: 'rgba(247, 223, 161, 1)',
                     weight: 20,
                     fill: false
                 },{
                     label: '',
-                    backgroundColor: 'rgb(255, 205, 86)',
-                    borderColor: 'rgb(255, 205, 86)',
+                    backgroundColor: 'rgba(247, 223, 161, 1)',
+                    borderColor: 'rgba(247, 223, 161, 1)',
                     data: [null, null, null,null,null,
                         {
                             x: 6,
@@ -121,14 +121,14 @@ class ChartCaseNumber extends Component {
                         x: 6,
                         y: 218
                     }],
-                    backgroundColor: 'rgb(255, 99, 132)',
-                    borderColor: 'rgb(255, 99, 132)',
+                    backgroundColor: 'rgba(239, 159, 176, 1)',
+                    borderColor: 'rgba(239, 159, 176, 1)',
                     weight: 20,
                     fill: false
                 },{
                     label: '',
-                    backgroundColor: 'rgb(255, 99, 132)',
-                    borderColor: 'rgb(255, 99, 132)',
+                    backgroundColor: 'rgba(239, 159, 176, 1)',
+                    borderColor: 'rgba(239, 159, 176, 1)',
                     data: [null, null, null,null,null,
                     {
                         x: 6,

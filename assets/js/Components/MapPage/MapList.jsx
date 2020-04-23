@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { toast } from 'react-toastify';
-import Axios from 'axios';
+import hospitalsAPI from '../Services/hospitalsAPI';
 
 class MapList extends Component {
 
@@ -12,8 +12,7 @@ class MapList extends Component {
     componentDidMount(){
         let prov = [];
         
-        Axios.get("http://localhost:8000/api/hospitals")
-        .then(response => response.data["hydra:member"])
+        hospitalsAPI.findAll()
         .then(data => {
             this.setState({hopitals : data})
             for(let e in data){

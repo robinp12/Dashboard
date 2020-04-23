@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from "react";
-import axios from 'axios';
 import Header from "../Header";
 import usersAPI from "../Services/usersAPI";
 import Select from "../Forms/Select";
@@ -7,6 +6,7 @@ import FieldInscription from "../Forms/FieldInscription";
 import { toast } from "react-toastify";
 import Popup from "reactjs-popup";
 import authAPI from "../Services/authAPI";
+import Axios from "axios";
 
 
 const AddUser = props => {
@@ -16,11 +16,13 @@ const AddUser = props => {
         firstName: "",
         email: "",
         password: "password2020",
+        roles: []
     });
     const [errors, setErrors] = useState({
         lastName: "",
         firstName: "",
         email: "",
+        password: "",
         roles: ""
     });
 
@@ -28,17 +30,27 @@ const AddUser = props => {
         const {name, value} = currentTarget;
         setUsers({...users, [name] : value});
     };
+    const handleChangeSelect = ({currentTarget}) => {
+        const {name, value} = currentTarget;
+        setUsers({...users, [name] : [value]});
+    };
     const handleSubmit = async e => {
         e.preventDefault();
         try {
             const rep = await usersAPI.register(users)
             toast(users.firstName +" a été ajouté");
-            console.log(rep.data);
+            setErrors("");
         } catch (error) {
-            toast(error + "",{
+            toast("Erreur dans le formulaire !" + "",{
                 className: 'bg-red',
             });
-            console.log(error);
+            if(error.response.data.violations){
+               const apiErrors = {};
+               error.response.data.violations.forEach(violation => {
+                   apiErrors[violation.propertyPath] = violation.message;
+               });
+               setErrors(apiErrors);
+            }
         }
     };
     return (
@@ -77,7 +89,14 @@ const AddUser = props => {
                             onChange={handleChange} 
                             type="password"
                             placeholder="Mot de Passe"
+                            error={errors.password}
                         />
+                           <Select 
+                           name="roles" 
+                           onChange={handleChangeSelect} 
+                           value={users.roles[0]} 
+                           defaut={"Accès"}
+                           />
                         <div className="col">
                             <button className="btn-secondary btn ml-2" type="submit">
                                 Ajouter
@@ -98,38 +117,55 @@ const UsersPage = props => {
     const[show, setShow] = useState(false);
     const [users, setUsers] = useState([]);
 
-    useEffect(() => {
-        axios.get("http://localhost:8000/api/users")
-            .then(response => response.data["hydra:member"])
-            .then(data => setUsers(data))
-            .catch(error => {
-                console.log(error.response.data)
-                toast(error + "",{
-                    className: 'bg-red',
-                });
-            });
-    }, []);
-
-    const handleDelete = (id) => {
-
-        const originUsers = [...users];
-        setUsers(users.filter(users => users.id !== id))
-
-        axios
-        .delete("api/users/" + id)
-        .then(rep => { 
-            console.log(rep);
-            toast("Utilisateur n°"+ id +" supprimé",{
+    const fetchUsers = async () => {
+        try {
+            const data = await usersAPI.getAllUsers();
+            setUsers(data);
+            console.log(data)
+        } catch (error) {
+            console.log(error.response)
+            toast(error + "",{
                 className: 'bg-red',
             });
-        })
-        .catch(error => {
-            setUsers(originUsers);
+        }
+    }
+    useEffect(() => {
+        fetchUsers();
+    }, []);
+    const handleChange = async (id,e) => {
+          const {value} = e.currentTarget;
+        try {
+             const rep = await Axios.put("http://localhost:8000/api/users/" + id, {...users, roles : [value]})
+             if(authAPI.getCurrent().id == id && value == "USER"){
+                 setTimeout(() => {
+                     authAPI.logout();
+                     window.location.replace("/");
+                    }, 300)           
+                    toast("Role de l'utilisateur n°" + id + " modifié");
+             }
+        } catch (error) {
             toast(error + "",{
                 className: 'bg-red',
             });
             console.log(error);
-        })
+        }
+    }
+
+    const handleDelete = async id => {
+        const originUsers = [...users];
+        setUsers(users.filter(users => users.id !== id))
+
+        try {
+            await usersAPI.deleteUsers(id)
+            toast("Utilisateur n°"+ id +" supprimé",{
+                className: 'bg-red',
+            });
+        } catch (error) {
+            setUsers(originUsers);
+            toast(error + "",{
+                className: 'bg-red',
+            });
+        }
     };
 
     return(
@@ -159,31 +195,27 @@ const UsersPage = props => {
                             <td>{users.lastName}</td>
                             <td>{users.firstName}</td>
                             <td>{users.email}</td>
-                                {users.roles == "ADMIN" && (
+                                {users.email == "robipaq@hotmail.com" && (
                                 <>
                                 <td className="text-center">
                                     {users.roles}
                                 </td>
                                 <td className="text-center">
-                                {authAPI.isAdmin() && (
-                                    <button 
-                                        disabled 
-                                        className="btn btn-danger">X
-                                    </button>)}
                                 </td>
                                 </>
                                 ) || (
                                 <>
                                 <td className="text-center">
-                                    {/* <Select 
+                                    <Select 
                                     name="role" 
                                     value={users.role} 
                                     className=""
-                                    />*/}
-                                    {users.roles}
+                                    onChange={(e) => handleChange(users.id,e)}
+                                    defaut={users.roles}
+                                    />
                                 </td>
                                 <td className="text-center">
-                                    {authAPI.isAdmin() && (
+                                    {authAPI.getCurrent().username == "robipaq@hotmail.com"  && (
                                     <Popup
                                     trigger={<button className="btn btn-sm btn-danger">X </button>}
                                     position="right top"

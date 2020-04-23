@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -50,24 +52,29 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"users_read","hospital_read"})
-     * @Assert\NotBlank(message="Prénom obligatoire")
      * @Assert\Length(min=2, minMessage="Prénom trop court", max=254, maxMessage="Prénom trop long")
+     * @Assert\NotBlank(message="Prénom obligatoire")
      */
     private $firstName;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"users_read","hospital_read"})
-     * @Assert\NotBlank(message="Nom obligatoire")
      * @Assert\Length(min=2, minMessage="Nom trop court", max=254, maxMessage="Nom trop long")
+     * @Assert\NotBlank(message="Nom obligatoire")
      */
     private $lastName;
 
     /**
-     * @Groups({"users_read"})
-     * @ORM\OneToOne(targetEntity="App\Entity\Hospital", mappedBy="user", cascade={"persist", "remove"})
+     * @ORM\ManyToMany(targetEntity="App\Entity\Hospital", mappedBy="user")
      */
-    private $hospital;
+    private $hospitals;
+
+    public function __construct()
+    {
+        $this->hospitals = new ArrayCollection();
+    }
+
 
     public function getId(): ?int
     {
@@ -172,20 +179,32 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getHospital(): ?Hospital
+    /**
+     * @return Collection|Hospital[]
+     */
+    public function getHospitals(): Collection
     {
-        return $this->hospital;
+        return $this->hospitals;
     }
 
-    public function setHospital(Hospital $hospital): self
+    public function addHospital(Hospital $hospital): self
     {
-        $this->hospital = $hospital;
-
-        // set the owning side of the relation if necessary
-        if ($hospital->getUser() !== $this) {
-            $hospital->setUser($this);
+        if (!$this->hospitals->contains($hospital)) {
+            $this->hospitals[] = $hospital;
+            $hospital->addUser($this);
         }
 
         return $this;
     }
+
+    public function removeHospital(Hospital $hospital): self
+    {
+        if ($this->hospitals->contains($hospital)) {
+            $this->hospitals->removeElement($hospital);
+            $hospital->removeUser($this);
+        }
+
+        return $this;
+    }
+
 }

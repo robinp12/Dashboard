@@ -40,6 +40,9 @@ const Navbar = ({isAuth, onLogout, history}) => {
                 </li>)}
               </>
             }
+            <li className="nav-item">
+                  <NavLink className="nav-link" to="/test" >Tests</NavLink>
+                </li>
           </ul>
           <ul className="navbar-nav ml-auto">
             {!isAuth && 

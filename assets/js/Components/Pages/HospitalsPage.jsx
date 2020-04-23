@@ -1,29 +1,26 @@
 import React, {useEffect, useState} from "react";
-import axios from 'axios';
 import Header from "../Header";
 import FieldConnexion from "../Forms/FieldConnexion"
 import { toast } from "react-toastify";
 import Popup from "reactjs-popup";
 import FieldInscription from "../Forms/FieldInscription";
-import Axios from "axios";
 import authAPI from "../Services/authAPI";
+import hospitalsAPI from "../Services/hospitalsAPI";
+import SelectProvince from "../Forms/SelectProvinces";
 
 
 const AddHospital = props => {
 
     const [hospitals, setHospitals] = useState({
-        user: "",
+        user: [],
         name: "",
         province: "",
-        longitude: "",
-        latitude: "",
+        longitude: 0,
+        latitude: 0,
     });
     const [errors, setErrors] = useState({
-        user: "",
         name: "",
         province: "",
-        longitude: "",
-        latitude: "",
     });
 
     const handleChange = ({currentTarget}) => {
@@ -33,14 +30,20 @@ const AddHospital = props => {
     const handleSubmit = async e => {
         e.preventDefault();
         try {
-            const rep = await Axios.post("http://localhost:8000/api/hospitals", hospitals);
+            const rep = await hospitalsAPI.addHospital(hospitals)
             toast(hospitals.firstName +" a été ajouté");
-            console.log(rep.data);
+            setErrors("");
         } catch (error) {
-            toast(error + "",{
+            toast("Erreur dans le formulaire !" + "",{
                 className: 'bg-red',
             });
-            console.log(error);
+            if(error.response.data.violations){
+                const apiErrors = {};
+                error.response.data.violations.forEach(violation => {
+                    apiErrors[violation.propertyPath] = violation.message;
+                });
+                setErrors(apiErrors);
+             }
         }
     };
     return (
@@ -52,25 +55,17 @@ const AddHospital = props => {
                 <div className="form-group mb-2">
                     <div className="form-row">
                         <FieldInscription
-                            name="user" 
-                            value={hospitals.user} 
-                            onChange={handleChange} 
-                            placeholder="Utilisateur"
-                            error={errors.user} 
-                        />
-                        <FieldInscription
                             name="name" 
                             value={hospitals.name} 
                             onChange={handleChange} 
                             placeholder="Nom"
                             error={errors.name} 
                         />
-                        <FieldInscription
+                        <SelectProvince 
                             name="province" 
-                            value={hospitals.province} 
                             onChange={handleChange} 
-                            placeholder="Province"
-                            error={errors.province} 
+                            value={hospitals.province}
+                            error={errors.province}
                         />
                         <FieldInscription
                             name="longitude" 
@@ -83,6 +78,13 @@ const AddHospital = props => {
                             value={hospitals.latitude} 
                             onChange={handleChange} 
                             placeholder="Latitude"
+                        />
+                        <FieldInscription
+                            name="user" 
+                            value={hospitals.user} 
+                            onChange={handleChange} 
+                            placeholder="Utilisateur"
+                            error={errors.user} 
                         />
                         <div className="col">
                             <button className="btn-secondary btn ml-2" type="submit">
@@ -105,40 +107,56 @@ const HospitalsPage = props => {
     const[show, setShow] = useState(false);
     const [hospitals, setHospitals] = useState([]);
 
+    const fetchHospitals = async () => {
+        try {
+            const data = await hospitalsAPI.findAll();
+            setHospitals(data);
+            console.log(data)
+        } catch (error) {
+            console.log(error.response)
+            toast(error + "",{
+                className: 'bg-red',
+            });
+        }
+    };
 
     useEffect(() => {
-        axios.get("http://localhost:8000/api/hospitals")
-            .then(response => response.data["hydra:member"])
-            .then(data => setHospitals(data))
-            .catch(error => {
-                console.log(error.response.data)
-                toast(error + "",{
-                    className: 'bg-red',
-                });
-            });
+       fetchHospitals();
     }, []);
-    console.log(hospitals)
 
-    const handleDelete = (id) => {
-
+    const handleChange = async (id,e) => {
+        const {value} = e.currentTarget;
+      try {
+           const rep = await Axios.put("http://localhost:8000/api/hospitals/" + id, {...users, roles : [value]})
+           if(authAPI.getCurrent().id == id && value == "USER"){
+               setTimeout(() => {
+                   authAPI.logout();
+                   window.location.replace("/");
+                  }, 300)           
+                  toast("Role de l'utilisateur n°" + id + " modifié");
+           }
+      } catch (error) {
+          toast(error + "",{
+              className: 'bg-red',
+          });
+          console.log(error);
+      }
+  }
+    const handleDelete = async id => {
         const originHospitals = [...hospitals];
         setHospitals(hospitals.filter(hospitals => hospitals.id !== id))
 
-        axios
-        .delete("api/hospitals/" + id)
-        .then(rep => { 
-            console.log(rep);
+        try {
+           await hospitalsAPI.deleteHospitals(id)
             toast("Hopital n°"+ id +" supprimé",{
                 className: 'bg-red',
             });
-        })
-        .catch(error => {
+        } catch (error) {
             setHospitals(originHospitals);
             toast(error + "",{
                 className: 'bg-red',
             });
-            console.log(error);
-        })
+        }
     };
 
     return(
@@ -163,14 +181,14 @@ const HospitalsPage = props => {
             <tbody>
             {hospitals.map(hospitals =>
                 <tr key={hospitals.id}>
-                {((authAPI.getCurrent().id == hospitals.user.id) || authAPI.isAdmin()) && <>
                     <th scope="row" className="text-center">{hospitals.id}</th>
                     <th>{hospitals.name}</th>
                     <td>{hospitals.province}</td>
                     <td className="text-center">{hospitals.longitude}</td>
                     <td className="text-center">{hospitals.latitude}</td>
-                    {authAPI.isAdmin() && 
-                    <td>{hospitals.user.lastName+" "+hospitals.user.firstName}</td>
+                    {typeof(hospitals.user[0]) != "undefined" && 
+                    (<td>{hospitals.user[0].lastName+" "+hospitals.user[0].firstName}{console.log(hospitals.user[0].id == authAPI.getCurrent().id) }
+                    </td>) || (<td></td>)
                     }
                     <td className="text-center">
                         <Popup
@@ -185,8 +203,8 @@ const HospitalsPage = props => {
                                     <button className="btn btn-outline-secondary ml-1" onClick={close}>Non</button>
                                 </div>)}
                         </Popup>
-                    </td></>
-                }
+                    </td>
+                
                 </tr>
             )}
             </tbody>

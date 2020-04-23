@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import { HashRouter, Switch, Route, withRouter, Redirect } from 'react-router-dom';
+import { HashRouter, Redirect, Route, Switch, withRouter } from 'react-router-dom';
+import { toast, ToastContainer, Zoom } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import '../css/App.css';
 import Navbar from '../js/Components/Navbar';
-import HomePage from "../js/Components/Pages/HomePage";
 import ConnexionPage from "../js/Components/Pages/ConnexionPage";
-import UsersPage from './Components/Pages/UsersPage';
+import HomePage from "../js/Components/Pages/HomePage";
 import Footer from './Components/Footer';
-import Test from './Components/Test';
-import authAPI from './Components/Services/authAPI';
-import MapPage from './Components/Pages/MapPage';
-import { ToastContainer, toast, Zoom } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import HospitalsPage from './Components/Pages/HospitalsPage';
+import MapPage from './Components/Pages/MapPage';
+import UsersPage from './Components/Pages/UsersPage';
+import authAPI from './Components/Services/authAPI';
+import Test from './Components/Test';
 
 authAPI.setup();
 

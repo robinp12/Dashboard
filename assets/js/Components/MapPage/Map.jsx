@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import 'leaflet/dist/leaflet.css'
 import { Map as LeafletMap, TileLayer } from "react-leaflet"
 import Marqueur from './Marqueur';
-import Axios from 'axios';
+import hospitalsAPI from '../Services/hospitalsAPI';
 
 class Map extends Component {
 
@@ -10,8 +10,7 @@ class Map extends Component {
     name : [],
   }
   componentDidMount(){
-    Axios.get("http://localhost:8000/api/hospitals")
-    .then(response => response.data["hydra:member"])
+    hospitalsAPI.findAll()
     .then(data => { 
         this.setState({ name : data });
     })

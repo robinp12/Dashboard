@@ -1,7 +1,6 @@
 import React, { useState, useEffect, Component } from 'react';
 import 'leaflet/dist/leaflet.css'
 import { Marker, Popup, Map as LeafletMap, TileLayer } from "react-leaflet"
-import Axios from 'axios';
 
 const Marqueur = ({hopital, nombre, position}) => {
 

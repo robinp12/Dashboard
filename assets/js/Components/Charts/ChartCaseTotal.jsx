@@ -15,9 +15,9 @@ class ChartCaseNumber extends Component {
                     label: '#',
                     data: [352, 347, 302],
                     backgroundColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
+                        'rgba(239, 159, 176, 1)',
+                        'rgba(165, 203, 227, 1)',
+                        'rgba(247, 223, 161, 1)',
                     ],
                 }]
             },
