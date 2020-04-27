@@ -3,7 +3,7 @@ import Header from "../Header";
 import authAPI from "../Services/authAPI";
 import FieldConnexion from "../Forms/FieldConnexion"
 import { toast } from "react-toastify";
-import usersAPI from "../Services/usersAPI";
+import RequestTokenAPI from "../Services/RequestTokenAPI";
 
 const ConnexionPage = ({onLogin, history}) => {
         const [login, setLogin] = useState({
@@ -21,9 +21,9 @@ const ConnexionPage = ({onLogin, history}) => {
             event.preventDefault();
             try {
                await authAPI.authenticate(login);
-                setError("");
-                onLogin(true);
-                toast("Connecté ! " + authAPI.getCurrent().firstName)
+               setError("");
+               onLogin(true);
+               toast("Connecté ! " + authAPI.getCurrent().firstName)
                 history.replace("/");
             } catch (error) {
                 toast("Mauvais identifiants",{
@@ -55,15 +55,6 @@ const ConnexionPage = ({onLogin, history}) => {
                         placeholder="Mot de passe"
                         error={error} 
                     />
-                    
-                    <fieldset className="form-group">
-                        <div className="form-check disabled">
-                            <label className="form-check-label">
-                                <input className="form-check-input" type="checkbox" value="" disabled=""/>
-                                Se souvenir de moi.
-                            </label>
-                        </div>
-                    </fieldset>
                     <div className="form-group">
                     <button className="btn-secondary btn">Connexion</button>
                     </div>

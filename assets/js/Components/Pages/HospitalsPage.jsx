@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from "react";
 import Header from "../Header";
-import FieldConnexion from "../Forms/FieldConnexion"
 import { toast } from "react-toastify";
 import Popup from "reactjs-popup";
 import FieldInscription from "../Forms/FieldInscription";
 import authAPI from "../Services/authAPI";
 import hospitalsAPI from "../Services/hospitalsAPI";
-import SelectProvince from "../Forms/SelectProvinces";
+import SelectUsers from "../Forms/SelectUsers";
+import SelectProvinces from "../Forms/SelectProvinces";
 
 
 const AddHospital = props => {
@@ -15,8 +15,8 @@ const AddHospital = props => {
         user: [],
         name: "",
         province: "",
-        longitude: 0,
-        latitude: 0,
+        longitude: undefined,
+        latitude: undefined,
     });
     const [errors, setErrors] = useState({
         name: "",
@@ -27,11 +27,19 @@ const AddHospital = props => {
         const {name, value} = currentTarget;
         setHospitals({...hospitals, [name] : value});
     };
+    const handleChangeNb = ({currentTarget}) => {
+        const {name, value} = currentTarget;
+        setHospitals({...hospitals, [name] : isNaN(value)?0:value});
+    };
+    const handleChangeSelect = ({currentTarget}) => {
+        const {name, value} = currentTarget;
+        setHospitals({...hospitals, [name] : [value]});
+    };
     const handleSubmit = async e => {
         e.preventDefault();
         try {
             const rep = await hospitalsAPI.addHospital(hospitals)
-            toast(hospitals.firstName +" a été ajouté");
+            toast(hospitals.name +" a été ajouté");
             setErrors("");
         } catch (error) {
             toast("Erreur dans le formulaire !" + "",{
@@ -44,6 +52,7 @@ const AddHospital = props => {
                 });
                 setErrors(apiErrors);
              }
+             console.log(error.response.data)
         }
     };
     return (
@@ -58,33 +67,37 @@ const AddHospital = props => {
                             name="name" 
                             value={hospitals.name} 
                             onChange={handleChange} 
-                            placeholder="Nom"
+                            placeholder="Nom hôpital"
                             error={errors.name} 
                         />
-                        <SelectProvince 
+                        <SelectProvinces 
                             name="province" 
                             onChange={handleChange} 
                             value={hospitals.province}
                             error={errors.province}
+                            defaut={"Province"}
                         />
                         <FieldInscription
                             name="longitude" 
                             value={hospitals.longitude} 
-                            onChange={handleChange} 
+                            onChange={handleChangeNb} 
                             placeholder="Longitude"
+                            error={errors.longitude}
                         />
                         <FieldInscription
                             name="latitude" 
                             value={hospitals.latitude} 
-                            onChange={handleChange} 
+                            onChange={handleChangeNb} 
                             placeholder="Latitude"
+                            error={errors.latitude}
                         />
-                        <FieldInscription
+                        <SelectUsers 
                             name="user" 
-                            value={hospitals.user} 
-                            onChange={handleChange} 
+                            value={hospitals.user[0]} 
+                            onChange={handleChangeSelect} 
                             placeholder="Utilisateur"
                             error={errors.user} 
+                            defaut={"Utilisateur"}
                         />
                         <div className="col">
                             <button className="btn-secondary btn ml-2" type="submit">
@@ -111,7 +124,6 @@ const HospitalsPage = props => {
         try {
             const data = await hospitalsAPI.findAll();
             setHospitals(data);
-            console.log(data)
         } catch (error) {
             console.log(error.response)
             toast(error + "",{
@@ -124,24 +136,24 @@ const HospitalsPage = props => {
        fetchHospitals();
     }, []);
 
-    const handleChange = async (id,e) => {
-        const {value} = e.currentTarget;
-      try {
-           const rep = await Axios.put("http://localhost:8000/api/hospitals/" + id, {...users, roles : [value]})
-           if(authAPI.getCurrent().id == id && value == "USER"){
-               setTimeout(() => {
-                   authAPI.logout();
-                   window.location.replace("/");
-                  }, 300)           
-                  toast("Role de l'utilisateur n°" + id + " modifié");
-           }
-      } catch (error) {
-          toast(error + "",{
-              className: 'bg-red',
-          });
-          console.log(error);
-      }
-  }
+//     const handleChange = async (id,e) => {
+//         const {value} = e.currentTarget;
+//       try {
+//            const rep = await Axios.put("http://localhost:8000/api/hospitals/" + id, {...users, roles : [value]})
+//            if(authAPI.getCurrent().id == id && value == "USER"){
+//                setTimeout(() => {
+//                    authAPI.logout();
+//                    window.location.replace("/");
+//                   }, 300)           
+//                   toast("Role de l'utilisateur n°" + id + " modifié");
+//            }
+//       } catch (error) {
+//           toast(error + "",{
+//               className: 'bg-red',
+//           });
+//           console.log(error);
+//       }
+//   }
     const handleDelete = async id => {
         const originHospitals = [...hospitals];
         setHospitals(hospitals.filter(hospitals => hospitals.id !== id))
@@ -168,7 +180,7 @@ const HospitalsPage = props => {
             <thead className="table-dark">
                 <tr>
                 <th scope="col" className="text-center" >#</th>
-                    <th scope="col">Hopital</th>
+                    <th scope="col">Hôpital</th>
                     <th scope="col">Province</th>
                     <th scope="col" className="text-center">Longitude</th>
                     <th scope="col" className="text-center">Latitude</th>

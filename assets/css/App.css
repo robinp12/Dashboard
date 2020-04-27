@@ -88,3 +88,8 @@ form{
   margin: 10px;
   text-align: center;
 }
+.liste{
+  height: 35em;
+  overflow-y: scroll;
+  overflow: auto;
+}

@@ -1,19 +1,38 @@
 import React, { Component } from 'react';
 import Chart from 'chart.js';
+import { isIterable } from 'core-js';
 
 class ChartCaseNumber extends Component {
 
+    constructor(props){
+        super(props);
+    }
     chartRef = React.createRef();
     
     componentDidMount() {
+        const name = [];
+        const val = [2,4];
+        const id = [];
+        const datee = [];
+        const {props} = this.props;
+           const [f,s,t] = props;
+           if(f){
+               const {name_reference, value, id_service, date} = f;
+               console.log(name_reference, value, id_service, date)
+               name.push(value + " " + name_reference);
+               val.push(value);
+               id.push(id_service);
+               datee.push(date);
+           }
+
         const myChartRef = this.chartRef.current.getContext("2d");
         new Chart(myChartRef, {
             type: 'pie',
             data: {
-                labels: ['352 Décès', '347 Cas entrant', '302 Soins intensifs'],
+                labels: [name, '347 Cas entrant', '302 Soins intensifs'],
                 datasets: [{
                     label: '#',
-                    data: [352, 347, 302],
+                    data: val,
                     backgroundColor: [
                         'rgba(239, 159, 176, 1)',
                         'rgba(165, 203, 227, 1)',

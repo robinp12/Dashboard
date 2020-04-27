@@ -13,13 +13,14 @@ import MapPage from './Components/Pages/MapPage';
 import UsersPage from './Components/Pages/UsersPage';
 import authAPI from './Components/Services/authAPI';
 import Test from './Components/Test';
+import requestTokenAPI from './Components/Services/RequestTokenAPI';
 
 authAPI.setup();
+requestTokenAPI();
 
 const PrivateRoute = ({path, isAuth, component}) => 
-  isAuth?(<Route path={path} component={component}/>):(<Redirect to="/connexion"/>);
+isAuth?(<Route path={path} component={component}/>):(<Redirect to="/connexion"/>);
 const App = () => {
-
   const [isAuth, setIsAuth] = useState(authAPI.isAuth());
   const NavbarWithRouter = withRouter(Navbar);
 

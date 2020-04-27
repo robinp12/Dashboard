@@ -1,15 +1,16 @@
 import Axios from 'axios';
+import {USERS_API} from '../../config'
 
 function register(user){
-    return Axios.post("http://localhost:8000/api/users", user);
+    return Axios.post(USERS_API, user);
 }
 function getAllUsers(){
-    return Axios.get("http://localhost:8000/api/users")
+    return Axios.get(USERS_API)
     .then(response => response.data["hydra:member"]);
 }
 function deleteUsers(id){
     return Axios
-    .delete("api/users/" + id);
+    .delete(USERS_API + "/" + id);
 }
 
 export default {

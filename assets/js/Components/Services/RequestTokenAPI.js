@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 
 function requestTokenAPI(){
-    const [token, setToken] = useState("");
-    useEffect(() => {
+    
         var AmazonCognitoIdentity = require('amazon-cognito-identity-js');
         var authenticationData = {
             Username: 'phil',
@@ -21,17 +20,15 @@ function requestTokenAPI(){
             Pool: userPool,
         };
         var cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
-        
             cognitoUser.authenticateUser(authenticationDetails, {
-                onSuccess: (result) => {
-                    setToken(result.getAccessToken().getJwtToken());
-                },
-                onFailure: (err) => {
-                    alert(err.message || JSON.stringify(err));
-                },
-            });
-    },[])
-    return token;
+                    onSuccess: (result) => {
+                         result.getAccessToken().getJwtToken();
+                    },
+                    onFailure: (err) => {
+                        console.log("Erreur lors de la récuperation du token API")
+                        console.log(err.message || JSON.stringify(err));
+                    },
+                });
 }
 
 export default requestTokenAPI;

@@ -1,15 +1,16 @@
 import Axios from 'axios';
+import {HOSPITALS_API} from '../../config'
 
 function findAll() {
-    return Axios.get("http://localhost:8000/api/hospitals")
+    return Axios.get(HOSPITALS_API)
     .then(response => response.data["hydra:member"]);
 }
 function addHospital(hospital){
-    return Axios.post("http://localhost:8000/api/hospitals", hospital);
+    return Axios.post(HOSPITALS_API, hospital);
 }
 function deleteHospitals(id){
     return Axios
-    .delete("api/hospitals/" + id);
+    .delete(HOSPITALS_API + "/" + id);
 }
 export default {
     findAll,

@@ -1,5 +1,7 @@
 import Axios from 'axios';
 import jwtDecode from 'jwt-decode';
+import {LOGIN_API} from '../../config'
+
 
 function logout(){
     window.localStorage.removeItem("authToken");
@@ -8,9 +10,10 @@ function logout(){
 
 function authenticate(login) {
     return Axios
-    .post("http://localhost:8000/api/login_check", login)
+    .post(LOGIN_API, login)
     .then(response => response.data.token)
     .then(token => {
+        //Token Login 
         window.localStorage.setItem("authToken", token);   
         setToken(token);
     });

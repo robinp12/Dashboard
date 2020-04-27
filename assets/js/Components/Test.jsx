@@ -1,12 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import externAPI from './Services/externAPI';
+import ChartCaseTotal from './Charts/ChartCaseTotal';
+import PageLoader from "./PageLoader";
 
 const Test = () => {
     const [datas, setDatas] = useState([]);
-    
-    externAPI()
+    externAPI(3875).then(e=> {
+            setDatas(e.datapoints);
+    })
     return(<>
-    test
+        {!datas && (<div className="text-center"><PageLoader/></div> ) || (  
+        <>
+        <h4>Données chargées !</h4>
+        <ChartCaseTotal props={datas}/>
+        </>
+        )}
     </>)
 
 }

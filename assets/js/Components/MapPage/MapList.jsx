@@ -44,11 +44,16 @@ class MapList extends Component {
         console.log(tab)
     }
     list = (hopitals,tab) => {
-        return hopitals.map((hopital,index) => 
-            <li key={index} className="list-group-item d-flex justify-content-between align-items-center">
-                {hopital.id +" "+hopital.name}
-                <span className="badge badge-danger badge-pill">{Math.floor(Math.random() * 200)}</span>
-            </li>)
+        return (<>
+            <ul className='liste list-group text-secondary list-group-flush'>
+            {hopitals.map((hopital,index) => 
+                <li key={index} className="list-group-item d-flex justify-content-between align-items-center">
+                    {hopital.id +" -- "+hopital.name}
+                    <span className="badge badge-danger badge-pill">{Math.floor(Math.random() * 200)}</span>
+                </li>)}
+            </ul>
+            </>)
+
     }
     render(){
         const {hopitals, province} = this.state;
@@ -65,10 +70,8 @@ class MapList extends Component {
                 </div>)}
             </div>
             <br/>
-            <ul className='list-group text-muted list-group-flush'>
                {this.list(hopitals,tab)}
-            </ul>
-        </>);}
+        </>)}
 }
  
 export default MapList;
