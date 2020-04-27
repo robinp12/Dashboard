@@ -9,7 +9,7 @@ async function RequestAPI(ref){
         const auth = localStorage.getItem("CognitoIdentityServiceProvider.365rnnq5bbq4a0krr2hpiatlhr.phil.accessToken");
         const api = "pTS7BOf5om6rdHWjOYv649DakKAU9l4B6fnL2Fqe";
         const url = "https://80q2kxxmp6.execute-api.us-east-1.amazonaws.com/awsls1/metrics/reference/"+ref+"?maxEntries=10";
-        const fetchDatas = () => {
+        const fetchDatas = async () => {
             var apigClientFactory = require("aws-api-gateway-client").default;
             var apigClient = apigClientFactory.newClient({
                     invokeUrl:url,
@@ -32,7 +32,7 @@ async function RequestAPI(ref){
                     pastDays: 45,
                     maxEntries: 10,
                 }
-                apigClient
+                await apigClient
                     .invokeApi(pathParams, pathTemplate, method, additionalParams,body)
                     .then(rep => {
                         setDatas(rep.data)
@@ -51,4 +51,17 @@ async function RequestAPI(ref){
     
         return datas;
     }
-export default RequestAPI;
+function getData(){
+    RequestAPI(3875).then(e => console.log(e))
+}
+function getReference(){
+
+    const [ref,setRef] = useState([1])
+    RequestAPI(3874).then(e => {
+        if(typeof(e.datapoints) != "undefined"){
+            setRef([...ref,e.datapoints[0].name_reference])
+        }
+    })
+    console.log(ref)
+}
+export default {getData, RequestAPI, getReference};

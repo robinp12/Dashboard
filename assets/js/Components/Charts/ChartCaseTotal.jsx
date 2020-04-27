@@ -24,7 +24,7 @@ class ChartCaseNumber extends Component {
                id.push(id_service);
                datee.push(date);
            }
-
+           console.log(this.props)
         const myChartRef = this.chartRef.current.getContext("2d");
         new Chart(myChartRef, {
             type: 'pie',

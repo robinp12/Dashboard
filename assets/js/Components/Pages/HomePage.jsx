@@ -13,17 +13,17 @@ import PageLoader from "../PageLoader";
 
 const HomePage = () => {
     const [datas, setDatas] = useState([]);
+    const [ref, setRef] = useState([1]);
     const date = Datepicker.getDate();
     useEffect(()=>{
         console.log(authAPI.getCurrent());
+        externAPI.getReference()
     },[])
-    externAPI(3875).then(e=> {
-            setDatas(e.datapoints);
-    })
     return(
         <>
             {!datas&& (<div className="text-center"><PageLoader/></div> ) || (  
             <>
+            {    externAPI.getReference()}
                 <Header title={"Monitoring COVID19"}/>
                 <div className="row">
                     <ChartCaseTotal props={datas} />
