@@ -7,26 +7,27 @@ import ChartCaseNumber from "../Charts/ChartCaseNumber";
 import ChartUSNumber from "../Charts/ChartUSNumber";
 import Header from "../Header";
 import Datepicker from "../DashboardPage/Datepicker";
-import authAPI from "../Services/authAPI";
 import externAPI from "../Services/externAPI";
 import PageLoader from "../PageLoader";
 
 const HomePage = () => {
     const [datas, setDatas] = useState([]);
-    const [ref, setRef] = useState([1]);
+    const [show, setShow] = useState(false);
+    
     const date = Datepicker.getDate();
-    useEffect(()=>{
-        console.log(authAPI.getCurrent());
-        externAPI.getReference()
-    },[])
+    externAPI(3874).then(e=> { 
+        setDatas(e)
+        console.log(datas)
+        setShow(true)
+    })
+    
     return(
         <>
-            {!datas&& (<div className="text-center"><PageLoader/></div> ) || (  
+            {!show&& (<div className="text-center"><PageLoader/></div> ) || (  
             <>
-            {    externAPI.getReference()}
                 <Header title={"Monitoring COVID19"}/>
                 <div className="row">
-                    <ChartCaseTotal props={datas} />
+                    <ChartCaseTotal datas={datas} />
                     <USNumber/>
                     <ChartBedNumber />
                     <Table date={date}/>

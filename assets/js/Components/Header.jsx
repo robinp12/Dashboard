@@ -5,12 +5,11 @@ const Header = ({title,other}) => {
         
     return (
             <>
-                <div>
+                <div className="headerrr">
                     <span className="lead">{title}</span>
                     <span className=" float-right mr-4">{other}</span>
                 </div>
                 <hr />
-                <br />
             </>
         );
 }

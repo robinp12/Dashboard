@@ -7,12 +7,15 @@ import authAPI from "../Services/authAPI";
 import hospitalsAPI from "../Services/hospitalsAPI";
 import SelectUsers from "../Forms/SelectUsers";
 import SelectProvinces from "../Forms/SelectProvinces";
+import Axios from "axios";
+import cache from "../Services/cache";
+import {USERS_API} from '../../config'
 
 
 const AddHospital = props => {
 
     const [hospitals, setHospitals] = useState({
-        user: [],
+        user: authAPI.isAdmin()?[]:[USERS_API + "/" + authAPI.getCurrent().id],
         name: "",
         province: "",
         longitude: undefined,
@@ -22,14 +25,13 @@ const AddHospital = props => {
         name: "",
         province: "",
     });
-
     const handleChange = ({currentTarget}) => {
         const {name, value} = currentTarget;
         setHospitals({...hospitals, [name] : value});
     };
     const handleChangeNb = ({currentTarget}) => {
         const {name, value} = currentTarget;
-        setHospitals({...hospitals, [name] : isNaN(value)?0:value});
+        setHospitals({...hospitals, [name] : +value});
     };
     const handleChangeSelect = ({currentTarget}) => {
         const {name, value} = currentTarget;
@@ -57,10 +59,10 @@ const AddHospital = props => {
     };
     return (
         <>
-        <div className="row justify-content-center">
+        <div className="row test justify-content-center">
             <div className="col-xs-12 col-sm-12 col-md-10 col-lg-8">
                 <form  onSubmit={handleSubmit}>
-                <h5>Ajouter utilisateur</h5>
+                <h5>Ajouter hôpital</h5>
                 <div className="form-group mb-2">
                     <div className="form-row">
                         <FieldInscription
@@ -91,6 +93,7 @@ const AddHospital = props => {
                             placeholder="Latitude"
                             error={errors.latitude}
                         />
+                        {authAPI.isAdmin() && 
                         <SelectUsers 
                             name="user" 
                             value={hospitals.user[0]} 
@@ -98,7 +101,7 @@ const AddHospital = props => {
                             placeholder="Utilisateur"
                             error={errors.user} 
                             defaut={"Utilisateur"}
-                        />
+                        />}
                         <div className="col">
                             <button className="btn-secondary btn ml-2" type="submit">
                                 Ajouter
@@ -121,9 +124,16 @@ const HospitalsPage = props => {
     const [hospitals, setHospitals] = useState([]);
 
     const fetchHospitals = async () => {
+        cache.invalidate("hospitals")
         try {
-            const data = await hospitalsAPI.findAll();
-            setHospitals(data);
+            if(!authAPI.isAdmin()){
+                const data = await hospitalsAPI.find(authAPI.getCurrent().id)
+                setHospitals(data);
+            }
+            else{
+                const data = await hospitalsAPI.findAll();
+                setHospitals(data);
+            }
         } catch (error) {
             console.log(error.response)
             toast(error + "",{
@@ -133,7 +143,7 @@ const HospitalsPage = props => {
     };
 
     useEffect(() => {
-       fetchHospitals();
+        fetchHospitals();
     }, []);
 
 //     const handleChange = async (id,e) => {
@@ -175,53 +185,86 @@ const HospitalsPage = props => {
         <>
         <Header title="Liste hopitaux" other={<button className="btn-outline-secondary btn" onClick={() => setShow(!show)} >{!show && "Ajouter" || "Fermer"}</button>}/>
         {show && <><AddHospital/></>}
-        <div className="clienttable row justify-content-center">
-        <table className="table table-hover">
-            <thead className="table-dark">
-                <tr>
-                <th scope="col" className="text-center" >#</th>
-                    <th scope="col">Hôpital</th>
-                    <th scope="col">Province</th>
-                    <th scope="col" className="text-center">Longitude</th>
-                    <th scope="col" className="text-center">Latitude</th>
-                    {authAPI.isAdmin() && 
-                    <th scope="col">Utilisateur</th>}
-                    <th scope="col" className="text-center">\</th>
+    <div className="row justify-content-center">
+        <div className="clienttable col-xs-12 col-sm-12 col-md-10 col-lg-8">
+            <table className="table table-hover">
+                <thead className="table-dark">
+                    <tr>{authAPI.isAdmin() &&
+                        <th scope="col" className="text-center" >#</th>}
+                        <th scope="col">Hôpital</th>
+                        <th scope="col">Province</th>
+                        <th scope="col" className="text-center">Longitude</th>
+                        <th scope="col" className="text-center">Latitude</th>
+                        {authAPI.isAdmin() && 
+                        <th scope="col">Utilisateur</th>}
+                        <th scope="col" className="text-center">\</th>
 
-                </tr>
-            </thead>
-            <tbody>
-            {hospitals.map(hospitals =>
-                <tr key={hospitals.id}>
-                    <th scope="row" className="text-center">{hospitals.id}</th>
-                    <th>{hospitals.name}</th>
-                    <td>{hospitals.province}</td>
-                    <td className="text-center">{hospitals.longitude}</td>
-                    <td className="text-center">{hospitals.latitude}</td>
-                    {typeof(hospitals.user[0]) != "undefined" && 
-                    (<td>{hospitals.user[0].lastName+" "+hospitals.user[0].firstName}{console.log(hospitals.user[0].id == authAPI.getCurrent().id) }
-                    </td>) || (<td></td>)
-                    }
-                    <td className="text-center">
-                        <Popup
-                            trigger={<button className="btn btn-danger">X </button>}
-                            position="right top"
-                            closeOnDocumentClick
-                            >
-                            {close => (
-                                <div className="popup">
-                                    <span>Voulez-vous vraiment supprimer l'élément ?</span>
-                                    <button className="btn btn-outline-danger mr-1" onClick={() => handleDelete(hospitals.id)}>Oui</button>
-                                    <button className="btn btn-outline-secondary ml-1" onClick={close}>Non</button>
-                                </div>)}
-                        </Popup>
-                    </td>
-                
-                </tr>
-            )}
-            </tbody>
-        </table>
+                    </tr>
+                </thead>
+                <tbody>
+                    {authAPI.isAdmin() && <>
+                        {hospitals.map((hospitals,index) =>
+                            <tr key={hospitals.id}>
+                                <th scope="row" className="text-center">{index+1}</th>
+                                <th>{hospitals.name}</th>
+                                <td>{hospitals.province}</td>
+                                <td className="text-center">{hospitals.longitude}</td>
+                                <td className="text-center">{hospitals.latitude}</td>
+                                {typeof(hospitals.user[0]) != "undefined" && (
+                                    <td>
+                                        {hospitals.user[0].lastName+" "+hospitals.user[0].firstName}
+                                    </td>
+                                    ) || (
+                                    <td>
+                                    </td>
+                                    )
+                                }
+                                <td className="text-center">
+                                    <Popup
+                                        trigger={<button className="btn btn-danger">X </button>}
+                                        position="right center"
+                                        closeOnDocumentClick
+                                    >
+                                    {close => (
+                                        <div className="popup">
+                                            <span>Voulez-vous vraiment supprimer l'élément ?</span>
+                                            <button className="btn btn-outline-danger mr-1" onClick={() => handleDelete(hospitals.id)}>Oui</button>
+                                            <button className="btn btn-outline-secondary ml-1" onClick={close}>Non</button>
+                                        </div>
+                                    )}
+                                    </Popup>
+                                </td>
+                            </tr>
+                        )}
+                    </> || <>
+                        {hospitals.map(hospitals =>
+                            <tr key={hospitals.id}>
+                                <th scope="row" >{hospitals.name}</th>
+                                <td>{hospitals.province}</td>
+                                <td className="text-center">{hospitals.longitude}</td>
+                                <td className="text-center">{hospitals.latitude}</td>
+                                <td className="text-center">
+                                    <Popup
+                                        trigger={<button className="btn btn-danger">X </button>}
+                                        position="right center"
+                                        closeOnDocumentClick
+                                    >
+                                    {close => (
+                                        <div className="popup">
+                                            <span>Voulez-vous vraiment supprimer l'élément ?</span>
+                                            <button className="btn btn-outline-danger mr-1" onClick={() => handleDelete(hospitals.id)}>Oui</button>
+                                            <button className="btn btn-outline-secondary ml-1" onClick={close}>Non</button>
+                                        </div>
+                                    )}
+                                    </Popup>
+                                </td>
+                            </tr>
+                        )}
+                    </>}
+                </tbody>
+            </table>
         </div>
+    </div>
         </>
     )
 }

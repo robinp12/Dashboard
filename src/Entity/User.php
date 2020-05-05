@@ -67,6 +67,7 @@ class User implements UserInterface
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Hospital", mappedBy="user")
+     * @Groups({"users_read"})
      */
     private $hospitals;
 

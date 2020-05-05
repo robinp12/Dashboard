@@ -121,7 +121,6 @@ const UsersPage = props => {
         try {
             const data = await usersAPI.getAllUsers();
             setUsers(data);
-            console.log(data)
         } catch (error) {
             console.log(error.response)
             toast(error + "",{
@@ -133,16 +132,17 @@ const UsersPage = props => {
         fetchUsers();
     }, []);
     const handleChange = async (id,e) => {
-          const {value} = e.currentTarget;
+        const {value} = e.currentTarget;
         try {
-             const rep = await Axios.put("http://localhost:8000/api/users/" + id, {...users, roles : [value]})
+
+             const rep = await usersAPI.update(id, value, users)
              if(authAPI.getCurrent().id == id && value == "USER"){
                  setTimeout(() => {
                      authAPI.logout();
                      window.location.replace("/");
                     }, 300)           
-                    toast("Role de l'utilisateur n°" + id + " modifié");
-             }
+                }
+            toast("Role de l'utilisateur n°" + id + " modifié");
         } catch (error) {
             toast(error + "",{
                 className: 'bg-red',
@@ -171,7 +171,7 @@ const UsersPage = props => {
     return(
         <>
         {authAPI.isAdmin() && <>
-        <Header title="Liste Utilisateur" other={<button className="btn-outline-secondary btn" onClick={() => setShow(!show)}>{!show && "Ajouter" || "Fermer"}</button>}/>
+        <Header title="Liste utilisateur" other={<button className="btn-outline-secondary btn" onClick={() => setShow(!show)}>{!show && "Ajouter" || "Fermer"}</button>}/>
         {show && <><AddUser/><br/></>}
         <div className="row justify-content-center">
             <div className="clienttable col-xs-12 col-sm-12 col-md-10 col-lg-8">
@@ -189,9 +189,9 @@ const UsersPage = props => {
                         </tr>
                     </thead>
                     <tbody>
-                        {users.map(users =>
+                        {users.map((users,index) =>
                         <tr key={users.id}>
-                            <th scope="row" className="text-center">{users.id}</th>
+                            <th scope="row" className="text-center">{index+1}</th>
                             <td>{users.lastName}</td>
                             <td>{users.firstName}</td>
                             <td>{users.email}</td>
@@ -218,7 +218,7 @@ const UsersPage = props => {
                                     {authAPI.getCurrent().username == "robipaq@hotmail.com"  && (
                                     <Popup
                                     trigger={<button className="btn btn-sm btn-danger">X </button>}
-                                    position="right top"
+                                    position="right center"
                                     closeOnDocumentClick
                                     >
                                     {close => (

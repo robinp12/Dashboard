@@ -1,9 +1,20 @@
 body{
   background-color: #e9ecef;
-  /* overflow: hidden; */
 }
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #e9ecef;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #a8adb3;
+}
+
 .row div{
-  border-radius: 10px;
+  border-radius: 3px;
 }
 .card {
   padding: 5px;
@@ -35,12 +46,6 @@ h1{
   margin-left: 17%;
   margin-right: 17%;
 }
-#mapid { 
-  box-shadow: lightgray 1px 1px 5px 0.5px;
-  background-color: #343a40;
-  width: 95%;
-  height: 50em;
-}
 hr.mid{
   margin-top: auto;
   margin-bottom: auto;
@@ -57,13 +62,16 @@ form{
   background-color: whitesmoke;
   padding: 20px;
   margin: 10px;
-  box-shadow: lightslategrey 5px 5px 10px 0.5px;
-  border-radius: 5px;
+  box-shadow: lightslategrey 2px 2px 5px 0.5px;
+  border-radius: 4px;
+}
+.card{
+  box-shadow: lightgray 1px 1px 2px 1px;
 }
 .form-group{
   margin-left: 35px;
   margin-right: 35px;
-
+  
 }
 .visible {
   display: block;
@@ -92,4 +100,19 @@ form{
   height: 35em;
   overflow-y: scroll;
   overflow: auto;
+  border-radius: 5px;
+}
+#mapid { 
+  margin-top: 1em;
+  box-shadow: lightgray 1px 1px 5px 0.5px;
+  background-color: #343a40;
+  width: 95%;
+  height: 49em;
+}
+.clienttable{
+  padding: 0;
+  margin-bottom: 0.5em;
+}
+.table{
+  border-radius: 5px;
 }

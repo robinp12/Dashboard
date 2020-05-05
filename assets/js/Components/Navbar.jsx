@@ -16,7 +16,7 @@ const Navbar = ({isAuth, onLogout, history}) => {
     return ( 
     <>
       <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
-        <NavLink className="navbar-brand" to="/">Tableau de bord covid</NavLink>
+        <NavLink className="navbar-brand" to="/">Tableau de bord</NavLink>
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
         </button>

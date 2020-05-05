@@ -14,8 +14,8 @@ class ChartCaseNumber extends Component {
         const val = [2,4];
         const id = [];
         const datee = [];
-        const {props} = this.props;
-           const [f,s,t] = props;
+        const {datas} = this.props;
+           const [f,s,t] = datas;
            if(f){
                const {name_reference, value, id_service, date} = f;
                console.log(name_reference, value, id_service, date)
@@ -24,7 +24,7 @@ class ChartCaseNumber extends Component {
                id.push(id_service);
                datee.push(date);
            }
-           console.log(this.props)
+        //    console.log(this.props)
         const myChartRef = this.chartRef.current.getContext("2d");
         new Chart(myChartRef, {
             type: 'pie',
@@ -43,15 +43,16 @@ class ChartCaseNumber extends Component {
             options: {
                 maintainAspectRatio:false,
                 tooltips: {
-                    intersect:false,
-                    backgroundColor: '#FFF',
-                    borderWidth: 0.1,
-                    borderColor: '#000',
-                    titleFontSize: 13,
-                    titleFontColor: '#0066ff',
-                    bodyFontColor: '#555',
-                    bodyFontSize: 14,
-                    mode: "dataset",
+                    enabled: false,
+                    // intersect:false,
+                    // backgroundColor: '#FFF',
+                    // borderWidth: 0.1,
+                    // borderColor: '#000',
+                    // titleFontSize: 13,
+                    // titleFontColor: '#0066ff',
+                    // bodyFontColor: '#555',
+                    // bodyFontSize: 14,
+                    // mode: "dataset",
                 },
                 
                 legend: {

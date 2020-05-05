@@ -1,6 +1,7 @@
 import React, { Component, useState, useEffect } from 'react';
 import { Map, TileLayer, Marker, Popup } from "react-leaflet"
 import hospitalsAPI from '../Services/hospitalsAPI';
+import New from './New';
 
 export default function Maps() {
 
@@ -14,7 +15,7 @@ export default function Maps() {
         shadowSize: [41, 41]
       });
     useEffect(()=>{
-        hospitalsAPI.findAll()
+        hospitalsAPI.findAllMap()
         .then(async data => await data)
         .then(data => { 
             setMark(data)
@@ -27,7 +28,7 @@ export default function Maps() {
         <Map id="mapid" center={[50.503439, 4.855911]} zoom={8}>
         <TileLayer url="https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png" />
             {mark.map((e,index) => (<div key={index}>
-                {(typeof(e.longitude) || typeof(e.latitude)) != "undefined" && (
+                {(e.longitude || e.latitude) != 0 && !isNaN(e.longitude || e.latitude) && (
                 <Marker icon={greyIcon} position={[e.longitude, e.latitude]}>
                     <Popup>
                         {e.name}

@@ -1,16 +1,25 @@
 const cache = {};
 
-function set(id, data){
-    cache[id] = {
+function set(key, data){
+    cache[key] = {
         data: data,
         cachedAt : new Date().getTime()
     }
 }
 
-function get(id){
-    return cache[id]?cache[id].data:null;
+function get(key){
+    return new Promise(resolve => {
+        resolve(
+            cache[key] && cache[key].cachedAt + 10 * 60 *100 > new Date().getTime() 
+            ? cache[key].data
+            : null
+        );
+    });   
+}
+function invalidate(key){
+    delete cache[key];
 }
 
 export default {
-    set,get
+    set,get, invalidate
 }

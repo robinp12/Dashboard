@@ -36,11 +36,11 @@ class ChartUSNumber extends Component {
                     backgroundColor: '#FFF',
                     borderWidth: 0.1,
                     borderColor: '#000',
-                    titleFontSize: 13,
-                    titleFontColor: '#0066ff',
+                    titleFontSize: 14,
+                    titleFontColor: '#777',
                     bodyFontColor: '#555',
-                    bodyFontSize: 12,
-                    displayColors: false
+                    bodyFontSize: 13,
+                    mode: "index",
                 },
                 legend: {
                     display: false,

@@ -7,8 +7,6 @@ const Footer = props => {
             <div className="row justify-content-center">
             <small className="text-muted">Front-End & Back-End by Robin Paquet</small>
             </div>
-            <br/>
-            <br/>
             </>
      );
 }

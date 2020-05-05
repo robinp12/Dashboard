@@ -55,7 +55,7 @@ class Hospital
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\User", inversedBy="hospitals")
-     * @Groups({"users_read","hospital_read"})
+     * @Groups({"hospital_read"})
      */
     private $user;
 
