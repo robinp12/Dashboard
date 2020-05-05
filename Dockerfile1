@@ -1,0 +1,17 @@
+fROM ubuntu:latest
+MAINTAINER robin
+COPY ./app
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y \
+    mysql-server \
+    php \
+    nodejs \
+    npm
+ make /app
+
+RUN composer install
+EXPOSE 8000
+
+CMD
+

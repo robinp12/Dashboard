@@ -56,7 +56,7 @@ const MapList = () => {
             <div>
                 {province.map((ville,index) => 
                 <div key={index} className="form-check form-check-inline">
-                    <input type="checkbox" onClick={(e) => New.test()} className="form-check-input" id={ville} defaultChecked/>
+                    <input type="checkbox" onClick={(e) => handleClick(e)} className="form-check-input" id={ville} defaultChecked/>
                     <label className="form-check-label" htmlFor={"Check"+ index} value={ville}>
                         {ville}
                     </label>
