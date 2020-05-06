@@ -17,6 +17,7 @@ function authenticate(login) {
     .then((response) => response.data.token)
     .then((token) => {
       //Token Login
+      console.log(token)
       window.localStorage.setItem("authToken", token);
       setToken(token);
     });
