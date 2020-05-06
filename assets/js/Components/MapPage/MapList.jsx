@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { toast } from 'react-toastify';
 import hospitalsAPI from '../Services/hospitalsAPI';
-import New from './New';
 
 const tab = [];
 const MapList = () => {
     const [show, setshow] = useState()
     const [hopitals, setHopitals] = useState([]);
     const [province, setprovince] = useState([]);
-    
+
     const handleClick = (e) => {
         const {id, checked} = e.target;
         if(checked == false){
@@ -55,7 +54,7 @@ const MapList = () => {
             <>
             <div>
                 {province.map((ville,index) => 
-                <div key={index} className="form-check form-check-inline">
+                    <div key={index} className="form-check form-check-inline">
                     <input type="checkbox" onClick={(e) => handleClick(e)} className="form-check-input" id={ville} defaultChecked/>
                     <label className="form-check-label" htmlFor={"Check"+ index} value={ville}>
                         {ville}

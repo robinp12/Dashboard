@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, forwardRef } from "react";
 import ChartCaseTotal from "../Charts/ChartCaseTotal";
 import USNumber from "../Charts/USNumber";
 import ChartBedNumber from "../Charts/ChartBedNumber";
@@ -13,19 +13,18 @@ import PageLoader from "../PageLoader";
 const HomePage = () => {
     const [datas, setDatas] = useState([]);
     const [show, setShow] = useState(false);
-    
     const date = Datepicker.getDate();
-    externAPI(3874).then(e=> { 
+    externAPI(3874).then( e=> { 
         setDatas(e)
-        console.log(datas)
         setShow(true)
     })
-    
+    let o = [...datas]
+    // o.map(e=> console.log(e.name_reference))
     return(
         <>
             {!show&& (<div className="text-center"><PageLoader/></div> ) || (  
             <>
-                <Header title={"Monitoring COVID19"}/>
+                <Header title={"Monitoring COVID19"} />
                 <div className="row">
                     <ChartCaseTotal datas={datas} />
                     <USNumber/>

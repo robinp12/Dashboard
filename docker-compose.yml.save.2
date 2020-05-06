@@ -1,0 +1,15 @@
+:q
+version: '3'
+services:
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+    ports:
+      - 3000:3005
+    environment: 
+      PORT: 3005
+      REACT_APP_INTERNEO_API: http://localhost:8080

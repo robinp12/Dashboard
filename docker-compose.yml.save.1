@@ -1,0 +1,58 @@
+version: '3'
+services:
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+    ports:
+      - 3000:3005
+    environment: 
+      PORT: 3005
+      REACT_APP_INTERNEO_API: http://localhost:8080
+pgsql:
+    image: postgres:11.4
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+      POSTGRES_PASSWORD: opale
+      PGDATA: /var/lib/postgresql/data
+    ports:
+      - 15432:5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  pgadmin:
+    container_name: pgadmin_container
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+    volumes:
+      - ./var/pgadmin:/root/.pgadmin
+    ports:
+      - "${PGADMIN_PORT:-5050}:80"
+    depends_on:
+      - pgsql
+    restart: unless-stopped
+
+  php:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - pgsql
+    volumes:
+      - .:/app
+
+  nginx:
+    image: nginx:1.17
+    ports:
+      - 8080:80
+    depends_on:
+      - php
+    volumes:
+      - .docker/nginx.conf:/etc/nginx/conf.d/default.conf
+

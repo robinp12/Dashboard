@@ -10,26 +10,19 @@ class ChartCaseNumber extends Component {
     chartRef = React.createRef();
     
     componentDidMount() {
-        const name = [];
-        const val = [2,4];
-        const id = [];
-        const datee = [];
         const {datas} = this.props;
-           const [f,s,t] = datas;
-           if(f){
-               const {name_reference, value, id_service, date} = f;
-               console.log(name_reference, value, id_service, date)
-               name.push(value + " " + name_reference);
-               val.push(value);
-               id.push(id_service);
-               datee.push(date);
-           }
-        //    console.log(this.props)
+        const name = datas[0]?.name_reference??"Pas défini";
+        const label = (datas[0]?.value??0) + ' ' + name;
+        const val = [+datas[0]?.value??0,347,302];
+        const id = datas[0]?.id_service??0;
+        const date = datas[0]?.date?? new Date();
+        console.log(label, val, id, date)
+
         const myChartRef = this.chartRef.current.getContext("2d");
         new Chart(myChartRef, {
             type: 'pie',
             data: {
-                labels: [name, '347 Cas entrant', '302 Soins intensifs'],
+                labels: [label, '347 Cas entrant', '302 Soins intensifs'],
                 datasets: [{
                     label: '#',
                     data: val,

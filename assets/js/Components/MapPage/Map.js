@@ -1,7 +1,6 @@
 import React, { Component, useState, useEffect } from 'react';
 import { Map, TileLayer, Marker, Popup } from "react-leaflet"
 import hospitalsAPI from '../Services/hospitalsAPI';
-import New from './New';
 
 export default function Maps() {
 
