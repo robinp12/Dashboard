@@ -76,6 +76,7 @@ const AddUser = (props) => {
                   type="email"
                   placeholder="Email"
                   error={errors.email}
+                  size="col-3"
                 />
                 <FieldInscription
                   name="password"

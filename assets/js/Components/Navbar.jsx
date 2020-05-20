@@ -75,7 +75,7 @@ const Navbar = ({ isAuth, onLogout, history }) => {
               </>
             )) || (
               <>
-                <li className="nav-link text-secondary">{authAPI.isAdmin()?authAPI.getCurrent().roles:""}</li>
+                <li className="nav-link text-light">{authAPI.isAdmin()?authAPI.getCurrent().roles:""}</li>
                 <li className="nav-item ml-2 mr-2">
                   <button
                     className="btn btn-outline-secondary text-light active"

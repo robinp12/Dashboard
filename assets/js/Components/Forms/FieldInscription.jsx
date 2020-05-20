@@ -7,8 +7,9 @@ const FieldInscription = ({
   placeholder,
   type = "text",
   error = "",
+  size = "col-2"
 }) => (
-  <div className="col-2">
+  <div className={size}>
     <input
       className={"form-control" + (error && " is-invalid")}
       value={value}

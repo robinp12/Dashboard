@@ -20,7 +20,7 @@ const SelectProvince = ({name, value, onChange, defaut,error}) => {
                 onChange={onChange} 
                 value={value}
                 >
-                    <option hidden value>{defaut}</option>
+                    <option hidden value="">{defaut}</option>
                     {provinces.map((prov,index) => <option value={prov.id} key={index}>{prov.name}</option>)}
                 </select>
                 { error && <p className="invalid-feedback">{error}</p>}

@@ -11,7 +11,7 @@ import { USERS_API } from "../../config";
 import nominatim from "nominatim-geocoder";
 import DeletePopup from "../DeletePopup";
 
-const AddHospital = (props) => {
+const AddHospital = () => {
   const [address, setAddress] = useState("");
   const [listHop, setListHop] = useState([]);
   const [disableSubmit, setDisableSubmit] = useState(true);
@@ -77,8 +77,6 @@ const AddHospital = (props) => {
     secure: true, // enables ssl
     host: "nominatim.openstreetmap.org",
   });
-  console.log(1);
-
   geocoder
     .search({ q: address })
     .then((response) => {
@@ -89,68 +87,67 @@ const AddHospital = (props) => {
     });
   // console.log(listHop);
   return (
-    <>
-      <div className="row justify-content-center">
-        <div className="col-xs-12 col-sm-12 col-md-10 col-lg-8">
-          <form onSubmit={handleSubmit}>
-            <h5>Ajouter un hôpital</h5>
-            <div className="form-group mt-3 mb-2">
-              <div className="form-row">
-                <FieldInscription
-                  name="name"
-                  value={hospitals.name}
-                  onChange={handleChange}
-                  placeholder="Nom hôpital"
-                  error={errors.name}
-                />
-                <div className="col">
-                  <div className="btn-group col-12" role="group">
-                    <input
-                      placeholder="Adresse"
-                      ref={refInput}
-                      className={"form-control"}
-                    />
-                    <button
-                      onClick={handleChangeAddress}
-                      type="button"
-                      className="btn btn-outline-dark"
+    <div className="row justify-content-center">
+      <div className="col-xs-12 col-sm-12 col-md-10 col-lg-8">
+        <form onSubmit={handleSubmit}>
+          <h5>Ajouter un hôpital</h5>
+          <div className="form-group mt-3 mb-2">
+            <div className="form-row">
+              <FieldInscription
+                name="name"
+                value={hospitals.name}
+                onChange={handleChange}
+                placeholder="Nom hôpital"
+                error={errors.name}
+              />
+              <div className="col">
+                <div className="btn-group col-12" role="group">
+                  <input
+                    placeholder="Adresse"
+                    ref={refInput}
+                    className={"form-control"}
+                  />
+                  <button
+                    onClick={handleChangeAddress}
+                    type="button"
+                    className="btn btn-outline-dark"
+                  >
+                    Verifier
+                  </button>
+                </div>
+              </div>
+              {listHop.length > 0 && (
+                <div className="col mr-2">
+                  <div className="btn-group" role="group">
+                    <select
+                      className="select-address custom-select"
+                      ref={refSelect}
                     >
-                      Verifier
+                      {listHop.map((e) => (
+                        <option key={e.osm_id} value={e.lon + " " + e.lat}>
+                          {e.display_name}
+                        </option>
+                      ))}
+                    </select>
+                    <button
+                      onClick={handleSelect}
+                      type="button"
+                      className="btn btn-outline-success"
+                    >
+                      Choisir
                     </button>
                   </div>
                 </div>
-                {listHop.length > 0 && (
-                    <div className="col mr-2">
-                      <div className="btn-group" role="group">
-                        <select
-                          className="select-address custom-select"
-                          ref={refSelect}
-                        >
-                          {listHop.map((e) => (
-                            <option key={e.osm_id} value={e.lon + " " + e.lat}>
-                              {e.display_name}
-                            </option>
-                          ))}
-                        </select>
-                        <button
-                          onClick={handleSelect}
-                          type="button"
-                          className="btn btn-outline-success"
-                        >
-                          Choisir
-                        </button>
-                      </div>
-                    </div>
-                )}
-                <SelectProvinces
-                  name="province"
-                  onChange={handleChange}
-                  value={hospitals.province}
-                  error={errors.province}
-                  defaut={"Province"}
-                />
-                {authAPI.isAdmin() && (
-                  <div className="ml-3">
+              )}
+              <SelectProvinces
+                name="province"
+                onChange={handleChange}
+                value={hospitals.province}
+                error={errors.province}
+                defaut={"Province"}
+              />
+              {authAPI.isAdmin() && (
+                <div className="ml-3">
                   <SelectUsers
                     name="user"
                     value={hospitals.user[0]}
@@ -159,26 +156,60 @@ const AddHospital = (props) => {
                     error={errors.user}
                     defaut={"Utilisateur"}
                   />
-                  </div>
-                )}
-                  <button
-                    className="btn-secondary btn ml-2"
-                    type="submit"
-                    disabled={disableSubmit}
-                  >
-                    Ajouter
-                  </button>
+                </div>
+              )}
+              <div>
+              <button
+                className="btn-secondary btn ml-2"
+                type="submit"
+                disabled={disableSubmit}
+              >
+                Ajouter
+              </button>
               </div>
             </div>
-          </form>
-        </div>
+          </div>
+        </form>
       </div>
-    </>
+    </div>
+  );
+};
+
+const AddProvince = (props) => {
+  return (
+    <div className="row justify-content-center">
+      <div className="col-xs-9 col-sm-9 col-md-7 col-lg-5">
+        <form>
+          <h5>Ajouter une province</h5>
+          <div className="form-group mt-3 mb-2">
+          <div className="form-row justify-content-center">
+
+          <FieldInscription
+                name="name"
+                // value={""}
+                // onChange={""}
+                placeholder="Province"
+                error={""}
+                size="col-5"
+              />
+              <button
+                className="btn-secondary btn ml-2"
+                type="submit"
+                disabled={false}
+              >
+                Ajouter
+              </button>
+              </div>
+          </div>
+        </form>
+      </div>
+    </div>
   );
 };
 
 const HospitalsPage = (props) => {
-  const [show, setShow] = useState(false);
+  const [showHospital, setShowHospital] = useState(false);
+  const [showProvince, setShowProvince] = useState(false);
   const [hospitals, setHospitals] = useState([]);
 
   const fetchHospitals = async () => {
@@ -245,20 +276,41 @@ const HospitalsPage = (props) => {
           authAPI.isAdmin() ? "Gestion des hôpitaux" : "Gestion de mes hôpitaux"
         }
         right={
-          <button
-            className="btn-outline-secondary btn"
-            onClick={() => setShow(!show)}
-          >
-            {(!show && "Ajouter") || "Fermer"}
-          </button>
+          <>
+            <button
+              className="btn-outline-secondary btn mr-1"
+              onClick={() => {
+                setShowProvince(!showProvince);
+                setShowHospital(false);
+              }}
+            >
+              {(!showProvince && "Ajouter province") || "Fermer"}
+            </button>
+            <button
+              className="btn-outline-secondary btn ml-1"
+              onClick={() => {
+                setShowHospital(!showHospital);
+                setShowProvince(false);
+              }}
+            >
+              {(!showHospital && "Ajouter hôpital") || "Fermer"}
+            </button>
+          </>
         }
       />
-      {show && (
+      {(showHospital && (
         <>
           <AddHospital />
           <br />
         </>
-      )}
+      )) ||
+        (showProvince && (
+          <>
+            <AddProvince />
+            <br />
+          </>
+        ))}
+
       <div className="row justify-content-center">
         <div className="clienttable col-xs-12 col-sm-12 col-md-10 col-lg-8">
           <table className="table table-hover">
