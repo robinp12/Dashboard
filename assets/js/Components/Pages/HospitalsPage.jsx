@@ -72,6 +72,13 @@ const AddHospital = (props) => {
       // console.log(error.response.data);
     }
   };
+  const geocoder = new nominatim({
+    delay: 1000, // delay between requests
+    secure: false, // enables ssl
+    host:'nominatim.openstreetmap.org',
+    customUrl: 'https://dashboard-opal.herokuapp.com/'
+  })
+
   const nom = new nominatim();
   nom
     .search({ q: address })
