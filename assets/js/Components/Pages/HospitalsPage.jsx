@@ -75,7 +75,7 @@ const AddHospital = (props) => {
   const geocoder = new nominatim({
     delay: 1000, // delay between requests
     secure: false, // enables ssl
-    host:'nominatim.openstreetmap.org',
+    host:'https://nominatim.openstreetmap.org',
     customUrl: 'https://dashboard-opal.herokuapp.com/'
   })
 
