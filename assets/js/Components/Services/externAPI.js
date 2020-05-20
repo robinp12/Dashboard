@@ -34,13 +34,13 @@ function RequestAPI(ref) {
     var body = {};
     const cachedDatas = await Cache.get("datas");
     if (cachedDatas) {
-      console.log("dans cache");
+      console.log(cachedDatas,"dans cache");
       return cachedDatas;
     } else {
       var datas = await apigClient
         .invokeApi(pathParams, pathTemplate, method, additionalParams, body)
         .then((e) => {
-          console.log("hors cache");
+          console.log(e)
           Cache.set("datas", e.data.datapoints);
           return e.data.datapoints;
         })
@@ -50,6 +50,7 @@ function RequestAPI(ref) {
           });
           // console.log(err)
         });
+        console.log(datas,"hors cache")
       return datas;
     }
   };

@@ -9,13 +9,17 @@ import Header from "../Header";
 import Datepicker from "../DashboardPage/Datepicker";
 import externAPI from "../Services/externAPI";
 import PageLoader from "../PageLoader";
+import SelectUsers from "../Forms/SelectUsers";
+import authAPI from "../Services/authAPI";
+import cache from "../Services/cache";
 
 const HomePage = () => {
     const [datas, setDatas] = useState([]);
     const [show, setShow] = useState(false);
+    const ref = useRef();
     const date = Datepicker.getDate();
     externAPI(3874).then( e=> { 
-        setDatas(e)
+        // setDatas(e)
         setShow(true)
     })
     let o = [...datas]
@@ -24,7 +28,7 @@ const HomePage = () => {
         <>
             {!show&& (<div className="text-center"><PageLoader/></div> ) || (  
             <>
-                <Header title={"Monitoring COVID19"} />
+                <Header title={"Monitoring COVID19"} center={cache.lastUpdate("datas")} right={authAPI.isAdmin()?<SelectUsers onChange={(e) => {console.log(e.currentTarget.value)}} defaut={authAPI.getCurrent().firstName + " " + authAPI.getCurrent().lastName}/>:<></>}/>
                 <div className="row">
                     <ChartCaseTotal datas={datas} />
                     <USNumber/>

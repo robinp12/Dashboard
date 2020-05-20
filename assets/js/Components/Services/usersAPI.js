@@ -1,67 +1,62 @@
-import Axios from 'axios';
-import {USERS_API} from '../../config'
-import Cache from './cache';
+import Axios from "axios";
+import { USERS_API } from "../../config";
+import Cache from "./cache";
 
-function register(user){
-    return Axios
-    .post(USERS_API, user)
-    .then(async response => {
-        const cachedUsers = await Cache.get("users");
-        if(cachedUsers) {
-            Cache.set("users", [...cachedUsers, response.data]);
-        }
-        return response;
+function register(user) {
+  return Axios.post(USERS_API, user).then(async (response) => {
+    const cachedUsers = await Cache.get("users");
+    if (cachedUsers) {
+      Cache.set("users", [...cachedUsers, response.data]);
+    }
+    return response;
+  });
+}
+function update(id, value, users) {
+  return Axios.put(USERS_API + "/" + id, { ...users, roles: [value] }).then(
+    async (response) => {
+      const cachedUsers = await Cache.get("users");
+
+      if (cachedUsers) {
+        const index = cachedUsers.findIndex((e) => e.id === +id);
+        const newcachedUser = response.data;
+        cachedUsers[index] = newcachedUser;
+
+        Cache.set("users", cachedUsers);
+      }
+      return response;
+    }
+  );
+}
+async function getAllUsers() {
+  const cachedUsers = await Cache.get("users");
+
+  if (cachedUsers) {
+    return cachedUsers;
+  } else {
+    return Axios.get(USERS_API).then((response) => {
+      const users = response.data["hydra:member"];
+      Cache.set("users", users);
+      return users;
     });
+  }
 }
-function update(id, value, users){
-
-    return Axios
-    .put(USERS_API + "/" + id, {...users, roles : [value]})
-    .then(async response => {
-        const cachedUsers = await Cache.get("users");
-
-        if(cachedUsers) {
-            const index = cachedUsers.findIndex(e => e.id === +id);
-            const newcachedUser = response.data;
-            cachedUsers[index] = newcachedUser;
-
-            Cache.set("users", cachedUsers);
-        }
-        return response;
-    })
-
-}
-async function getAllUsers(){
+function deleteUsers(id) {
+  return Axios.delete(USERS_API + "/" + id).then(async (response) => {
     const cachedUsers = await Cache.get("users");
 
-    if(cachedUsers) {
-        return cachedUsers
+    if (cachedUsers) {
+      Cache.set(
+        "users",
+        cachedUsers.filter((e) => e.id !== id)
+      );
     }
-    else{
-        return Axios.get(USERS_API)
-        .then(response => {
-            const users = response.data["hydra:member"];
-            Cache.set("users", users)
-            return users;
-        });
-    }
-}
-function deleteUsers(id){
-    return Axios
-    .delete(USERS_API + "/" + id)
-    .then(async response => {
-        const cachedUsers = await Cache.get("users");
-
-        if(cachedUsers) {
-            Cache.set("users", cachedUsers.filter(e => e.id !== id));
-        }
-        return response;
-    })
+    return response;
+  });
 }
 
 export default {
-    register,
-    update,
-    getAllUsers,
-    deleteUsers
+  register,
+  update,
+  getAllUsers,
+  deleteUsers,
 };

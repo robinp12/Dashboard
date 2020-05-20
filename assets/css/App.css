@@ -1,5 +1,8 @@
-body{
+body {
   background-color: #e9ecef;
+}
+.jumbotron {
+  padding: 40px;
 }
 ::-webkit-scrollbar {
   width: 5px;
@@ -13,106 +16,92 @@ body{
   background: #a8adb3;
 }
 
-.row div{
+.row div {
   border-radius: 3px;
 }
 .card {
+  box-shadow: lightgray 1px 1px 2px 1px;
   padding: 5px;
   margin: 5px;
 }
-.col-md-3>.card{
+.col-md-3 > .card {
   height: 100%;
 }
-h1{
+h1 {
   color: dimgrey;
 }
-.jumbotron{
-  padding: 40px;
-}
-.card-body>span{
+.card-body > span {
   font-size: 150%;
 }
-.card-body>#nb{
+.card-body > #nb {
   font-weight: bold;
   font-size: 300%;
 }
-.firstrow{
+.firstrow {
   max-height: 170px;
 }
-.secondrow{
+.secondrow {
   max-height: 270px;
 }
-.clienttable{
-  margin-left: 17%;
-  margin-right: 17%;
-}
-hr.mid{
+hr.mid {
   margin-top: auto;
   margin-bottom: auto;
   border-left: 0.8px solid lightgray;
   height: 60vh;
 }
-.btn-danger{
+.btn-danger {
   height: 30px;
   width: 30px;
   padding: 0px;
   font-weight: bold;
 }
-form{
+form {
   background-color: whitesmoke;
   padding: 20px;
   margin: 10px;
   box-shadow: lightslategrey 2px 2px 5px 0.5px;
   border-radius: 4px;
 }
-.card{
-  box-shadow: lightgray 1px 1px 2px 1px;
-}
-.form-group{
+.form-group {
   margin-left: 35px;
   margin-right: 35px;
-  
 }
-.visible {
-  display: block;
-}
-.invisible {
-  display:none;
-}
-.toa{
+.toa {
   border-radius: 5px;
-  color:white;
+  color: white;
   box-shadow: lightslategrey 5px 5px 10px 0.5px;
   padding-left: 25px;
 }
-.bg-red{
+.bg-red {
   border-radius: 5px;
   box-shadow: lightslategrey 5px 5px 10px 0.5px;
   padding-left: 25px;
   background-color: rgb(189, 52, 52);
-  color: white
+  color: white;
 }
-.popup{
+.popup {
   margin: 10px;
   text-align: center;
 }
-.liste{
+.liste {
   height: 35em;
   overflow-y: scroll;
   overflow: auto;
   border-radius: 5px;
 }
-#mapid { 
+#mapid {
   margin-top: 1em;
   box-shadow: lightgray 1px 1px 5px 0.5px;
   background-color: #343a40;
   width: 95%;
   height: 49em;
 }
-.clienttable{
+.clienttable {
+  margin-left: 17%;
+  margin-right: 17%;
   padding: 0;
   margin-bottom: 0.5em;
 }
-.table{
-  border-radius: 5px;
+.select-address {
+  width: 100%;
 }

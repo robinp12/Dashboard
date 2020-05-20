@@ -49,7 +49,7 @@ function isAuth() {
 }
 function isAdmin() {
   const token = window.localStorage.getItem("authToken");
-  if (jwtDecode(token).roles.includes("ADMIN")) {
+  if (jwtDecode(token).roles.includes("SUPERADMIN")||jwtDecode(token).roles.includes("ADMIN")) {
     return true;
   }
   return false;

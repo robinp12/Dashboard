@@ -7,8 +7,8 @@ import RequestTokenAPI from "../Services/RequestTokenAPI";
 
 const ConnexionPage = ({onLogin, history}) => {
         const [login, setLogin] = useState({
-            username: "robipaq@hotmail.com",
-            password: "password"
+            username: "",
+            password: ""
         });
         const [error, setError] = useState("");
 

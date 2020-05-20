@@ -16,7 +16,7 @@ class ChartCaseNumber extends Component {
         const val = [+datas[0]?.value??0,347,302];
         const id = datas[0]?.id_service??0;
         const date = datas[0]?.date?? new Date();
-        console.log(label, val, id, date)
+        // console.log(label, val, id, date)
 
         const myChartRef = this.chartRef.current.getContext("2d");
         new Chart(myChartRef, {

@@ -1,3 +1,5 @@
+import React, { useState, useEffect } from "react";
+
 const cache = {};
 
 function set(key, data){
@@ -16,10 +18,13 @@ function get(key){
         );
     });   
 }
+function lastUpdate(key){
+    return <i> {"Dernière mise à jour à " + new Date(cache[key].cachedAt).toLocaleTimeString()}</i>;
+}
 function invalidate(key){
     delete cache[key];
 }
 
 export default {
-    set,get, invalidate
+    set, get, lastUpdate, invalidate
 }

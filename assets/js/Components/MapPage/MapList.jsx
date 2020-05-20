@@ -2,22 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import { toast } from 'react-toastify';
 import hospitalsAPI from '../Services/hospitalsAPI';
 
-const tab = [];
-const MapList = () => {
-    const [show, setshow] = useState()
+const MapList = ({onChange, show}) => {
     const [hopitals, setHopitals] = useState([]);
     const [province, setprovince] = useState([]);
-
-    const handleClick = (e) => {
-        const {id, checked} = e.target;
-        if(checked == false){
-            tab.push(id)
-        }
-        if(checked == true){
-            tab.pop(id)
-        }
-        setshow(!show);
-    }
 
     hospitalsAPI.findAllMap()
         .then(data => {
@@ -42,9 +29,9 @@ const MapList = () => {
         return (
             <ul className='liste list-group text-secondary list-group-flush'>
                 {hopitals.map((hopital,index) => 
-                    (!tab.includes(hopital.province)) && (<li key={index} className="list-group-item d-flex justify-content-between align-items-center li">
+                    (!show.includes(hopital.province)) && (<li key={index} className="list-group-item d-flex justify-content-between align-items-center li">
                         {hopital.name} -- {hopital.province}
-                        <span className="badge badge-danger badge-pill">{Math.floor(Math.random() * 200)}</span>
+                        <span className="badge badge-danger badge-pill">{hopital.caseNumber??0}</span>
                     </li>)
                 )}
             </ul>
@@ -55,7 +42,7 @@ const MapList = () => {
             <div>
                 {province.map((ville,index) => 
                     <div key={index} className="form-check form-check-inline">
-                    <input type="checkbox" onClick={(e) => handleClick(e)} className="form-check-input" id={ville} defaultChecked/>
+                    <input type="checkbox" onClick={onChange} className="form-check-input" id={ville} defaultChecked={!show.includes(ville)}/>
                     <label className="form-check-label" htmlFor={"Check"+ index} value={ville}>
                         {ville}
                     </label>

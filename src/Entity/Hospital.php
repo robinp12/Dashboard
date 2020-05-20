@@ -59,6 +59,12 @@ class Hospital
      */
     private $user;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     * * @Groups({"users_read","hospital_read"})
+     */
+    private $caseNumber;
+
     public function __construct()
     {
         $this->user = new ArrayCollection();
@@ -139,6 +145,18 @@ class Hospital
         if ($this->user->contains($user)) {
             $this->user->removeElement($user);
         }
+
+        return $this;
+    }
+
+    public function getCaseNumber(): ?int
+    {
+        return $this->caseNumber;
+    }
+
+    public function setCaseNumber(?int $caseNumber): self
+    {
+        $this->caseNumber = $caseNumber;
 
         return $this;
     }

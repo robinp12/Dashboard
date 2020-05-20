@@ -11,7 +11,7 @@ const SelectUsers = ({name, value, onChange, defaut,error}) => {
             .then(e => setUsers(e))
         },[])
         return ( 
-            <div className="col">
+            <div className="mr-2">
                 <select 
                 className={"form-control " + (error && " is-invalid")}
                 id={name} 
