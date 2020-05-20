@@ -75,9 +75,9 @@ const AddHospital = (props) => {
   const geocoder = new nominatim({
     delay: 1000, // delay between requests
     secure: true, // enables ssl
-    host:'nominatim.openstreetmap.org',
-  })
-  console.log(1)
+    host: "nominatim.openstreetmap.org",
+  });
+  console.log(1);
 
   geocoder
     .search({ q: address })
@@ -103,24 +103,25 @@ const AddHospital = (props) => {
                   placeholder="Nom hôpital"
                   error={errors.name}
                 />
-                <div className="btn-group col" role="group">
-                  <input
-                    placeholder="Adresse"
-                    ref={refInput}
-                    className={"form-control"}
-                  />
-                  <button
-                    onClick={handleChangeAddress}
-                    type="button"
-                    className="btn btn-outline-dark"
-                  >
-                    Verifier
-                  </button>
+                <div className="col">
+                  <div className="btn-group col-12" role="group">
+                    <input
+                      placeholder="Adresse"
+                      ref={refInput}
+                      className={"form-control"}
+                    />
+                    <button
+                      onClick={handleChangeAddress}
+                      type="button"
+                      className="btn btn-outline-dark"
+                    >
+                      Verifier
+                    </button>
+                  </div>
                 </div>
                 {listHop.length > 0 && (
-                  <>
-                    <div className="col">
-                      <div className="btn-group " role="group">
+                    <div className="col mr-2">
+                      <div className="btn-group" role="group">
                         <select
                           className="select-address custom-select"
                           ref={refSelect}
@@ -140,7 +141,6 @@ const AddHospital = (props) => {
                         </button>
                       </div>
                     </div>
-                  </>
                 )}
                 <SelectProvinces
                   name="province"
@@ -150,6 +150,7 @@ const AddHospital = (props) => {
                   defaut={"Province"}
                 />
                 {authAPI.isAdmin() && (
+                  <div className="ml-3">
                   <SelectUsers
                     name="user"
                     value={hospitals.user[0]}
@@ -158,8 +159,8 @@ const AddHospital = (props) => {
                     error={errors.user}
                     defaut={"Utilisateur"}
                   />
+                  </div>
                 )}
-                <div className="">
                   <button
                     className="btn-secondary btn ml-2"
                     type="submit"
@@ -167,7 +168,6 @@ const AddHospital = (props) => {
                   >
                     Ajouter
                   </button>
-                </div>
               </div>
             </div>
           </form>
@@ -241,7 +241,9 @@ const HospitalsPage = (props) => {
   return (
     <>
       <Header
-        title={authAPI.isAdmin()?"Gestion des hôpitaux":"Gestion de mes hôpitaux"}
+        title={
+          authAPI.isAdmin() ? "Gestion des hôpitaux" : "Gestion de mes hôpitaux"
+        }
         right={
           <button
             className="btn-outline-secondary btn"

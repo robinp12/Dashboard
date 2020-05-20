@@ -34,6 +34,7 @@ const Test = () => {
           <h4>GERER TABLE PROVINCE</h4>
           <h4>ENVOYER MAIL LORS D'INSCRIPTION</h4>
           <h4>AJOUTER COLONNE ADRESSE & nombre d'infecté</h4>
+          <h4>AJOUTER MANUELLEMENT PROVINCE</h4>
           <h4></h4>
           <input ref={refInput} type="text"></input>
           <button onClick={handleChange}>X</button>
