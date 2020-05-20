@@ -27,7 +27,7 @@ export default function Maps({ show }) {
   }, []);
   return (
     <Map id="mapid" center={[50.503439, 4.855911]} zoom={8}>
-      <TileLayer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" />
+      <TileLayer url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" />
       {mark.map(
         (e, index) =>
           !show.includes(e.province) && (
