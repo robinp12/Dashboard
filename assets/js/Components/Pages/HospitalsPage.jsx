@@ -78,9 +78,9 @@ const AddHospital = (props) => {
     host:'nominatim.openstreetmap.org',
     customUrl: 'https://dashboard-opal.herokuapp.com/'
   })
+  console.log(geocoder)
 
-  const nom = new nominatim();
-  nom
+  geocoder
     .search({ q: address })
     .then((response) => {
       setListHop(response);
