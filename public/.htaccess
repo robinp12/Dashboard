@@ -65,6 +65,7 @@ DirectoryIndex index.php
     </IfModule>
 </IfModule>
 
-RewriteEngine On
 RewriteCond %{HTTPS} off
-RewriteRule ^(.*)$ https://%{dashboard-opal.herokuapp.com}%{REQUEST_URI} [L,R=301]
+RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+RewriteCond %{HTTP_HOST} !^www\. [NC]
+RewriteRule .* https://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
