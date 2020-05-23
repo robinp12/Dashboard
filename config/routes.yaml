@@ -4,6 +4,6 @@
 api_login_check:
     path: /api/login_check
 secure:
-    path:       /secure
+    path:       /
     controller: App\Controller\MainController::secure
     schemes:    [https]
