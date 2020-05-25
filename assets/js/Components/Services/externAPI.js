@@ -45,7 +45,7 @@ function RequestAPI(ref) {
           return e.data.datapoints;
         })
         .catch((err) => {
-          toast("Erreur de connexion à l'API ", {
+          toast("Erreur de connexion à l'API, essayer de vous reconnecter.", {
             className: "bg-red",
           });
           // console.log(err)

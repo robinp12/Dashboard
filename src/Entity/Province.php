@@ -5,6 +5,8 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ApiResource(
@@ -24,6 +26,8 @@ class Province
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Nom obligatoire")
+     * @Assert\Length(min=2, minMessage="Nom trop court", max=254, maxMessage="Nom trop long")
      * @Groups({"hospital_read","province_read"})
      */
     private $name;

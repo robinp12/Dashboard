@@ -7,6 +7,15 @@ async function findAll() {
     return provinces;
   });
 }
+function addProvince(province){
+  return Axios
+  .post(PROVINCES_API, province)
+  .then(async response => {
+    console.log(response)  
+    return response;
+  });
+}
 export default {
-    findAll
+    findAll, 
+    addProvince
 }

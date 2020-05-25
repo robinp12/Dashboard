@@ -29,7 +29,7 @@ const ConnexionPage = ({onLogin, history}) => {
                 toast("Mauvais identifiants",{
                     className: 'bg-red',
                 });
-                setError("Erreur dans les identifiants.")
+                setError("Mauvais identifiants")
 
             }
         }
@@ -45,6 +45,7 @@ const ConnexionPage = ({onLogin, history}) => {
                         value={login.username} 
                         onChange={handleChange} 
                         placeholder="Adresse email"
+                        error={error} 
                     />
                     <FieldConnexion 
                         label="Mot de passe" 
@@ -53,7 +54,6 @@ const ConnexionPage = ({onLogin, history}) => {
                         onChange={handleChange} 
                         type="password"
                         placeholder="Mot de passe"
-                        error={error} 
                     />
                     <div className="form-group">
                     <button className="btn-secondary btn">Connexion</button>

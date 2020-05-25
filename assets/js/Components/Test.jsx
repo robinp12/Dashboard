@@ -7,15 +7,7 @@ const Test = () => {
   const [listHop, setListHop] = useState([]);
   const refInput = useRef();
   const refSelect = useRef();
-  const nom = new nominatim();
-  nom
-    .search({ q: address })
-    .then((response) => {
-      setListHop(response);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+  
   const handleChange = () => {
     setAddress(refInput.current.value);
   };

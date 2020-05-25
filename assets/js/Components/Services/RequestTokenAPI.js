@@ -26,7 +26,7 @@ function requestTokenAPI() {
     },
     onFailure: (err) => {
       // console.log("Erreur lors de la récuperation du token API")
-      toast("Erreur lors de la récuperation du token API", {
+      toast("Erreur lors de la récuperation du token API, essayez de vous reconnecter.", {
         className: "bg-red",
       });
     },

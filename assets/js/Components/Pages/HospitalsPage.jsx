@@ -10,6 +10,7 @@ import cache from "../Services/cache";
 import { USERS_API } from "../../config";
 import nominatim from "nominatim-geocoder";
 import DeletePopup from "../DeletePopup";
+import provincesAPI from "../Services/provincesAPI";
 
 const AddHospital = () => {
   const [address, setAddress] = useState("");
@@ -56,7 +57,7 @@ const AddHospital = () => {
     // console.log(hospitals)
     try {
       const rep = await hospitalsAPI.addHospital(hospitals);
-      toast(hospitals.name + " a été ajouté");
+      toast("L'hôpital " + hospitals.name + " a été ajouté");
       setErrors("");
     } catch (error) {
       toast("Erreur dans le formulaire !" + "", {
@@ -159,13 +160,13 @@ const AddHospital = () => {
                 </div>
               )}
               <div>
-              <button
-                className="btn-secondary btn ml-2"
-                type="submit"
-                disabled={disableSubmit}
-              >
-                Ajouter
-              </button>
+                <button
+                  className="btn-secondary btn ml-2"
+                  type="submit"
+                  disabled={disableSubmit}
+                >
+                  Ajouter
+                </button>
               </div>
             </div>
           </div>
@@ -176,30 +177,69 @@ const AddHospital = () => {
 };
 
 const AddProvince = (props) => {
+  const [disabled, setdisabled] = useState(true);
+  const [errors, setErrors] = useState({
+    name: "",
+  });
+  const [provinces, setProvinces] = useState({
+    name: "",
+  });
+  const handleChange = ({ currentTarget }) => {
+    const { name, value } = currentTarget;
+    setProvinces({ ...provinces, [name]: value });
+    setdisabled(false);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log(provinces);
+    try {
+      const rep = await provincesAPI.addProvince(provinces);
+      toast("La province de " + provinces.name + " a été ajouté");
+      setErrors("");
+    } catch (error) {
+      console.log(error);
+      toast("Erreur dans le formulaire !" + "", {
+        className: "bg-red",
+      });
+      if (error.response.data.violations) {
+        const apiErrors = {};
+        error.response.data.violations.forEach((violation) => {
+          apiErrors[violation.propertyPath] = violation.message;
+        });
+        setErrors(apiErrors);
+      }
+      console.log(error.response.data);
+    }
+  };
+
   return (
     <div className="row justify-content-center">
       <div className="col-xs-9 col-sm-9 col-md-7 col-lg-5">
-        <form>
+        <form onSubmit={handleSubmit}>
           <h5>Ajouter une province</h5>
-          <div className="form-group mt-3 mb-2">
-          <div className="form-row justify-content-center">
-
-          <FieldInscription
-                name="name"
-                // value={""}
-                // onChange={""}
-                placeholder="Province"
-                error={""}
-                size="col-5"
-              />
-              <button
-                className="btn-secondary btn ml-2"
-                type="submit"
-                disabled={false}
-              >
-                Ajouter
-              </button>
+          <div className="form-group">
+            <div className="form-row justify-content-center">
+              <div className="col-5">
+                <FieldInscription
+                  name="name"
+                  value={provinces.name}
+                  onChange={handleChange}
+                  placeholder="Province"
+                  error={errors.name}
+                  size="col-12"
+                />
               </div>
+              <div className="col-2">
+                <button
+                  className="btn-secondary btn"
+                  type="submit"
+                  disabled={disabled}
+                >
+                  Ajouter
+                </button>
+              </div>
+            </div>
           </div>
         </form>
       </div>
@@ -277,7 +317,7 @@ const HospitalsPage = (props) => {
         }
         right={
           <>
-            <button
+            {authAPI.isAdmin() && <button
               className="btn-outline-secondary btn mr-1"
               onClick={() => {
                 setShowProvince(!showProvince);
@@ -285,7 +325,7 @@ const HospitalsPage = (props) => {
               }}
             >
               {(!showProvince && "Ajouter province") || "Fermer"}
-            </button>
+            </button>}
             <button
               className="btn-outline-secondary btn ml-1"
               onClick={() => {
@@ -329,7 +369,10 @@ const HospitalsPage = (props) => {
                 <th scope="col" className="text-center">
                   Latitude
                 </th>
-                {authAPI.isAdmin() && <th scope="col">Utilisateur</th>}
+                <th scope="col" className="text-center">
+                  Nombre de cas
+                </th>
+                {authAPI.isAdmin() && <th scope="col" className="text-center">Utilisateur</th>}
                 <th scope="col" className="text-center">
                   \
                 </th>
@@ -347,13 +390,14 @@ const HospitalsPage = (props) => {
                       <td>{hospitals.province}</td>
                       <td className="text-center">{hospitals.longitude}</td>
                       <td className="text-center">{hospitals.latitude}</td>
+                      <td className="text-center">{hospitals.caseNumber??"/"}</td>
                       {(typeof hospitals.user[0] != "undefined" && (
-                        <td>
+                        <td className="text-center">
                           {hospitals.user[0].lastName +
                             " " +
                             hospitals.user[0].firstName}
                         </td>
-                      )) || <td></td>}
+                      )) || <td className="text-center">/</td>}
                       <td className="text-center">
                         <DeletePopup
                           deletepop={() => handleDelete(hospitals.id)}
@@ -370,7 +414,10 @@ const HospitalsPage = (props) => {
                       <td>{hospitals.province}</td>
                       <td className="text-center">{hospitals.longitude}</td>
                       <td className="text-center">{hospitals.latitude}</td>
-                      <td className="text-center">De</td>
+                      <td className="text-center">{hospitals.caseNumber??"/"}</td>
+                      <td className="text-center"><DeletePopup
+                          deletepop={() => handleDelete(hospitals.id)}
+                        /></td>
                     </tr>
                   ))}
                 </>
