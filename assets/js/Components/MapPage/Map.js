@@ -30,7 +30,7 @@ export default function Maps({ show }) {
       <TileLayer url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" />
       {mark.map(
         (e, index) =>
-          !show.includes(e.province) && (
+          !show.includes(e.province.name) && (
             <div key={index}>
               {(e.longitude || e.latitude) != 0 &&
                 !isNaN(e.longitude || e.latitude) && (

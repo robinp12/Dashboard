@@ -22,7 +22,7 @@ const AddHospital = () => {
   const [hospitals, setHospitals] = useState({
     user: authAPI.isAdmin() ? [] : [USERS_API + "/" + authAPI.getCurrent().id],
     name: "",
-    province: "",
+    province: undefined,
     longitude: undefined,
     latitude: undefined,
   });
@@ -54,7 +54,7 @@ const AddHospital = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // console.log(hospitals)
+    console.log(hospitals)
     try {
       const rep = await hospitalsAPI.addHospital(hospitals);
       toast("L'hôpital " + hospitals.name + " a été ajouté");
@@ -384,10 +384,11 @@ const HospitalsPage = (props) => {
                   {hospitals.map((hospitals, index) => (
                     <tr key={hospitals.id}>
                       <th scope="row" className="text-center">
+                    {console.log(hospitals)}
                         {hospitals.id}
                       </th>
                       <th>{hospitals.name}</th>
-                      <td>{hospitals.province}</td>
+                      <td>{hospitals.province.name}</td>
                       <td className="text-center">{hospitals.longitude}</td>
                       <td className="text-center">{hospitals.latitude}</td>
                       <td className="text-center">{hospitals.caseNumber??"/"}</td>
@@ -408,10 +409,12 @@ const HospitalsPage = (props) => {
                 </>
               )) || (
                 <>
+                {console.log(hospitals)}
                   {hospitals.map((hospitals) => (
                     <tr key={hospitals.id}>
                       <th scope="row">{hospitals.name}</th>
-                      <td>{hospitals.province}</td>
+                      <td>{hospitals.province.name}</td>
+                      {console.log(hospitals.province)}
                       <td className="text-center">{hospitals.longitude}</td>
                       <td className="text-center">{hospitals.latitude}</td>
                       <td className="text-center">{hospitals.caseNumber??"/"}</td>

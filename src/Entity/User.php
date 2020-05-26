@@ -71,11 +71,12 @@ class User implements UserInterface
      */
     private $hospitals;
 
+   
+
     public function __construct()
     {
         $this->hospitals = new ArrayCollection();
     }
-
 
     public function getId(): ?int
     {
@@ -207,5 +208,4 @@ class User implements UserInterface
 
         return $this;
     }
-
 }

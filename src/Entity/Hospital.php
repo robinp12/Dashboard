@@ -9,7 +9,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
-
 /**
  * @ApiResource(
  *  normalizationContext={"groups"={"hospital_read"}}
@@ -35,7 +34,8 @@ class Hospital
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Province", inversedBy="hospitals")
+     * @ORM\JoinColumn(nullable=false)
      * @Assert\NotBlank(message="Province obligatoire")
      * @Groups({"users_read","hospital_read"})
      */
@@ -59,12 +59,6 @@ class Hospital
      */
     private $user;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     * * @Groups({"users_read","hospital_read"})
-     */
-    private $caseNumber;
-
     public function __construct()
     {
         $this->user = new ArrayCollection();
@@ -87,12 +81,12 @@ class Hospital
         return $this;
     }
 
-    public function getProvince(): ?string
+    public function getProvince(): ?Province
     {
         return $this->province;
     }
 
-    public function setProvince(string $province): self
+    public function setProvince(?Province $province): self
     {
         $this->province = $province;
 
@@ -124,14 +118,14 @@ class Hospital
     }
 
     /**
-     * @return Collection|user[]
+     * @return Collection|User[]
      */
     public function getUser(): Collection
     {
         return $this->user;
     }
 
-    public function addUser(user $user): self
+    public function addUser(User $user): self
     {
         if (!$this->user->contains($user)) {
             $this->user[] = $user;
@@ -140,23 +134,11 @@ class Hospital
         return $this;
     }
 
-    public function removeUser(user $user): self
+    public function removeUser(User $user): self
     {
         if ($this->user->contains($user)) {
             $this->user->removeElement($user);
         }
-
-        return $this;
-    }
-
-    public function getCaseNumber(): ?int
-    {
-        return $this->caseNumber;
-    }
-
-    public function setCaseNumber(?int $caseNumber): self
-    {
-        $this->caseNumber = $caseNumber;
 
         return $this;
     }

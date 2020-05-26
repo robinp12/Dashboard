@@ -8,6 +8,7 @@ const MapList = ({onChange, show}) => {
 
     hospitalsAPI.findAllMap()
         .then(data => {
+            console.log(data)
             setHopitals(data);
         })
         .catch(error => {
@@ -20,19 +21,23 @@ const MapList = ({onChange, show}) => {
     useEffect(()=>{
         const prov = [];
         for(let o of hopitals){
-            prov.push(o.province)
+            prov.push(o.province.name)
         }
         setprovince([...new Set(prov)])
     },[hopitals]);
+    console.log((hopitals))
 
     const list = (hopitals) => {
         return (
             <ul className='liste list-group text-secondary list-group-flush'>
                 {hopitals.map((hopital,index) => 
-                    (!show.includes(hopital.province)) && (<li key={index} className="list-group-item d-flex justify-content-between align-items-center li">
-                        {hopital.name} -- {hopital.province}
+                     (!show.includes(hopital.province.name)) && 
+                    (<li key={index} className="list-group-item d-flex justify-content-between align-items-center li">
+                        {hopital.name} -- 
+                        {hopital.province.name}
                         <span className="badge badge-danger badge-pill">{hopital.caseNumber??0}</span>
-                    </li>)
+                    </li>
+                    )
                 )}
             </ul>
         )

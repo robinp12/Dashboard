@@ -43,6 +43,7 @@ async function find(id) {
         .then(response => {
             const hospitals = response.data.hospitals;
             Cache.set("hospitals", hospitals)
+            console.log(response.data)
             return hospitals;
         });
     }

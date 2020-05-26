@@ -57,41 +57,41 @@ class AppFixtures extends Fixture
 
         }
 
-        $province = new Province();
-        $province->setName("Namur");
-        $manager->persist($province);
+        // $province = new Province();
+        // $province->setName("Namur");
+        // $manager->persist($province);
         
-        $province = new Province();
-        $province->setName("Liège");
-        $manager->persist($province);
+        // $province = new Province();
+        // $province->setName("Liège");
+        // $manager->persist($province);
         
-        $province = new Province();
-        $province->setName("Bruxelles");
-        $manager->persist($province);
+        // $province = new Province();
+        // $province->setName("Bruxelles");
+        // $manager->persist($province);
         
-        $province = new Province();
-        $province->setName("Luxembourg");
-        $manager->persist($province);
+        // $province = new Province();
+        // $province->setName("Luxembourg");
+        // $manager->persist($province);
         
-        $province = new Province();
-        $province->setName("Hainaut");
-        $manager->persist($province);
+        // $province = new Province();
+        // $province->setName("Hainaut");
+        // $manager->persist($province);
         
-        $province = new Province();
-        $province->setName("Anvers");
-        $manager->persist($province);
+        // $province = new Province();
+        // $province->setName("Anvers");
+        // $manager->persist($province);
         
-        $province = new Province();
-        $province->setName("Limbourg");
-        $manager->persist($province);
+        // $province = new Province();
+        // $province->setName("Limbourg");
+        // $manager->persist($province);
         
-        $province = new Province();
-        $province->setName("Flandre orientale");
-        $manager->persist($province);
+        // $province = new Province();
+        // $province->setName("Flandre orientale");
+        // $manager->persist($province);
         
-        $province = new Province();
-        $province->setName("Flandre occidentale");
-        $manager->persist($province);
+        // $province = new Province();
+        // $province->setName("Flandre occidentale");
+        // $manager->persist($province);
 
 
 

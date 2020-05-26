@@ -50,7 +50,7 @@ function RequestAPI(ref) {
           });
           // console.log(err)
         });
-        console.log(datas,"hors cache")
+        console.log(datas,"hors cache", new Date().toLocaleTimeString())
       return datas;
     }
   };

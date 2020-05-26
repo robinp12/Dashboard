@@ -8,9 +8,11 @@ const SelectProvince = ({name, value, onChange, defaut,error}) => {
 
         useEffect(()=>{
             provincesAPI.findAll()
-            .then(e => setProvinces(e))
+            .then(e => {
+                console.log(e)
+                setProvinces(e)})
         }, [])
-        console.log(provinces)
+        console.log(provinces["@id"])
         return ( 
             <div className="col-2">
                 <select 
@@ -20,8 +22,8 @@ const SelectProvince = ({name, value, onChange, defaut,error}) => {
                 onChange={onChange} 
                 value={value}
                 >
-                    <option hidden value="">{defaut}</option>
-                    {provinces.map((prov,index) => <option value={prov.id} key={index}>{prov.name}</option>)}
+                    <option hidden value={defaut}>{defaut}</option>
+                    {provinces.map((prov,index) => <option value={prov["@id"]} key={index}>{prov.name}</option>)}
                 </select>
                 { error && <p className="invalid-feedback">{error}</p>}
             </div>
