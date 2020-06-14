@@ -1,5 +1,4 @@
-import React, { Component, useState } from "react";
-import "react-datepicker/dist/react-datepicker.css";
+import React from "react";
 
 const Header = ({ title, center, right }) => {
   return (
@@ -9,7 +8,7 @@ const Header = ({ title, center, right }) => {
         <small className="ml-3 text-muted">{center}</small>
         <span className="float-right mr-4">{right}</span>
       </div>
-      <hr />
+      <hr/>
     </>
   );
 };

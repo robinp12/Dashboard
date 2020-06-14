@@ -6,14 +6,14 @@ import 'react-toastify/dist/ReactToastify.css';
 import '../css/App.css';
 import Navbar from '../js/Components/Navbar';
 import ConnexionPage from "../js/Components/Pages/ConnexionPage";
-import HomePage from "../js/Components/Pages/HomePage";
 import Footer from './Components/Footer';
-import HospitalsPage from './Components/Pages/HospitalsPage';
-import MapPage from './Components/Pages/MapPage';
-import UsersPage from './Components/Pages/UsersPage';
+import HomePage from "./Components/Pages/Home/HomePage";
+import HospitalsPage from './Components/Pages/Hospital/HospitalsPage';
+import MapPage from './Components/Pages/Map/MapPage';
+import UsersPage from './Components/Pages/User/UsersPage';
 import authAPI from './Components/Services/authAPI';
-import Test from './Components/Test';
 import requestTokenAPI from './Components/Services/RequestTokenAPI';
+import Test from './Components/Test';
 
 authAPI.setup();
 requestTokenAPI();
@@ -30,7 +30,7 @@ const App = () => {
       <NavbarWithRouter isAuth={isAuth} onLogout={setIsAuth} />
         <main className="jumbotron">
           <Switch>
-            <Route path="/test" isAuth={isAuth} component={Test}/>
+            <PrivateRoute path="/test" isAuth={isAuth} component={Test}/>
             <PrivateRoute path="/map" isAuth={isAuth} component={MapPage}/>
             <PrivateRoute path="/hospitals" isAuth={isAuth} component={HospitalsPage}/>            
             <PrivateRoute path="/users" isAuth={isAuth} component={UsersPage} />

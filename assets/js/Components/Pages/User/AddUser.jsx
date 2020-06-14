@@ -1,15 +1,15 @@
-import FieldInscription from "../Forms/FieldInscription";
 import React, { useState } from "react";
-import Select from "../Forms/Select";
 import { toast } from "react-toastify";
-import usersAPI from "../Services/usersAPI";
+import FieldInscription from "../../Forms/FieldInscription";
+import Select from "../../Forms/Select";
+import usersAPI from "../../Services/usersAPI";
 
 const AddUser = (props) => {
   const [users, setUsers] = useState({
     lastName: "",
     firstName: "",
     email: "",
-    password: "password2020",
+    password: "",
     roles: [],
   });
   const [errors, setErrors] = useState({
@@ -22,7 +22,7 @@ const AddUser = (props) => {
 
   const handleChange = ({ currentTarget }) => {
     const { name, value } = currentTarget;
-    setUsers({ ...users, [name]: value });
+    setUsers({ ...users, [name]: value });   
   };
   const handleChangeSelect = ({ currentTarget }) => {
     const { name, value } = currentTarget;
@@ -93,8 +93,8 @@ const AddUser = (props) => {
                   value={users.roles[0]}
                   defaut={"Accès"}
                 />
-                <div className="col">
-                  <button className="btn-secondary btn ml-2" type="submit">
+                <div className="col-1">
+                  <button className="btn-secondary btn ml-2" type="submit" disabled={!(users.firstName && users.lastName && users.email && users.password)}>
                     Ajouter
                   </button>
                 </div>

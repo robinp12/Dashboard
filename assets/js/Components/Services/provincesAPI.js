@@ -7,15 +7,25 @@ async function findAll() {
     return provinces;
   });
 }
-function addProvince(province){
-  return Axios
-  .post(PROVINCES_API, province)
-  .then(async response => {
-    console.log(response)  
+function addProvince(province) {
+  return Axios.post(PROVINCES_API, province).then(async (response) => {
+    console.log(response);
     return response;
   });
 }
-export default {
-    findAll, 
-    addProvince
+function deleteProvince(id) {
+  return Axios.delete(id)
+    .then(async (response) => {
+      console.log(response);
+      return response;
+    })
+    .then(async (response) => {
+      console.log(response);
+      return response;
+    });
 }
+export default {
+  findAll,
+  addProvince,
+  deleteProvince,
+};

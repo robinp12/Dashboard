@@ -59,6 +59,12 @@ class Hospital
      */
     private $user;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\CaseNumber", mappedBy="hospital", cascade={"persist", "remove"})
+     * @Groups({"users_read","hospital_read"})
+     */
+    private $caseNumber;
+
     public function __construct()
     {
         $this->user = new ArrayCollection();
@@ -138,6 +144,23 @@ class Hospital
     {
         if ($this->user->contains($user)) {
             $this->user->removeElement($user);
+        }
+
+        return $this;
+    }
+
+    public function getCaseNumber(): ?CaseNumber
+    {
+        return $this->caseNumber;
+    }
+
+    public function setCaseNumber(CaseNumber $caseNumber): self
+    {
+        $this->caseNumber = $caseNumber;
+
+        // set the owning side of the relation if necessary
+        if ($caseNumber->getHospital() !== $this) {
+            $caseNumber->setHospital($this);
         }
 
         return $this;

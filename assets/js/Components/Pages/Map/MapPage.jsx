@@ -1,8 +1,8 @@
-import React, { useState } from "react";
 import "leaflet/dist/leaflet.css";
-import Header from "../Header";
-import Map from "../MapPage/Map";
-import MapList from "../MapPage/MapList";
+import React, { useState } from "react";
+import Header from "../../Header";
+import Map from "./Map";
+import MapList from "./MapList";
 
 const tab = [];
 const MapPage = () => {
@@ -13,7 +13,8 @@ const MapPage = () => {
       tab.push(id);
     }
     if (checked == true) {
-      tab.pop(id);
+      let newId = tab.indexOf(id)
+      tab.splice(newId, 1);
     }
     setshow(!show);
   };

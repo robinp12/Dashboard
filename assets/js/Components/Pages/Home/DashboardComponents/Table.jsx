@@ -1,9 +1,9 @@
 import React from 'react';
 
 const Table = ({date}) => {
-    let d = 200
-    let c = 160
-    let b = 218
+    let d = 20
+    let c = 16
+    let b = 21
     for(let e in date){
         if(date[e] === (new Date().getDate()+"/"+new Date().getMonth())){
             date[e] = "Aujourd'hui"
@@ -29,22 +29,22 @@ const Table = ({date}) => {
                     {date.slice(0, 1).map((date, index)=>
                     <tr key={index}>
                         <th key={index} scope="row">{date}</th>
-                        <td>{d--}</td>
-                        <td>{c--}</td>
-                        <td>{b--}</td>
+                        <td>{d++}</td>
+                        <td>{c++}</td>
+                        <td>{b++}</td>
                     </tr>
                     )}
                     <tr>
                         <th scope="row">{date[1]}</th>
-                        <td>\</td>
-                        <td>\</td>
-                        <td>\</td>
+                        <td>{d+2}</td>
+                        <td>{c+3}</td>
+                        <td>{b+4}</td>
                     </tr>
                     <tr>
                         <th scope="row">{date[2]}</th>
-                        <td>\</td>
-                        <td>\</td>
-                        <td>\</td>
+                        <td>{d+3}</td>
+                        <td>{c+4}</td>
+                        <td>{b+5}</td>
                     </tr>
                     
                 </tbody>

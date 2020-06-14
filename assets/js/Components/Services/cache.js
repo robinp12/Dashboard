@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 const cache = {};
 
@@ -20,10 +20,14 @@ function get(key){
 }
 function lastUpdate(key){
 
-    let updatedTime = new Date().getMinutes() - new Date(cache[key].cachedAt).getMinutes();
+    let updatedTime = new Date().getMinutes() - new Date(cache[key]?.cachedAt).getMinutes()||0;
 
     if(updatedTime == 0){
         return <i> {"Mise à jour des données à l'instant"}</i>;
+
+    }
+    else if(updatedTime > 10){
+        return <i> {"Dernière mise à jour des données il y a plus de 10 min"}</i>;
 
     }
     else {

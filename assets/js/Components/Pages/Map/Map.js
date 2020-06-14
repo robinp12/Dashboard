@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { Map, TileLayer, Marker, Popup } from "react-leaflet";
-import hospitalsAPI from "../Services/hospitalsAPI";
+import React, { useEffect, useState } from "react";
+import { Map, Marker, Popup, TileLayer } from "react-leaflet";
+import hospitalsAPI from "../../Services/hospitalsAPI";
 
 export default function Maps({ show }) {
   const [mark, setMark] = useState([]);
@@ -39,7 +39,7 @@ export default function Maps({ show }) {
                       {e.name}
                       <br />
                       <b className="badge badge-danger badge-pill">
-                        {e.caseNumber??0 + " infectés"}
+                        {e.caseNumber?.caseNumber??"/" + " infectés"}
                       </b>
                     </Popup>
                   </Marker>

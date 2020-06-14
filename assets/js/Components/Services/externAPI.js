@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import Cache from "./cache";
 
@@ -12,7 +11,7 @@ function RequestAPI(ref) {
   const url =
     "https://80q2kxxmp6.execute-api.us-east-1.amazonaws.com/awsls1/metrics/reference/" +
     ref +
-    "?maxEntries=10";
+    "?maxEntries=20";
   const fetchDatas = async () => {
     var apigClientFactory = require("aws-api-gateway-client").default;
     var apigClient = apigClientFactory.newClient({
@@ -32,16 +31,16 @@ function RequestAPI(ref) {
       },
     };
     var body = {};
-    const cachedDatas = await Cache.get("datas");
+    const cachedDatas = await Cache.get("ref"+ref);
     if (cachedDatas) {
-      console.log(cachedDatas,"dans cache");
+      // console.log(cachedDatas,"dans cache");
       return cachedDatas;
     } else {
       var datas = await apigClient
         .invokeApi(pathParams, pathTemplate, method, additionalParams, body)
         .then((e) => {
-          console.log(e)
-          Cache.set("datas", e.data.datapoints);
+          // console.log(e)
+          Cache.set("ref"+ref, e.data.datapoints);
           return e.data.datapoints;
         })
         .catch((err) => {
@@ -50,11 +49,10 @@ function RequestAPI(ref) {
           });
           // console.log(err)
         });
-        console.log(datas,"hors cache", new Date().toLocaleTimeString())
       return datas;
     }
   };
-  return fetchDatas();
+    return fetchDatas();
 }
 
 export default RequestAPI;

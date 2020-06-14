@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 
 function requestTokenAPI() {
@@ -26,7 +25,7 @@ function requestTokenAPI() {
     },
     onFailure: (err) => {
       // console.log("Erreur lors de la récuperation du token API")
-      toast("Erreur lors de la récuperation du token API, essayez de vous reconnecter.", {
+      toast("Erreur lors de la récuperation du token API, Veuillez raffraichir la page.", {
         className: "bg-red",
       });
     },

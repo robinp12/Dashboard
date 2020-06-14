@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import Header from "../Header";
-import usersAPI from "../Services/usersAPI";
-import Select from "../Forms/Select";
 import { toast } from "react-toastify";
-import authAPI from "../Services/authAPI";
-import AddUser from "../UserPage/AddUser";
-import DeletePopup from "../DeletePopup";
+import Select from "../../Forms/Select";
+import Header from "../../Header";
+import DeletePopup from "../../PopupDelete";
+import authAPI from "../../Services/authAPI";
+import usersAPI from "../../Services/usersAPI";
+import AddUser from "./AddUser";
 
 const UsersPage = (props) => {
   const [show, setShow] = useState(false);
@@ -27,6 +27,7 @@ const UsersPage = (props) => {
   }, []);
   const handleChange = async (id, e) => {
     const { value } = e.currentTarget;
+    console.log(id, value, users)
     try {
       const rep = await usersAPI.update(id, value, users);
       if (authAPI.getCurrent().id == id && value == "USER") {
@@ -92,7 +93,7 @@ const UsersPage = (props) => {
                     </th>
                     <th scope="col">Nom</th>
                     <th scope="col">Prénom</th>
-                    <th scope="col">Email</th>
+                    <th scope="col" className="text-center">Email</th>
                     <th scope="col" className="text-center">
                       Role
                     </th>
@@ -111,7 +112,7 @@ const UsersPage = (props) => {
                       </th>
                       <td>{users.lastName}</td>
                       <td>{users.firstName}</td>
-                      <td>{users.email}</td>
+                      <td className="text-center">{users.email}</td>
                       {(users.roles == "SUPERADMIN" && (
                         <>
                           <td className="text-center">{users.roles}</td>
@@ -123,7 +124,7 @@ const UsersPage = (props) => {
                             <Select
                               name="role"
                               value={users.role}
-                              className="custom-select-sm custom-select col-xs-12 col-sm-10 col-md-5 col-lg-5"
+                              className="custom-select-sm custom-select col-lg-7"
                               onChange={(e) => handleChange(users.id, e)}
                               defaut={users.roles}
                             />

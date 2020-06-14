@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import PageLoader from "./PageLoader";
 import nominatim from "nominatim-geocoder";
+import Axios from "axios";
+import hospitalsAPI from "./Services/hospitalsAPI";
 
 const Test = () => {
   const [address, setAddress] = useState("");
@@ -12,8 +14,17 @@ const Test = () => {
     setAddress(refInput.current.value);
   };
   const handleSelect = () => {
-    console.log(refSelect.current.value);
+   
+    hospitalsAPI.addCase({
+      caseNumber: 199,
+      hospital:"/api/hospitals/5"
+    })
   };
+  const [hospitals, setHospitals] = useState({
+    case_number: 56
+  });
+  
+
   return (
     <>
       {(!true && (
@@ -22,12 +33,7 @@ const Test = () => {
         </div>
       )) || (
         <>
-          <h4>Données chargées!</h4>
-          <h4>SEPARER LES TABLES</h4>
           <h4>ENVOYER MAIL LORS D'INSCRIPTION</h4>
-          <h4>AJOUTER COLONNE ADRESSE & nombre d'infecté</h4>
-          <h4>AJOUTER MANUELLEMENT PROVINCE</h4>
-          <h4></h4>
           <input ref={refInput} type="text"></input>
           <button onClick={handleChange}>X</button>
           <br />
@@ -42,11 +48,11 @@ const Test = () => {
                   </>
                 ))}
               </select>
-              <button onClick={handleSelect}>X</button>
             </>
           )}
         </>
       )}
+      <button onClick={handleSelect}>X</button>
     </>
   );
 };

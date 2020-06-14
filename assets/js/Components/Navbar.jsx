@@ -38,7 +38,7 @@ const Navbar = ({ isAuth, onLogout, history }) => {
               <>
                 <li className="nav-item">
                   <NavLink className="nav-link" to="/map">
-                    Map
+                    Carte
                   </NavLink>
                 </li>
                 <li className="nav-item">
@@ -46,20 +46,21 @@ const Navbar = ({ isAuth, onLogout, history }) => {
                     Hôpitaux
                   </NavLink>
                 </li>
-                {authAPI.isAdmin() && (
+                {authAPI.isAdmin() && (<>
                   <li className="nav-item">
                     <NavLink className="nav-link" to="/users">
                       Utilisateurs
                     </NavLink>
                   </li>
-                )}
-              </>
-            )}
             <li className="nav-item">
               <NavLink className="nav-link" to="/test">
                 Tests
               </NavLink>
             </li>
+            </>
+                )}
+              </>
+            )}
           </ul>
           <ul className="navbar-nav ml-auto">
             {(!isAuth && (

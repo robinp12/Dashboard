@@ -1,14 +1,12 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import hospitalsAPI from '../Services/hospitalsAPI';
+import hospitalsAPI from '../../Services/hospitalsAPI';
 
 const MapList = ({onChange, show}) => {
     const [hopitals, setHopitals] = useState([]);
     const [province, setprovince] = useState([]);
-
     hospitalsAPI.findAllMap()
         .then(data => {
-            console.log(data)
             setHopitals(data);
         })
         .catch(error => {
@@ -25,7 +23,6 @@ const MapList = ({onChange, show}) => {
         }
         setprovince([...new Set(prov)])
     },[hopitals]);
-    console.log((hopitals))
 
     const list = (hopitals) => {
         return (
@@ -33,9 +30,8 @@ const MapList = ({onChange, show}) => {
                 {hopitals.map((hopital,index) => 
                      (!show.includes(hopital.province.name)) && 
                     (<li key={index} className="list-group-item d-flex justify-content-between align-items-center li">
-                        {hopital.name} -- 
-                        {hopital.province.name}
-                        <span className="badge badge-danger badge-pill">{hopital.caseNumber??0}</span>
+                        {hopital.name}
+                        <span className="badge badge-danger badge-pill">{hopital?.caseNumber?.caseNumber??"/"}</span>
                     </li>
                     )
                 )}
