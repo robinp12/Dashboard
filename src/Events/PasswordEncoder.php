@@ -9,7 +9,8 @@ use Symfony\Component\HttpKernel\Event\ViewEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class PasswordEncoder implements EventSubscriberInterface {
+class PasswordEncoder implements EventSubscriberInterface
+{
 
     /**
      * 
@@ -29,13 +30,23 @@ class PasswordEncoder implements EventSubscriberInterface {
             KernelEvents::VIEW => ['encodePassword', EventPriorities::PRE_WRITE]
         ];
     }
-    
-    public function encodePassword(ViewEvent $event) {
+
+    public function encodePassword(ViewEvent $event)
+    {
         $result = $event->getControllerResult();
         $method = $event->getRequest()->getMethod();
-        if($result instanceof User && $method === 'POST') {
-            $hash = $this->encoder->encodePassword($result,$result->getPassword());
+        if ($result instanceof User && $method === 'POST') {
+            $hash = $this->encoder->encodePassword($result, $result->getPassword());
             $result->setPassword($hash);
+        } else if ($result instanceof User && $method === 'PUT') {
+            if (strstr($result->getPassword(), '$argon2id$') !== FALSE) {
+                $result->setPassword(
+                    $result->getPassword()
+                );
+            } else {
+                $hash = $this->encoder->encodePassword($result, $result->getPassword());
+                $result->setPassword($hash);
+            }
         }
     }
 }

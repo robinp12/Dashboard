@@ -22,7 +22,7 @@ class UserPersister implements DataPersisterInterface
     }
     public function persist($data)
     {
-        if($data->getRoles() != ["ADMIN"]){
+        if($data->getRoles() != (["ADMIN"] || ["SUPERADMIN"])){
             $role = ["USER"];
             $data->setRoles($role);
         }

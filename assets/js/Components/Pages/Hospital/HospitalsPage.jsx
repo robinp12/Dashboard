@@ -128,7 +128,7 @@ const HospitalsPage = () => {
                   Province
                 </th>
                 <th scope="col" className="text-center">
-                  Nombre de cas
+                  Patients infectés
                 </th>
                 {authAPI.isAdmin() && (
                   <th scope="col" className="text-center">

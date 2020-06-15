@@ -1,7 +1,7 @@
 import React from "react";
-import authAPI from "./Services/authAPI";
 import { NavLink } from "react-router-dom";
 import { toast } from "react-toastify";
+import authAPI from "./Services/authAPI";
 
 const Navbar = ({ isAuth, onLogout, history }) => {
   const handleLogout = () => {
@@ -46,18 +46,14 @@ const Navbar = ({ isAuth, onLogout, history }) => {
                     Hôpitaux
                   </NavLink>
                 </li>
-                {authAPI.isAdmin() && (<>
-                  <li className="nav-item">
-                    <NavLink className="nav-link" to="/users">
-                      Utilisateurs
-                    </NavLink>
-                  </li>
-            <li className="nav-item">
-              <NavLink className="nav-link" to="/test">
-                Tests
-              </NavLink>
-            </li>
-            </>
+                {authAPI.isAdmin() && (
+                  <>
+                    <li className="nav-item">
+                      <NavLink className="nav-link" to="/users">
+                        Utilisateurs
+                      </NavLink>
+                    </li>
+                  </>
                 )}
               </>
             )}
@@ -76,7 +72,13 @@ const Navbar = ({ isAuth, onLogout, history }) => {
               </>
             )) || (
               <>
-                <li className="nav-link text-light">{authAPI.isAdmin()?authAPI.getCurrent().roles:""}</li>
+                <NavLink
+                  className="btn btn-secondary text-light"
+                  to="/profil"
+                >
+                  Profil
+                </NavLink>
+
                 <li className="nav-item ml-2 mr-2">
                   <button
                     className="btn btn-outline-secondary text-light active"

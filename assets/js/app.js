@@ -10,10 +10,10 @@ import Footer from './Components/Footer';
 import HomePage from "./Components/Pages/Home/HomePage";
 import HospitalsPage from './Components/Pages/Hospital/HospitalsPage';
 import MapPage from './Components/Pages/Map/MapPage';
+import Profil from './Components/Pages/Profil/Profil';
 import UsersPage from './Components/Pages/User/UsersPage';
 import authAPI from './Components/Services/authAPI';
 import requestTokenAPI from './Components/Services/RequestTokenAPI';
-import Test from './Components/Test';
 
 authAPI.setup();
 requestTokenAPI();
@@ -30,7 +30,7 @@ const App = () => {
       <NavbarWithRouter isAuth={isAuth} onLogout={setIsAuth} />
         <main className="jumbotron">
           <Switch>
-            <PrivateRoute path="/test" isAuth={isAuth} component={Test}/>
+            <PrivateRoute path="/profil" isAuth={isAuth} component={Profil}/>
             <PrivateRoute path="/map" isAuth={isAuth} component={MapPage}/>
             <PrivateRoute path="/hospitals" isAuth={isAuth} component={HospitalsPage}/>            
             <PrivateRoute path="/users" isAuth={isAuth} component={UsersPage} />
