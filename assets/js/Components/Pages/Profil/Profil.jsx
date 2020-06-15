@@ -118,7 +118,7 @@ const Profil = ({ onLogin, history }) => {
                   <div className="row justify-content-center">
                     <button
                       onClick={(e) => handleSubmit(e)}
-                      className="btn btn-outline-secondary col-5"
+                      className="btn btn-outline-secondary col-5 mb-3 mt-2"
                     >
                       Enregistrer
                     </button>
@@ -134,7 +134,7 @@ const Profil = ({ onLogin, history }) => {
                   <div className="row">
                     <div className="form-group p-2">
                       <label>Nombre d'hôpitaux : </label>
-                      <div className="form mt-3">
+                      <div className="form mt-1">
                         <ol className="listeProfil pt-2 pb-2">
                           {data?.hospitals.map((e, o) => (
                             <li key={o} className="pl-2 ml-0">

@@ -5,7 +5,7 @@ const DeletePopup = ({ deletepop }) => {
   return (
     <Popup
       trigger={<button className="btn btn-danger">X </button>}
-      position="right center"
+      position="left center"
       closeOnDocumentClick
     >
       {(close) => (

@@ -25,28 +25,24 @@ const HomePage = () => {
     externAPI(3874).then((e) => {
       cache.get("ref3874").then((e) => {
         setDatasAveree(e);
-        console.log(e);
       });
     });
     //COVID SUSPECTS
     externAPI(3875).then(() => {
       cache.get("ref3875").then((e) => {
         setDatasSuspect(e);
-        console.log(e);
       });
     });
     //LIT RESERVE
     externAPI(3876).then(() => {
       cache.get("ref3876").then((e) => {
         setDatasReserve(e);
-        console.log(e);
       });
     });
     //LIT OCCUPE
     externAPI(3877).then(() => {
       cache.get("ref3877").then((e) => {
         setDatasOccupe(e);
-        console.log(e);
       });
     });
   }, []);
@@ -78,8 +74,7 @@ const HomePage = () => {
               )
             }
           />
-          {console.log(fake)}
-          {console.log(datasAveree[0], datasOccupe[0])}
+          {/* {console.log(datasAveree[0], datasOccupe[0])} */}
           {!fake && (
             <>
               <div className="row">

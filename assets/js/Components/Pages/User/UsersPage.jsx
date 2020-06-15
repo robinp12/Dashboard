@@ -84,7 +84,7 @@ const UsersPage = (props) => {
             </>
           )}
           <div className="row justify-content-center">
-            <div className="clienttable col-xs-12 col-sm-12 col-md-10 col-lg-8">
+            <div className="listeH clienttable col-xs-12 col-sm-12 col-md-10 col-lg-8">
               <table className="table table-hover">
                 <thead className="table-dark">
                   <tr>

@@ -6,198 +6,52 @@ class ChartCaseNumber extends Component {
 
   componentDidMount() {
     const { suspect, averee, date } = this.props;
+    let days = [];
+    let vala = [];
+    let valb = [];
     if (isNaN(suspect && averee)) {
-        console.log(suspect, averee)
-      const myChartRef = this.chartRef.current.getContext("2d");
-      date.pop();
-      for (let e in date) {
-        if (
-          date[e] ===
-          new Date().getDate() + "/" + (new Date().getMonth() + 1)
-        ) {
-          date[e] = "Aujourd'hui";
-        }
+      console.log(suspect[0], averee[0]);
+      let concatDay = new Date(suspect[0].date);
+
+      let labela = suspect[0].name_reference;
+      let nbra = suspect[0].value;
+      
+      let labelb = averee[0].name_reference;
+      let nbrb = averee[0].value;
+      
+      for (let i = 6; i >= 0; i--) {
+        days[i] = concatDay.getDate() - i + "/" + (concatDay.getMonth() + 1);
+        vala[i] = 15+(-2^i);
+        valb[i] = averee[0].value;
       }
-      let d = new Date();
-      let a = new Date();
-      a.setDate(d.getDate() + 1);
-      date.unshift(a.getDate() + "/" + (a.getMonth() + 1));
+      const myChartRef = this.chartRef.current.getContext("2d");
       new Chart(myChartRef, {
         type: "line",
         data: {
-          labels: date.reverse(),
+          labels: days.reverse(),
           datasets: [
             {
-              label: "200 Cas entrant",
-              data: [
-                {
-                  x: 1,
-                  y: 1,
-                },
-                {
-                  x: 2,
-                  y: 3,
-                },
-                {
-                  x: 3,
-                  y: 9,
-                },
-                {
-                  x: 4,
-                  y: 27,
-                },
-                {
-                  x: 5,
-                  y: 81,
-                },
-                {
-                  x: 6,
-                  y: 200,
-                },
-              ],
+              label: labelb,
+              data: valb,
               backgroundColor: "rgba(165, 203, 227, 1)",
               borderColor: "rgba(165, 203, 227, 1)",
               weight: 20,
               fill: false,
             },
             {
-              label: "",
-              backgroundColor: "rgba(165, 203, 227, 1)",
-              borderColor: "rgba(165, 203, 227, 1)",
-              data: [
-                null,
-                null,
-                null,
-                null,
-                null,
-                {
-                  x: 6,
-                  y: 200,
-                },
-                {
-                  x: 7,
-                  y: 343,
-                },
-              ],
-              fill: false,
-              borderDash: [5, 5],
-            },
-            {
-              label: "160 Soins intensifs",
-              data: [
-                {
-                  x: 1,
-                  y: 5,
-                },
-                {
-                  x: 2,
-                  y: 5,
-                },
-                {
-                  x: 3,
-                  y: 25,
-                },
-                {
-                  x: 4,
-                  y: 50,
-                },
-                {
-                  x: 5,
-                  y: 100,
-                },
-                {
-                  x: 6,
-                  y: 160,
-                },
-              ],
-              backgroundColor: "rgba(247, 223, 161, 1)",
-              borderColor: "rgba(247, 223, 161, 1)",
-              weight: 20,
-              fill: false,
-            },
-            {
-              label: "",
-              backgroundColor: "rgba(247, 223, 161, 1)",
-              borderColor: "rgba(247, 223, 161, 1)",
-              data: [
-                null,
-                null,
-                null,
-                null,
-                null,
-                {
-                  x: 6,
-                  y: 160,
-                },
-                {
-                  x: 7,
-                  y: 260,
-                },
-              ],
-              fill: false,
-              borderDash: [5, 5],
-            },
-            {
-              label: "218 Décès",
-              data: [
-                {
-                  x: 1,
-                  y: 1,
-                },
-                {
-                  x: 2,
-                  y: 2,
-                },
-                {
-                  x: 3,
-                  y: 8,
-                },
-                {
-                  x: 4,
-                  y: 16,
-                },
-                {
-                  x: 5,
-                  y: 90,
-                },
-                {
-                  x: 6,
-                  y: 218,
-                },
-              ],
+              label: labela,
+              data: vala,
               backgroundColor: "rgba(239, 159, 176, 1)",
               borderColor: "rgba(239, 159, 176, 1)",
               weight: 20,
               fill: false,
-            },
-            {
-              label: "",
-              backgroundColor: "rgba(239, 159, 176, 1)",
-              borderColor: "rgba(239, 159, 176, 1)",
-              data: [
-                null,
-                null,
-                null,
-                null,
-                null,
-                {
-                  x: 6,
-                  y: 218,
-                },
-                {
-                  x: 7,
-                  y: 356,
-                },
-              ],
-              fill: false,
-              borderDash: [5, 5],
             },
           ],
         },
         options: {
           maintainAspectRatio: false,
           tooltips: {
-            enabled: false,
+            enabled: true,
             // filter: function (legendItem, chartData) {
             //     return (chartData.datasets[legendItem.datasetIndex].label)
             // },

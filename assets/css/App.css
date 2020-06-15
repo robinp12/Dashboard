@@ -99,12 +99,16 @@ div .profil{
   border-radius: 5px;
 }
 .listeProfil {
-  height: 8.5em;
+  height: 10.5em;
   overflow-y: scroll;
   overflow: auto;
-  background:#FFF;
   border-radius: 5px;
   width: 20em;
+}
+.listeH {
+  height: 65vh;
+  overflow-y: scroll;
+  overflow: auto;
 }
 #mapid {
   margin-top: 1em;

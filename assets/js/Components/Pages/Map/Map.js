@@ -39,7 +39,7 @@ export default function Maps({ show }) {
                       {e.name}
                       <br />
                       <b className="badge badge-danger badge-pill">
-                        {e.caseNumber?.caseNumber??"/" + " infectés"}
+                        {(e.caseNumber?.caseNumber??"/") + " infectés"}
                       </b>
                     </Popup>
                   </Marker>
