@@ -1,5 +1,5 @@
 import React from 'react';
-
+//Composant d'input
 const FieldConnexion = ({name, label, value, onChange, placeholder, type="text", error=""}) => ( 
         <div className="form-group">
             <label htmlFor={name}>{label}</label>

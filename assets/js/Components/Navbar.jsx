@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import authAPI from "./Services/authAPI";
 
 const Navbar = ({ isAuth, onLogout, history }) => {
+  // Action lors de la déconnexion
   const handleLogout = () => {
     authAPI.logout();
     onLogout(false);
@@ -72,10 +73,7 @@ const Navbar = ({ isAuth, onLogout, history }) => {
               </>
             )) || (
               <>
-                <NavLink
-                  className="btn btn-secondary text-light"
-                  to="/profil"
-                >
+                <NavLink className="btn btn-secondary text-light" to="/profil">
                   Profil
                 </NavLink>
 

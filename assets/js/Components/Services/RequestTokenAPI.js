@@ -1,5 +1,6 @@
 import { toast } from "react-toastify";
 
+// Permet la recuperation d'un token pour l'api careboard
 function requestTokenAPI() {
   var AmazonCognitoIdentity = require("amazon-cognito-identity-js");
   var authenticationData = {

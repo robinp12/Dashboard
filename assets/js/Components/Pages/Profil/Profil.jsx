@@ -5,7 +5,7 @@ import Header from "../../Header";
 import authAPI from "../../Services/authAPI";
 import usersAPI from "../../Services/usersAPI";
 
-const Profil = ({ onLogin, history }) => {
+const Profil = () => {
   const [data, setData] = useState({});
   const [up, setUp] = useState(true);
   const [error, setErrors] = useState("");
@@ -68,10 +68,12 @@ const Profil = ({ onLogin, history }) => {
           <Header title={"Gestion du profil"} />
           <div className="row justify-content-center">
             <div className="profil col-xs-12 col-sm-12 col-md-9 col-lg-7">
-              <h5>{"Profil : " + data?.firstName + " " + data?.lastName}</h5>
-              <hr/>
-              <div className="row justify-content-center">
-                <div className="col">
+              <h5 className="mt-2 ml-2">
+                {"Profil : " + data?.firstName + " " + data?.lastName}
+              </h5>
+              <hr />
+              <div className="row">
+                <div className="col-6 pt-2 ml-4 mr-3 dcol">
                   <div className="row justify-content-center">
                     <FieldConnexion
                       label="Prénom :"
@@ -124,7 +126,7 @@ const Profil = ({ onLogin, history }) => {
                     </button>
                   </div>
                 </div>
-                <div className="col">
+                <div className="col-5 ml-3 dcol">
                   <div className="row">
                     <div className="form-group p-2">
                       <label>Rôle : </label>

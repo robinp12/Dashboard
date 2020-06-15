@@ -3,6 +3,7 @@ import jwtDecode from "jwt-decode";
 import { LOGIN_API } from "../../config";
 import cache from "./cache";
 
+//Action de deconnexion
 function logout() {
   window.localStorage.removeItem("authToken");
   delete Axios.defaults.headers["Authorization"];
@@ -11,21 +12,21 @@ function logout() {
   cache.invalidate("users");
   cache.invalidate("datas");
 }
-
+//Action de connexion
 function authenticate(login) {
   return Axios.post(LOGIN_API, login)
     .then((response) => response.data.token)
     .then((token) => {
-      //Token Login
+      //Token Login en localStorage
       window.localStorage.setItem("authToken", token);
       setToken(token);
     });
 }
-
+// Token dans les headers
 function setToken(token) {
   Axios.defaults.headers["Authorization"] = "Bearer " + token;
 }
-
+//Mise en place d'une expiration 
 function setup() {
   const token = window.localStorage.getItem("authToken");
   if (token) {
@@ -35,7 +36,7 @@ function setup() {
     }
   }
 }
-
+//Verifier si l'user est connecté
 function isAuth() {
   const token = window.localStorage.getItem("authToken");
   if (token) {
@@ -47,6 +48,7 @@ function isAuth() {
   }
   return false;
 }
+//Verifier si l'user connecté est admin ou superadmin
 function isAdmin() {
   const token = window.localStorage.getItem("authToken");
   if (jwtDecode(token).roles.includes("SUPERADMIN")||jwtDecode(token).roles.includes("ADMIN")) {
@@ -54,6 +56,7 @@ function isAdmin() {
   }
   return false;
 }
+//Avoir des informations breves sur l'user connecté
 function getCurrent() {
   const token = window.localStorage.getItem("authToken");
   return jwtDecode(token);

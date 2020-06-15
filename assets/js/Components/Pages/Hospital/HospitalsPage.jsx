@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Header from "../../Header";
 import DeletePopup from "../../PopupDelete";
@@ -18,7 +18,6 @@ const HospitalsPage = () => {
   const handleChangeNb = async (id, e, caseId) => {
     const { value } = e.currentTarget;
     cache.invalidate("hospitalsMap");
-    console.log(id, +value, caseNumber, caseId);
     try {
       if (isNaN(caseId)) {
         await hospitalsAPI.createCase(id, +value, caseNumber);
@@ -123,7 +122,9 @@ const HospitalsPage = () => {
                     #
                   </th>
                 )}
-                <th className="text-center" scope="col">Hôpital</th>
+                <th className="text-center" scope="col">
+                  Hôpital
+                </th>
                 <th scope="col" className="text-center">
                   Province
                 </th>
@@ -185,7 +186,9 @@ const HospitalsPage = () => {
                 <>
                   {hospitals.map((hospitals) => (
                     <tr key={hospitals.id}>
-                      <th className="text-center" scope="row">{hospitals.name}</th>
+                      <th className="text-center" scope="row">
+                        {hospitals.name}
+                      </th>
                       <td className="text-center">{hospitals.province.name}</td>
                       <td className="text-center">
                         <input

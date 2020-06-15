@@ -3,6 +3,7 @@ import Cache from "./cache";
 
 import("aws-sdk/clients/codecommit").CreatePullRequestApprovalRuleInput;
 
+//Requete sur l'api careboard grace a un parametre de reference
 function RequestAPI(ref) {
   const auth = localStorage.getItem(
     "CognitoIdentityServiceProvider.365rnnq5bbq4a0krr2hpiatlhr.phil.accessToken"
@@ -31,23 +32,23 @@ function RequestAPI(ref) {
       },
     };
     var body = {};
+    //Verifier si le resultat se trouve deja en cache
     const cachedDatas = await Cache.get("ref"+ref);
     if (cachedDatas) {
-      // console.log(cachedDatas,"dans cache");
       return cachedDatas;
     } else {
       var datas = await apigClient
         .invokeApi(pathParams, pathTemplate, method, additionalParams, body)
         .then((e) => {
-          // console.log(e)
+          // Mise en cache apres requete
           Cache.set("ref"+ref, e.data.datapoints);
           return e.data.datapoints;
         })
         .catch((err) => {
+          //Notification d'erreur
           toast("Erreur de connexion à l'API, essayer de vous reconnecter.", {
             className: "bg-red",
           });
-          // console.log(err)
         });
       return datas;
     }

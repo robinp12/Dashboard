@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Header from "../../Header";
 import PageLoader from "../../PageLoader";
+import authAPI from "../../Services/authAPI";
 import cache from "../../Services/cache";
 import externAPI from "../../Services/externAPI";
 import ChartBedNumber from "./Charts/ChartBedNumber";
@@ -8,9 +9,7 @@ import ChartCaseNumber from "./Charts/ChartCaseNumber";
 import ChartCaseTotal from "./Charts/ChartCaseTotal";
 import ChartUSNumber from "./Charts/ChartUSNumber";
 import USNumber from "./Charts/USNumber";
-import Datepicker from "./DashboardComponents/Datepicker";
 import Table from "./DashboardComponents/Table";
-import authAPI from "../../Services/authAPI";
 
 const HomePage = () => {
   const [datasSuspect, setDatasSuspect] = useState([]);
@@ -18,7 +17,6 @@ const HomePage = () => {
   const [datasReserve, setDatasReserve] = useState([]);
   const [datasOccupe, setDatasOccupe] = useState([]);
   const [fake, setFake] = useState(false);
-  const date = Datepicker.getDate();
 
   useEffect(() => {
     //COVID AVEREES
@@ -74,7 +72,7 @@ const HomePage = () => {
               )
             }
           />
-          {/* {console.log(datasAveree[0], datasOccupe[0])} */}
+          {console.log(datasAveree[0], datasOccupe[0])}
           {!fake && (
             <>
               <div className="row">
@@ -87,15 +85,17 @@ const HomePage = () => {
                   occupe={datasOccupe[0]}
                   reserve={datasReserve[0]}
                 />
-                <Table date={date} />
+                <Table suspect={datasSuspect} averee={datasAveree} />
               </div>
               <div className="row">
                 <ChartCaseNumber
-                  suspect={datasSuspect}
-                  averee={datasAveree}
-                  date={date}
+                  suspect={datasSuspect[0]}
+                  averee={datasAveree[0]}
                 />
-                <ChartUSNumber />
+                <ChartUSNumber
+                  suspect={datasSuspect[0]}
+                  averee={datasAveree[0]}
+                />
               </div>
             </>
           )}
@@ -106,14 +106,10 @@ const HomePage = () => {
                 <ChartCaseTotal />
                 <USNumber />
                 <ChartBedNumber />
-                <Table date={date} />
+                <Table />
               </div>
               <div className="row">
-                <ChartCaseNumber
-                  suspect={datasSuspect}
-                  averee={datasAveree}
-                  date={date}
-                />
+                <ChartCaseNumber />
                 <ChartUSNumber />
               </div>
             </>

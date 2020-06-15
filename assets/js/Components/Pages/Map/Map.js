@@ -30,6 +30,7 @@ export default function Maps({ show }) {
       <TileLayer url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" />
       {mark.map(
         (e, index) =>
+        // Positionnement des marqueurs sur la carte
           !show.includes(e.province.name) && (
             <div key={index}>
               {(e.longitude || e.latitude) != 0 &&
@@ -39,7 +40,7 @@ export default function Maps({ show }) {
                       {e.name}
                       <br />
                       <b className="badge badge-danger badge-pill">
-                        {(e.caseNumber?.caseNumber??"/") + " infectés"}
+                        {(e.caseNumber?.caseNumber ?? "/") + " infectés"}
                       </b>
                     </Popup>
                   </Marker>

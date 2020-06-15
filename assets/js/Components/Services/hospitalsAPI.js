@@ -2,7 +2,9 @@ import Axios from "axios";
 import { HOSPITALS_API, USERS_API, CASE_API } from "../../config";
 import Cache from "./cache";
 
+// Recuperer tous les hopitaux
 async function findAll() {
+  //Verifier si ils sont en cache
   const cachedHospitals = await Cache.get("hospitals");
 
   if (cachedHospitals) {
@@ -10,11 +12,13 @@ async function findAll() {
   } else {
     return Axios.get(HOSPITALS_API).then((response) => {
       const hospitals = response.data["hydra:member"];
+      //Mettre dans le cache si pas
       Cache.set("hospitals", hospitals);
       return hospitals;
     });
   }
 }
+// Creer une valeur dans la table case_number
 function createCase(id, value, casenumber) {
   return Axios.post(CASE_API, {
     ...casenumber,
@@ -22,6 +26,8 @@ function createCase(id, value, casenumber) {
     hospital: "/api/hospitals/" + id,
   });
 }
+
+// Mettre a jour le nombre d'infecté
 function updateCase(id, value, casenumber, caseId) {
   return Axios.put(CASE_API + "/" + caseId, {
     ...casenumber,
@@ -29,6 +35,7 @@ function updateCase(id, value, casenumber, caseId) {
     hospital: "/api/hospitals/" + id,
   });
 }
+// Recuperer tous les hopitaux pour la map
 async function findAllMap() {
   const cachedHospitals = await Cache.get("hospitalsMap");
 
@@ -42,6 +49,7 @@ async function findAllMap() {
     });
   }
 }
+//Recuperer un hopital
 async function find(id) {
   const cachedHospitals = await Cache.get("hospitals");
 
@@ -55,7 +63,7 @@ async function find(id) {
     });
   }
 }
-
+//Ajouter un hopital
 function addHospital(hospital) {
   return Axios.post(HOSPITALS_API, hospital).then(async (response) => {
     Cache.invalidate("hospitalsMap");
@@ -66,11 +74,7 @@ function addHospital(hospital) {
     return response;
   });
 }
-function addCase(case_number) {
-  return Axios.post(CASE_API, case_number).then(async (response) => {
-    return response;
-  });
-}
+//Supprimer un hopital
 function deleteHospitals(id) {
   return Axios.delete(HOSPITALS_API + "/" + id).then(async (response) => {
     Cache.invalidate("hospitalsMap");
@@ -93,5 +97,4 @@ export default {
   find,
   addHospital,
   deleteHospitals,
-  addCase,
 };

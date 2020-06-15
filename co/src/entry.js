@@ -5,6 +5,7 @@ if (typeof fetch !== "function") {
 }
 
 var AmazonCognitoIdentity = require('amazon-cognito-identity-js');
+const { default: authAPI } = require("../../assets/js/Components/Services/authAPI");
 
 
 // Use Case 4 from https://github.com/aws-amplify/amplify-js/tree/master/packages/amazon-cognito-identity-js
@@ -64,5 +65,6 @@ cognitoUser.authenticateUser(authenticationDetails, {
 
 	onFailure: function(err) {
 		console.log(err.message || JSON.stringify(err));
+		window.location.replace("/");
 	},
 });

@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import usersAPI from "../Services/usersAPI";
-
+// Selecteur d'user
 const SelectUsers = ({ name, value, onChange, defaut, error }) => {
   const [users, setUsers] = useState([]);
 

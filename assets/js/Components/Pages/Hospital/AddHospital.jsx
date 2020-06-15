@@ -26,6 +26,7 @@ const AddHospital = () => {
     name: "",
     province: "",
   });
+  //Valeur mise dans le state
   const handleChange = ({ currentTarget }) => {
     const { name, value } = currentTarget;
     setHospitals({ ...hospitals, [name]: value });
@@ -39,6 +40,7 @@ const AddHospital = () => {
     const { name, value } = currentTarget;
     setHospitals({ ...hospitals, [name]: [value] });
   };
+  // Coordonnes GPS dans la table hospital
   const handleSelect = () => {
     const a = refSelect.current.value;
     let lat = a.split(" ")[0];
@@ -47,7 +49,6 @@ const AddHospital = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(hospitals);
     try {
       const rep = await hospitalsAPI.addHospital(hospitals);
       toast("L'hôpital " + hospitals.name + " a été ajouté");
@@ -56,6 +57,7 @@ const AddHospital = () => {
       toast("Erreur dans le formulaire !" + "", {
         className: "bg-red",
       });
+      // Verification des erreurs a afficher provenant du backend
       if (error.response.data.violations) {
         const apiErrors = {};
         error.response.data.violations.forEach((violation) => {
@@ -63,9 +65,9 @@ const AddHospital = () => {
         });
         setErrors(apiErrors);
       }
-      // console.log(error.response.data);
     }
   };
+  // API permettant de traduire l'adresse en coord GPS
   const geocoder = new nominatim({
     delay: 1000, // delay between requests
     secure: true, // enables ssl

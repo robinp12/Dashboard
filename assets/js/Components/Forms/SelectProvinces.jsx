@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
-import Axios from "axios";
+import React, { useEffect, useState } from "react";
 import provincesAPI from "../Services/provincesAPI";
-
+// Selecteur de province
 const SelectProvince = ({ name, value, onChange, defaut, error, refe }) => {
   const [provinces, setProvinces] = useState([]);
 

@@ -1,5 +1,5 @@
 import React from "react";
-
+//Composant d'input
 const FieldInscription = ({
   name,
   value,

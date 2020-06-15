@@ -4,7 +4,7 @@ import FieldInscription from "../../Forms/FieldInscription";
 import Select from "../../Forms/Select";
 import usersAPI from "../../Services/usersAPI";
 
-const AddUser = (props) => {
+const AddUser = () => {
   const [users, setUsers] = useState({
     lastName: "",
     firstName: "",
@@ -22,7 +22,7 @@ const AddUser = (props) => {
 
   const handleChange = ({ currentTarget }) => {
     const { name, value } = currentTarget;
-    setUsers({ ...users, [name]: value });   
+    setUsers({ ...users, [name]: value });
   };
   const handleChangeSelect = ({ currentTarget }) => {
     const { name, value } = currentTarget;
@@ -94,7 +94,18 @@ const AddUser = (props) => {
                   defaut={"Accès"}
                 />
                 <div className="col-1">
-                  <button className="btn-secondary btn ml-2" type="submit" disabled={!(users.firstName && users.lastName && users.email && users.password)}>
+                  <button
+                    className="btn-secondary btn ml-2"
+                    type="submit"
+                    disabled={
+                      !(
+                        users.firstName &&
+                        users.lastName &&
+                        users.email &&
+                        users.password
+                      )
+                    }
+                  >
                     Ajouter
                   </button>
                 </div>

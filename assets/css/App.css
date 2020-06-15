@@ -131,3 +131,8 @@ input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+.dcol{
+  border: solid rgb(218, 218, 218) 0.5px;
+  background-color: #f0f0f0;
+  box-shadow: rgb(218, 218, 218) 0.5px 0.5px 0.5px 0.5px;
+}

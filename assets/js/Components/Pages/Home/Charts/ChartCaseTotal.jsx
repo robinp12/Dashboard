@@ -10,12 +10,12 @@ class ChartCaseNumber extends Component {
   componentDidMount() {
     const { suspect, averee } = this.props;
     if (isNaN(suspect && averee)) {
-      const valuea = suspect?.value??17;
+      const valuea = suspect?.value ?? 17;
       const refa = suspect?.name_reference ?? "Covid suspects";
       const labela = (valuea ?? 0) + " " + refa;
       const vala = +valuea;
 
-      const valueb = averee?.value??25;
+      const valueb = averee?.value ?? 25;
       const refb = averee?.name_reference ?? "Covid avérés";
       const labelb = (valueb ?? 0) + " " + refb;
       const valb = +valueb;
@@ -40,17 +40,7 @@ class ChartCaseNumber extends Component {
           maintainAspectRatio: false,
           tooltips: {
             enabled: false,
-            // intersect:false,
-            // backgroundColor: '#FFF',
-            // borderWidth: 0.1,
-            // borderColor: '#000',
-            // titleFontSize: 13,
-            // titleFontColor: '#0066ff',
-            // bodyFontColor: '#555',
-            // bodyFontSize: 14,
-            // mode: "dataset",
           },
-
           legend: {
             display: true,
             position: "left",

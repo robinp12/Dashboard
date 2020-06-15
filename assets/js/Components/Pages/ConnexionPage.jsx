@@ -6,13 +6,14 @@ import Header from "../Header";
 import authAPI from "../Services/authAPI";
 
 const ConnexionPage = ({ onLogin, history }) => {
+  //State permettant d'afficher ou non l'inscription
   const [showRegister, setShowRegister] = useState(false);
   const [login, setLogin] = useState({
     username: "",
     password: "",
   });
   const [error, setError] = useState("");
-
+  //Mise ne place dans le state
   const handleChange = ({ currentTarget }) => {
     const { value, name } = currentTarget;
     setLogin({ ...login, [name]: value });
@@ -85,7 +86,11 @@ const ConnexionPage = ({ onLogin, history }) => {
                 administrateur en scannant ce QRcode :
               </h5>
               <QrCode className="text-center" value="robipaq@hotmail.com" />
-              <br/><small>Où en prennant contact avec cette adresse mail : robipaq@hotmail.com</small>
+              <br />
+              <small>
+                Où en prennant contact avec cette adresse mail :
+                robipaq@hotmail.com
+              </small>
               <div
                 className="mt-2 btn btn-secondary col-12"
                 onClick={() => setShowRegister(false)}

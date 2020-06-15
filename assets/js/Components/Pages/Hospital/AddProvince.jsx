@@ -1,8 +1,8 @@
-import React, { useState, useRef } from "react";
+import React, { useRef, useState } from "react";
 import { toast } from "react-toastify";
 import FieldInscription from "../../Forms/FieldInscription";
-import provincesAPI from "../../Services/provincesAPI";
 import SelectProvince from "../../Forms/SelectProvinces";
+import provincesAPI from "../../Services/provincesAPI";
 
 const AddProvince = () => {
   const [disabled, setdisabled] = useState(true);
@@ -16,6 +16,7 @@ const AddProvince = () => {
   const handleChange = ({ currentTarget }) => {
     const { name, value } = currentTarget;
     setProvinces({ ...provinces, [name]: value });
+    // Activation du boutton envoyer
     setdisabled(false);
   };
 
@@ -30,6 +31,7 @@ const AddProvince = () => {
       toast("Erreur dans le formulaire !" + "", {
         className: "bg-red",
       });
+      // Verification des erreurs a afficher provenant du backend
       if (error.response.data.violations) {
         const apiErrors = {};
         error.response.data.violations.forEach((violation) => {

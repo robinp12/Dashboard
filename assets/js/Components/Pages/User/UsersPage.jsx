@@ -27,9 +27,9 @@ const UsersPage = (props) => {
   }, []);
   const handleChange = async (id, e) => {
     const { value } = e.currentTarget;
-    console.log(id, value, users)
     try {
       const rep = await usersAPI.update(id, value, users);
+      // Si l'user passe de admin a user, il est deconnecté pour que le role soit pris en compte
       if (authAPI.getCurrent().id == id && value == "USER") {
         setTimeout(() => {
           authAPI.logout();
@@ -93,7 +93,9 @@ const UsersPage = (props) => {
                     </th>
                     <th scope="col">Nom</th>
                     <th scope="col">Prénom</th>
-                    <th scope="col" className="text-center">Email</th>
+                    <th scope="col" className="text-center">
+                      Email
+                    </th>
                     <th scope="col" className="text-center">
                       Role
                     </th>
@@ -130,8 +132,7 @@ const UsersPage = (props) => {
                             />
                           </td>
                           <td className="text-center">
-                            {authAPI.getCurrent().roles ==
-                              "SUPERADMIN" && (
+                            {authAPI.getCurrent().roles == "SUPERADMIN" && (
                               <DeletePopup
                                 deletepop={() => handleDelete(users.id)}
                               />
